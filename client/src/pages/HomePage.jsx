@@ -14,7 +14,7 @@ const HomePage = () => {
     const token = localStorage.getItem('token');
     if (token) {
 
-      toast.success('Đăng nhập thành công');
+      toast.success('Đăng nhập thành công'); // lỗi toast render2 lần
     
     } else {
      
