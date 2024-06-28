@@ -3,8 +3,8 @@ import Header from '../components/Header';
 import { Link, useNavigate } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoginUser } from '../redux/actions/authActions';
-import { setError } from '../redux/reducers/authSlice';
+import { loginUser } from '../redux/actions/authActions';
+
 import { toast, Toaster } from 'react-hot-toast';
 
 const LoginPage = () => {
@@ -23,18 +23,17 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await dispatch(LoginUser(formData));
+      const response = await dispatch(loginUser(formData));
       if (response && !response.error) {
         navigate('/');
       } else {
        
      
-        dispatch(setError(response.error));
+      
         toast.error('Đăng nhập không thành công: ' + response.error);
       }
     } catch (error) {
-      console.error('Lỗi:', error);
-      console.log('Đăng nhập không thành công: ' + error.message);
+      toast.error('Đăng kí không thành công ');
     }
   };
 

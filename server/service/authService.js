@@ -23,7 +23,7 @@ const createUser = async ({ name, email, password, phone }) => {
             isAdmin: false
         });
         const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: "10s"
+            expiresIn: "1d"
         })
         return {
             status: 'success',
@@ -58,7 +58,7 @@ const loginUser = async (email, password) => {
         }
   
             const accessToken = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: "3d"
+                expiresIn: "1d"
             })
             return {
                 status: 'success',

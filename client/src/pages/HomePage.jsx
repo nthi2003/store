@@ -8,13 +8,15 @@ import { GrMoney } from "react-icons/gr";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import FooterComponent from '../components/FooterComponent';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
 
-      toast.success('Đăng nhập thành công'); // lỗi toast render2 lần
+      toast.success('Đăng nhập thành công'); 
     
     } else {
      

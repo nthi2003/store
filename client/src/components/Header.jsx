@@ -11,9 +11,10 @@ import { logoutUser } from '../redux/actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
 const Header = ({ placeholder, onChange }) => {
-    const authenUser = useSelector(state => state.auth); 
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); 
+    const user = useSelector(state => state.auth.user)
     const navigate = useNavigate();
-    console.log(authenUser);
+    console.log(user);
     const handleSearch = () => {
         // console.log(1)
     }
@@ -91,15 +92,16 @@ const Header = ({ placeholder, onChange }) => {
                     <div className='flex ml-4 bg-[#BE1529]   '>
                         <LuUser2 className='text-white size-7 p-[1px] mt-2' />
                         <div className='p-2'>
-                            {authenUser ? <div>
-                                <a href="">
-
+                            {isAuthenticated ? 
+                            <div>
+                                
                                 <p className='text-white font-sans text-xs font-bold'>Xin chào</p>
+                                <p className='text-white font-sans text-xs font-bold'>{user.name}</p>
                                 <button onClick={handleLogout}>
-                                <p className='text-white font-sans text-xs'>Đăng xuất</p>
+                               <a href=""> <p className='text-white font-sans text-xs'>Đăng xuất</p></a>
                                 </button>
 
-                            </a>
+                       
                             </div>  :
                              <div>
                                 <a href="/login">
