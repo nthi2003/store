@@ -11,7 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 
 const HomePage = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -28,10 +28,11 @@ const HomePage = () => {
     <div>
       <Header placeholder='Bạn cần tìm gì ?' />
       <Toaster />
-      <div className='bg-white border-b border-gray-200'>
+
+      <div className='bg-white border-b border-gray-200 p-2'>
         <div className='max-w-7xl mx-auto px-3'>
           <ul className='flex'>
-            <li className='w-auto p-2'>
+            <li className='w-auto p-2 ml-10'>
               <a href="" className='flex items-center ml-6 mr-6'>
                 <span className='p-1'><AiOutlineTags /></span>
                 <span className='text-nowrap text-xs pt-1'>Săn Voucher GEARVN</span>
