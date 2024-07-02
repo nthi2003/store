@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/actions/authActions';
 
 import { toast, Toaster } from 'react-hot-toast';
+import FooterComponent from '../components/FooterComponent';
 const RegisterPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,7 +45,7 @@ const RegisterPage = () => {
         <div className='text-center'>
             <Header placeholder='Bạn cần tìm gì ?' />
             <Toaster />
-            <form className='w-full mt-[100px]' onSubmit={handleSubmit}>
+            <form className='w-full h-[600px] bg-gray-300' onSubmit={handleSubmit}>
                 <div className='p-5'>
                     <h2>ĐĂNG NHẬP HOẶC TẠO TÀI KHOẢN</h2>
                 </div>
@@ -104,6 +105,7 @@ const RegisterPage = () => {
                     </Link>
                 </p>
             </form>
+            <FooterComponent/>
         </div>
     );
 };

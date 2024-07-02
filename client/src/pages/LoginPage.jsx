@@ -33,7 +33,7 @@ const LoginPage = () => {
         toast.error('Đăng nhập không thành công: ' + response.error);
       }
     } catch (error) {
-      toast.error('Đăng kí không thành công ');
+      toast.error('Đăng nhập không thành công ');
     }
   };
 

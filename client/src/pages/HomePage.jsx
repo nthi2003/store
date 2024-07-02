@@ -9,6 +9,8 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import FooterComponent from '../components/FooterComponent';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import Product from '../components/Product';
+import Categorry from '../components/Categorry';
 
 const HomePage = () => {
 
@@ -26,51 +28,15 @@ const HomePage = () => {
   }, []);
   return (
     <div>
+      <div className=' h-auto bg-[#03370f]'>
+       <div className='max-w-7xl ml-auto mr-auto px-3'>
+       <img src="https://file.hstatic.net/200000722513/file/pc_-_topbar_ae727c35df2d4cff9f0c611a7d19cc15.png" alt="" />
+       </div>
+      </div>
       <Header placeholder='Bạn cần tìm gì ?' />
       <Toaster />
 
-      <div className='bg-white border-b border-gray-200 p-2'>
-        <div className='max-w-7xl mx-auto px-3'>
-          <ul className='flex'>
-            <li className='w-auto p-2 ml-10'>
-              <a href="" className='flex items-center ml-6 mr-6'>
-                <span className='p-1'><AiOutlineTags /></span>
-                <span className='text-nowrap text-xs pt-1'>Săn Voucher GEARVN</span>
-              </a>
-            </li>
-            <li className='w-auto p-2 border-l'>
-              <a href="" className='flex items-center ml-3 mr-6'>
-                <span className='p-1'><IoNewspaperOutline /></span>
-                <span className='text-nowrap text-xs pt-1'>Tin công nghệ</span>
-              </a>
-            </li>
-            <li className='w-auto p-2 border-l'>
-              <a href="" className='flex items-center ml-3 mr-6'>
-                <span className='p-1'><FiYoutube /></span>
-                <span className='text-nowrap text-xs pt-1'>Video</span>
-              </a>
-            </li>
-            <li className='w-auto p-2 border-l'>
-              <a href="" className='flex items-center ml-3 mr-6'>
-                <span className='p-1'><RiBankCardLine /></span>
-                <span className='text-nowrap text-xs pt-1'>Hướng dẫn thanh toán</span>
-              </a>
-            </li>
-            <li className='w-auto p-2 border-l'>
-              <a href="" className='flex items-center ml-3 mr-6'>
-                <span className='p-1'><GrMoney /></span>
-                <span className='text-nowrap text-xs pt-1'>Hướng dẫn trả góp</span>
-              </a>
-            </li>
-            <li className='w-auto p-2 border-l'>
-              <a href="" className='flex items-center ml-3 mr-6'>
-                <span className='p-1'><IoShieldCheckmarkOutline /></span>
-                <span className='text-nowrap text-xs pt-1'>Tra cứu bảo hành</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      
       <section className='bg-gray-300 h-[491px] flex'>
         <div className='lg:w-20% ml-[360px] mt-4'>
           <div className=' bg-white h-72 w-[220px]'>
@@ -214,7 +180,7 @@ const HomePage = () => {
         </div>
 
       </section>
-      <div className='bg-gray-300 h-[680px] '>
+      <div className='bg-gray-300 h-[2500px] '>
         <div className='grid grid-rows-1 grid-cols-4 mx-[360px]'>
           <div className='mt-2  '>
               <a href="">
@@ -231,13 +197,28 @@ const HomePage = () => {
                 <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
               </a>
             </div>
-            <div className='mt-2  ml-2'>
+            <div className='mt-2 ml-2'>
               <a href="">
                 <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
               </a>
             </div>
+        </div>
+        <div className='flex px-[360px] mt-2'>
+          <div className='mr-3 rounded-[20px]'>
+            <img src="https://file.hstatic.net/200000722513/file/pc_-_may_bo_gvn_b53d8e3709b142828f7231b80dc03aa9.png" alt="" className='rounded-[5px]' />
           </div>
+          <div className=''>
+             <img src="https://file.hstatic.net/200000722513/file/banner_promotion_2_20720b3c3bef4fdea0b762238a9fd183.png" alt="" className='rounded-[5px]'  />
+          </div>
+        </div>
+        <Product hTitle = 'PC bán chạy' shTitle = 'Trả góp 0%' />
+        <Product hTitle = 'Laptop gaming bán chạy' shTitle = 'Miễn phí giao hàng' />
+        <Product hTitle = 'Laptop văn phòng bán chạy' shTitle = 'Miễn phí giao hàng' />
+        
+        <Categorry/>
       </div>
+      
+     
       <FooterComponent/>
     </div>
   );

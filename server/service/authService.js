@@ -50,12 +50,7 @@ const loginUser = async (email, password) => {
         }
         const comparePassword = bcrypt.compareSync(password, user.password)
 
-        if (!comparePassword) {
-            return {
-                status: 'error',
-                mes: 'Tên đăng nhập hoặc mẫu khẩu không đúng'
-            }
-        }
+    
   
             const accessToken = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: "1d"
@@ -78,7 +73,30 @@ const loginUser = async (email, password) => {
         }
     }
 }
+const getProfile = async (userId) => {
+         try {
+          const user = await User.findById(userId)
+          if (!user)  {
+             return {
+                status: 'error',
+                message: 'Không tìm thấy người dùng'
+             }
+          }
+          return {
+            status: 'success',
+            message: 'Thành công',
+            user
+          }
+         }
+         catch (error) {
+            return {
+                status: 'error',
+                error: error.message
+            }
+         }
+}
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    getProfile
 };

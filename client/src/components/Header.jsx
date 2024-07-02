@@ -13,6 +13,12 @@ import { FiUser } from "react-icons/fi";
 import { IoHandLeftOutline } from "react-icons/io5";
 import { TbClipboardPlus } from "react-icons/tb";
 import { IoIosLogOut } from "react-icons/io";
+import { IoNewspaperOutline } from "react-icons/io5";
+import { FiYoutube } from "react-icons/fi";
+import { AiOutlineTags } from "react-icons/ai";
+import { RiBankCardLine } from "react-icons/ri";
+import { GrMoney } from "react-icons/gr";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
 const Header = ({ placeholder, onChange }) => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); 
     const user = useSelector(state => state.auth.user);
@@ -29,11 +35,12 @@ const Header = ({ placeholder, onChange }) => {
     }
     const handleLogout = () => {
         dispatch(logoutUser());
-        navigate('/login');
+        navigate('/');
     };
 
     return (
-        <div className='sticky top-0 z-10 bg-[#E30019]'>
+      <div>
+            <div className='sticky top-0 z-10 bg-[#E30019]'>
             <div className='max-w-7xl ml-auto mr-auto px-2 flex'>
                 <div className='lg:py-4 flex'>
                     <div className='ml-[50px] mr-[20px]'>
@@ -95,12 +102,12 @@ const Header = ({ placeholder, onChange }) => {
                             </a>
                         </div>
                     </div>
-                    <div className='flex ml-4 bg-[#BE1529]'>
+                    <div className='flex  bg-[#BE1529]'>
                         {isAuthenticated ? (
                             <div className='relative inline-block text-left '>
                                <div className='flex'>
-                               <FiUser className='text-white w-8 h-8 mt-3 ml-2 ' />
-                                <button className='  items-center justify-between mt-1 w-full px-4 py-2 text-sm font-medium  bg-[#BE1529]  rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 group' onClick={toggleDropdown}>
+                               <FiUser className='text-white w-8 h-8 mt-2 ml-2 ' />
+                                <button className='  items-center justify-between mt-1 w-full  text-sm shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 group' onClick={toggleDropdown}>
                                     <span className='text-white'>
                                         <p className='text-xs'>Xin chào</p>
                                     </span>
@@ -112,8 +119,10 @@ const Header = ({ placeholder, onChange }) => {
                                         <span className='flex'>
                                             <IoHandLeftOutline className='mt-[3px] mr-[3px] font-bold'/>
                                             <span className='flex'>
-                                                <p className='font-bold'>Xin chào,</p>
-                                                <p className='font-bold'>{user.name}</p>
+                                               <a href="/profile">
+                                               <p className='font-bold'>Xin chào,{user.name}</p>
+                                        
+                                               </a>
                                             </span>
                                         </span>
                                     </a>
@@ -124,7 +133,7 @@ const Header = ({ placeholder, onChange }) => {
                                        </div>
                                     </a>
                                     
-                                    <button className='block px-4 py-2  text-sm text-gray-700 hover:bg-gray-100' onClick={handleLogout}>
+                                    <button className='block px-4 py-2  text-sm text-gray-700 hover:bg-gray-100 w-[190px]' onClick={handleLogout}>
                                         <div className='flex'>
                                         <IoIosLogOut className='mt-[3px] mr-[3px] font-bold'/>
                                         <span>Đăng xuất</span>
@@ -133,10 +142,14 @@ const Header = ({ placeholder, onChange }) => {
                                 </div>
                             </div>
                         ) : (
-                            <div>
-                                <a href="/login">
+                            <div className='w-[80px]'>
+                                <a href="/login" className='flex'>
+                                <FiUser className='text-white w-[30%] mt-4 ml-2 h-[19px] ' />
+                                    <div className=' ml-2  mt-2 '>
+                                        
                                     <p className='text-white font-sans text-xs font-bold'>Đăng</p>
                                     <p className='text-white font-sans text-xs font-bold'>nhập</p>
+                                    </div>
                                 </a>
                             </div>
                         )}
@@ -144,6 +157,49 @@ const Header = ({ placeholder, onChange }) => {
                 </div>
             </div>
         </div>
+        <div className='bg-white border-b border-gray-200 p-2'>
+        <div className='max-w-7xl mx-auto px-3'>
+          <ul className='flex'>
+            <li className='w-auto p-2 ml-10'>
+              <a href="" className='flex items-center ml-6 mr-6'>
+                <span className='p-1'><AiOutlineTags /></span>
+                <span className='text-nowrap text-xs pt-1'>Săn Voucher GEARVN</span>
+              </a>
+            </li>
+            <li className='w-auto p-2 border-l'>
+              <a href="" className='flex items-center ml-3 mr-6'>
+                <span className='p-1'><IoNewspaperOutline /></span>
+                <span className='text-nowrap text-xs pt-1'>Tin công nghệ</span>
+              </a>
+            </li>
+            <li className='w-auto p-2 border-l'>
+              <a href="" className='flex items-center ml-3 mr-6'>
+                <span className='p-1'><FiYoutube /></span>
+                <span className='text-nowrap text-xs pt-1'>Video</span>
+              </a>
+            </li>
+            <li className='w-auto p-2 border-l'>
+              <a href="" className='flex items-center ml-3 mr-6'>
+                <span className='p-1'><RiBankCardLine /></span>
+                <span className='text-nowrap text-xs pt-1'>Hướng dẫn thanh toán</span>
+              </a>
+            </li>
+            <li className='w-auto p-2 border-l'>
+              <a href="" className='flex items-center ml-3 mr-6'>
+                <span className='p-1'><GrMoney /></span>
+                <span className='text-nowrap text-xs pt-1'>Hướng dẫn trả góp</span>
+              </a>
+            </li>
+            <li className='w-auto p-2 border-l'>
+              <a href="" className='flex items-center ml-3 mr-6'>
+                <span className='p-1'><IoShieldCheckmarkOutline /></span>
+                <span className='text-nowrap text-xs pt-1'>Tra cứu bảo hành</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </div>
     );
 }
 

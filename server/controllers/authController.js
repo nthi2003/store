@@ -71,10 +71,23 @@ const createUser = async (req, res) => {
             });
         }
     };
-
-
+    
+    const getProfile  = async ( req, res ) => {
+        try {
+            const userId = req.user.id
+            const response = await authService.getProfile({userId})
+            return response.status(200).json(response)
+        }
+        catch (e) {
+            return res.status(500).json({
+                status: 'error',
+                message: e.message
+            });
+        }
+    }
 
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    getProfile
 };

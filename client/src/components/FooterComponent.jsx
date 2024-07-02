@@ -2,7 +2,8 @@ import React from 'react'
 
 const FooterComponent = () => {
     return (
-        <div className=' mx-[360px]'>
+       <div className='bg-white h-[290px]'>
+         <div className=' mx-[360px] bg-white'>
             <div className='border-slate-500 border-b-2'>
                 <div className='h-[200px] mt-2'>
                     <ul className='flex'>
@@ -243,6 +244,7 @@ const FooterComponent = () => {
                 <span>Kết nối với chúng tôi</span>
             </div>
         </div>
+       </div>
     )
 }
 
