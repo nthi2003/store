@@ -10,4 +10,17 @@ const authenToken = (req, res, next) => {
          next()
     })
 }
-module.exports = {authenToken}
+const authorization = (req, res, next) => {
+    if(req.user.isAdmin) {
+        next();
+    }else {
+        return res.status(403).json({
+            status: 'error',
+            message: 'Bạn không có quyền truy cập vào trang này.'
+        })
+    }
+}
+module.exports = {
+    authenToken,
+    authorization
+}

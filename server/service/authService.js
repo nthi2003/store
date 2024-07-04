@@ -95,8 +95,48 @@ const getProfile = async (userId) => {
             }
          }
 }
+const updateUserProfile = async (userId , updateDataProfile) => {
+    try {
+        const  user = await User.findById(userId)
+        if (!user) {
+            return {
+                status: 'error',
+                message: 'Người dùng không tồn tại'
+            }
+        }
+        if (updateDataProfile.name)  user.name = updateDataProfile.name
+        if (updateDataProfile.email)  user.email = updateDataProfile.email
+        if (updateDataProfile.phone)  user.phone = updateDataProfile.phone
+        if (updateDataProfile.password) {
+            const hashedPassword = await bcrypt.hashSync(updateDataProfile.password , 10)
+            user.password = hashedPassword
+        }
+        if(updateDataProfile.address){
+            user.address = {
+                street: updateDataProfile.address.street || user.address.street,
+                city: updateDataProfile.address.city || user.address.city,
+                district: updateDataProfile.address.district || user.address.district,
+                country: updateDataProfile.address.country || user.address.country
+            }
+        }
+        await user.save();
+        return {
+            status: 'success',
+            message: 'Cập nhật thông tin thành công',
+            user
+        }
+    }
+    catch (error) {
+        return {
+            status: "error",
+            error: error.message
+        }
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
-    getProfile
+    getProfile,
+    updateUserProfile
 };

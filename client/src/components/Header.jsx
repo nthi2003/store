@@ -19,6 +19,8 @@ import { AiOutlineTags } from "react-icons/ai";
 import { RiBankCardLine } from "react-icons/ri";
 import { GrMoney } from "react-icons/gr";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { MdAdminPanelSettings } from "react-icons/md";
+
 const Header = ({ placeholder, onChange }) => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); 
     const user = useSelector(state => state.auth.user);
@@ -132,6 +134,14 @@ const Header = ({ placeholder, onChange }) => {
                                        <span>Đơn hàng của tôi</span>
                                        </div>
                                     </a>
+                                    {user.isAdmin && (
+                                        <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
+                                       <div className='flex'>
+                                       <MdAdminPanelSettings  className='mt-[3px] mr-[3px] font-bold'/>
+                                       <span>Doashboard</span>
+                                       </div>
+                                    </a>
+                                    )}
                                     
                                     <button className='block px-4 py-2  text-sm text-gray-700 hover:bg-gray-100 w-[190px]' onClick={handleLogout}>
                                         <div className='flex'>
