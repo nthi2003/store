@@ -1,12 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-
+// Check if user data is stored in localStorage
+const storedUser = localStorage.getItem('user');
+let initialState = {
     user: null,
     error: null,
     loading: false,
     isAuthenticated: false,
 };
+
+// Parse user data from localStorage if it exists
+if (storedUser) {
+    try {
+        initialState.user = JSON.parse(storedUser);
+        initialState.isAuthenticated = true;
+    } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+    }
+}
 
 const authSlice = createSlice({
     name: 'auth',
@@ -21,7 +32,6 @@ const authSlice = createSlice({
         registerSuccess: (state, action) => {
             state.user = action.payload.user;
             localStorage.setItem('token', action.payload.accessToken);
-
             state.error = null;
             state.isAuthenticated = true;
             state.loading = false;
@@ -34,6 +44,11 @@ const authSlice = createSlice({
             state.isAuthenticated = true;
             state.loading = false;
         },
+        updateProfileSuccess: (state, action) => {
+            state.user = action.payload.user;
+            localStorage.setItem('user', JSON.stringify(state.user));
+            state.loading = false;
+        },
         logout: (state) => {
             state.user = null;
             state.error = null;
@@ -42,12 +57,7 @@ const authSlice = createSlice({
         },
     },
 });
-const storedUser = JSON.parse(localStorage.getItem('user'));
-if (storedUser) {
-    initialState.user = storedUser;
-    initialState.isAuthenticated = true;
-}
 
-export const { setLoading, setError, registerSuccess, logout, loginSuccess } = authSlice.actions;
+export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

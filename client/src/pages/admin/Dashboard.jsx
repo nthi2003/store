@@ -49,7 +49,7 @@ const Dashboard = () => {
           <span className='text-[#F6F5F2] ml-[30px] opacity-40 text-sm'>Sales Management Dashboard</span>
 
         </div>
-        <div className='w-[85%] flex '>
+        <div className='w-[85%] flex border-b border-slate-200 shadow-sm '>
           <div className='mt-[30px] mb-[20px]'>
             <span className=' ml-4 '>Welcome Back, {user.name}</span>
           </div>
@@ -114,15 +114,15 @@ const Dashboard = () => {
       <div className='flex'>
         <div className='w-[15%] bg-[#31363F] h-[863px] '>
           <div className={` p-4 flex items-center cursor-pointer ${active === 'dashboard' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('dashboard')} >
-            <MdOutlineDashboard className='mt-1 mr-2'/>
+            <MdOutlineDashboard className=' mr-2'/>
             <span>Doashboard</span>
           </div>
           <div className={` p-4 flex items-center cursor-pointer ${active === 'products' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('products')}>
-            <BsBoxSeamFill className='mt-1 mr-2'/>
+            <BsBoxSeamFill className=' mr-2'/>
             <span>Products </span>
           </div>
           <div className={` p-4 flex items-center cursor-pointer ${active === 'Users' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('Users')}>
-            <FaUsers className='mt-1 mr-2'/>
+            <FaUsers className='   mr-2'/>
             <span>Users</span>
           </div>
       

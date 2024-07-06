@@ -5,7 +5,7 @@ const addressSchema = new Schema({
     street: { type: String, required: true },
     city: { type: String, required: true },
     district: { type: String, required: true },
-    country: { type: String, required: true }
+
 });
 
 const userSchema = new Schema({

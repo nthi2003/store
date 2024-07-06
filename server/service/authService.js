@@ -116,7 +116,7 @@ const updateUserProfile = async (userId , updateDataProfile) => {
                 street: updateDataProfile.address.street || user.address.street,
                 city: updateDataProfile.address.city || user.address.city,
                 district: updateDataProfile.address.district || user.address.district,
-                country: updateDataProfile.address.country || user.address.country
+               
             }
         }
         await user.save();

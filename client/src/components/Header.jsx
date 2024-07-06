@@ -113,7 +113,7 @@ const Header = ({ placeholder, onChange }) => {
                                     <span className='text-white'>
                                         <p className='text-xs'>Xin chào</p>
                                     </span>
-                                    <p className='text-white font-sans text-xs font-bold'>{user.name}</p>
+                                    <p className='text-white font-sans text-xs font-bold'>{user?.name}</p>
                                 </button>
                                </div>
                                 <div className={`absolute left-0 mt-2 w-48 bg-white border border-gray-300 ${isOpen ? 'block' : 'hidden'}`}>
@@ -122,7 +122,7 @@ const Header = ({ placeholder, onChange }) => {
                                             <IoHandLeftOutline className='mt-[3px] mr-[3px] font-bold'/>
                                             <span className='flex'>
                                                <a href="/profile">
-                                               <p className='font-bold'>Xin chào,{user.name}</p>
+                                               <p className='font-bold'>Xin chào,{user?.name}</p>
                                         
                                                </a>
                                             </span>
@@ -134,7 +134,7 @@ const Header = ({ placeholder, onChange }) => {
                                        <span>Đơn hàng của tôi</span>
                                        </div>
                                     </a>
-                                    {user.isAdmin && (
+                                    {user?.isAdmin && (
                                         <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
                                        <div className='flex'>
                                        <MdAdminPanelSettings  className='mt-[3px] mr-[3px] font-bold'/>

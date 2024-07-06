@@ -50,7 +50,7 @@ const Profile = () => {
 
           </div>
           <div className='p-2'>
-            <div className='w-[700px] bg-white'>
+            <div className='w-[700px] bg-white '>
             {contentMap[active]}
             </div>
           </div>
