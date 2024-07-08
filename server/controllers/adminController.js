@@ -13,7 +13,9 @@ const adminPage = async( req , res) => {
 }
 const getAllUsers = async( req , res ) => {
     try{
-        const response = await adminService.getAllUsers()
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 9
+        const response = await adminService.getAllUsers(page , limit)
         return res.status(200).json(response)
 
     }

@@ -16,9 +16,11 @@ const adminPage = async () => {
         }
     }
 }
-const getAllUsers = async() => {
+const getAllUsers = async(page , limit) => {
     try {
-        const users = await User.find({ })
+        const skip = (page - 1) * limit;
+        const users = await User.find().skip(skip).limit(limit)
+        const totalUsers = await User.countDocuments()
         if(!users) {
             return {
                 status: 'error',
@@ -28,7 +30,10 @@ const getAllUsers = async() => {
         return {
             status: 'success',
             message: 'loading user thành công',
-            users
+            users,
+            totalUsers,
+            totalPages: Math.ceil(totalUsers / limit),
+            currentPage: page,
         }
     }
     catch (error) {

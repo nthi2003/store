@@ -4,12 +4,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const storedUser = localStorage.getItem('user');
 let initialState = {
     user: null,
+    users: [],
     error: null,
     loading: false,
     isAuthenticated: false,
+    isAdmin : false,
 };
 
-// Parse user data from localStorage if it exists
+
 if (storedUser) {
     try {
         initialState.user = JSON.parse(storedUser);
@@ -55,9 +57,20 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             localStorage.removeItem('token');
         },
+        fetchAllUsers: (state, action) => {
+
+            const { users, totalUsers, totalPages, currentPage } = action.payload;
+            state.users= users;
+            state.totalUsers = totalUsers;
+            state.totalPages = totalPages;
+            state.currentPage = currentPage;
+       
+            state.loading = false;
+            state.error = null;
+        }
     },
 });
 
-export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess } = authSlice.actions;
+export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers } = authSlice.actions;
 
 export default authSlice.reducer;
