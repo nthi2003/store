@@ -1,5 +1,5 @@
 import axios from '../../axiosConfig';
-import { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess , fetchAllUsers} from '../reducers/authSlice';
+import { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess , fetchAllUsers , deleteUsersSuccess} from '../reducers/authSlice';
 
 export const registerUser = (newUser) => async (dispatch) => {
     dispatch(setLoading(true));
@@ -30,18 +30,17 @@ export const loginUser = (loginData) => async (dispatch) => {
 export const logoutUser = () => (dispatch) => {
     dispatch(logout());
 };
-export const updateUserProfile = (updateDta) => async(dispatch) => {
-     dispatch(setLoading(true));
-     try {
-        const response = await axios.put('/profileUpdate ', updateDta);
+export const updateUserProfile = (updateData) => async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+        const response = await axios.put('/profileUpdate', updateData);
         dispatch(updateProfileSuccess(response.data));
-     }
-     catch (error) {
+    } catch (error) {
         dispatch(setError(error.response.data.message));
-     } finally {
+    } finally {
         dispatch(setLoading(false));
-     }
-}
+    }
+};
 export const fetchUsers = (page, limit) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
@@ -53,3 +52,15 @@ export const fetchUsers = (page, limit) => async (dispatch) => {
       dispatch(setLoading(false));
     }
   };
+export const deleteUsers = (id) => async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await axios.delete(`/deleteUsers/${id}`)
+      dispatch(deleteUsersSuccess({ id }));
+    }
+    catch (error) { 
+        dispatch(setError(error.response.data.message));
+      } finally {
+        dispatch(setLoading(false));
+      }
+}

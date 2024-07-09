@@ -69,6 +69,7 @@ const updateUsers = async(id, isAdmin) => {
 }
 const deleteUsers = async(id) => {
     try {
+        
        const users = await User.findByIdAndDelete(id)
        if(!users) {
         return {

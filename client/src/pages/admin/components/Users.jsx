@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'; 
 import { MdOutlineDelete } from "react-icons/md";
 import Pagination  from './Pagination'
-import {fetchUsers} from '../../../redux/actions/authActions'
+import {deleteUsers, fetchUsers} from '../../../redux/actions/authActions'
 const Users = () => {
   const dispatch = useDispatch();
   const {users , totalUsers , totalPages , currentPage, loading, error } = useSelector(state => state.auth)
@@ -12,9 +12,9 @@ const Users = () => {
   const handlePageChange = (page) => {
      dispatch(fetchUsers(page, 9))
   }
-  const handleDelete = () => {
-
-  }
+  const handleDelete = (id) => {
+    dispatch(deleteUsers(id)); 
+};
   return (
     <div>
       <div className='round-sm  border border-gray-300 bg-white px-5 pt-6 pb-2.5'>
@@ -60,14 +60,9 @@ const Users = () => {
                   <td className='border-b border-[#eee] py-5 px-4'>
                     <p className='text-black flex ml-10 '>
                       <div className='bg-red-200 border rounded-[20px] p-2 mr-2'>
-                      <MdOutlineDelete className='text-red-500  ' onClick={handleDelete} />
+                      <MdOutlineDelete className='text-red-500  ' onClick={() => handleDelete(user._id)} />
                       </div>
-                      <div className='bg-red-200 border rounded-[20px] p-2 mr-2 '>
-                      <MdOutlineDelete className='text-red-500 ' onClick={handleDelete} />
-                      </div>
-                      <div className='bg-red-200 border rounded-[20px] p-2 mr-2'>
-                      <MdOutlineDelete className='text-red-500 ' onClick={handleDelete} />
-                      </div>
+                      
                     </p>
                   </td>
                 </tr>

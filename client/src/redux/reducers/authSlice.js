@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Check if user data is stored in localStorage
+
 const storedUser = localStorage.getItem('user');
 let initialState = {
     user: null,
@@ -47,9 +47,11 @@ const authSlice = createSlice({
             state.loading = false;
         },
         updateProfileSuccess: (state, action) => {
-            state.user = action.payload.user;
-            localStorage.setItem('user', JSON.stringify(state.user));
+            const updatedUser = action.payload.user;
+            state.user = updatedUser;
+            localStorage.setItem('user', JSON.stringify(updatedUser));
             state.loading = false;
+            state.error = null;
         },
         logout: (state) => {
             state.user = null;
@@ -67,10 +69,17 @@ const authSlice = createSlice({
        
             state.loading = false;
             state.error = null;
-        }
+        },
+        deleteUsersSuccess: (state, action) => {
+            const id = action.payload.id;
+            state.users = state.users.filter(user => user._id !== id); 
+            state.loading = false;
+            state.error = null;
+        },
+
     },
 });
 
-export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers } = authSlice.actions;
+export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers, deleteUsersSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

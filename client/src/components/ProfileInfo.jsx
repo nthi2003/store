@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { AiTwotoneSave } from "react-icons/ai";
+import { useState, useEffect } from 'react';
+import { AiTwotoneSave } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { updateUserProfile } from '../redux/actions/authActions';
 
 const ProfileInfo = () => {
@@ -10,8 +11,7 @@ const ProfileInfo = () => {
         name: '',
         email: '',
         phone: '',
-        password: '',
-        confirmPassword: '',
+
         address: {
             street: '',
             district: '',
@@ -19,15 +19,14 @@ const ProfileInfo = () => {
         }
     });
 
-    // Update formData when user data is available or changes
     useEffect(() => {
         if (user) {
             setFormData({
                 name: user.name || '',
                 email: user.email || '',
                 phone: user.phone || '',
-                password: '',
-                confirmPassword: '',
+        
+        
                 address: {
                     street: user.address?.street || '',
                     district: user.address?.district || '',
@@ -59,15 +58,11 @@ const ProfileInfo = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-            alert('Mật khẩu không khớp!');
-            return;
-        }
-        
+       
+
         const updateData = { ...formData };
-        if (!updateData.password) {
-            delete updateData.password;
-        }
+
+    
 
         dispatch(updateUserProfile(updateData));
     };
@@ -81,11 +76,11 @@ const ProfileInfo = () => {
             <form onSubmit={handleSubmit}>
                 <h1 className='text-xl p-2'>Thông tin tài khoản</h1>
                 <div className='grid grid-cols-2'>
-                    {['name', 'email', 'phone', 'password', 'confirmPassword'].map((field) => (
+                    {['name', 'email', 'phone'].map((field) => (
                         <div key={field} className='mb-4 flex items-center'>
                             <span className='p-2 w-32 capitalize'>{field}</span>
                             <input
-                                type={field.includes('password') ? 'password' : 'text'}
+                                type='text'
                                 className='border p-2 flex-1'
                                 name={field}
                                 value={formData[field]}

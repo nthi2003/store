@@ -41,7 +41,7 @@ const updateUsers = async (req, res) => {
     }
 };
 const deleteUsers = async (req, res) => {
-    const { id } = req.params;
+    const id = req.params.id;
     try {
         const response = await adminService.deleteUsers(id);
         return res.status(200).json(response);
