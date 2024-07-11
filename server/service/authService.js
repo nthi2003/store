@@ -3,7 +3,7 @@
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
-const createUser = async ({ name, email, password, phone }) => {
+const createUser = async ({ name, email, password, phone , role, active  }) => {
     try {
         const checkUser = await User.findOne({ email });
         if (checkUser) {
@@ -20,7 +20,8 @@ const createUser = async ({ name, email, password, phone }) => {
             email,
             password: hashedPassword,
             phone,
-            isAdmin: false
+            role,
+            active,
         });
         const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: "1d"
@@ -52,7 +53,7 @@ const loginUser = async (email, password) => {
 
     
   
-            const accessToken = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
+            const accessToken = jwt.sign({ id: user._id, email: user.email, role: user.role , active: user.active}, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: "1d"
             })
             return {

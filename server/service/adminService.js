@@ -44,10 +44,10 @@ const getAllUsers = async(page , limit) => {
     }
 
 } 
-const updateUsers = async(id, isAdmin) => {
+const updateUsers = async(id, role) => {
     try {
         
-        const users = await User.findByIdAndUpdate(id, {isAdmin})
+        const users = await User.findByIdAndUpdate(id, {role})
         if(!users) {
             return {
                 status: 'error',

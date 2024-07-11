@@ -8,7 +8,7 @@ let initialState = {
     error: null,
     loading: false,
     isAuthenticated: false,
-    isAdmin : false,
+   
 };
 
 
@@ -70,6 +70,20 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        updateUsersSuccess: (state, action) => {
+            const { id, role } = action.payload;
+            const index = state.users.findIndex(user => user._id === id);
+        
+            if (index !== -1) {
+                state.users[index] = {
+                    ...state.users[index],
+                    role: role
+                };
+            }
+        
+            state.loading = false;
+            state.error = null;
+        },
         deleteUsersSuccess: (state, action) => {
             const id = action.payload.id;
             state.users = state.users.filter(user => user._id !== id); 
@@ -80,6 +94,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers, deleteUsersSuccess } = authSlice.actions;
+export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers, updateUsersSuccess, deleteUsersSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

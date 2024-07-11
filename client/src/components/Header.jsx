@@ -134,7 +134,7 @@ const Header = ({ placeholder, onChange }) => {
                                        <span>Đơn hàng của tôi</span>
                                        </div>
                                     </a>
-                                    {user?.isAdmin && (
+                                    {user?.role === 'admin' && (
                                         <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
                                        <div className='flex'>
                                        <MdAdminPanelSettings  className='mt-[3px] mr-[3px] font-bold'/>

@@ -1,5 +1,5 @@
 import axios from '../../axiosConfig';
-import { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess , fetchAllUsers , deleteUsersSuccess} from '../reducers/authSlice';
+import { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess , fetchAllUsers ,updateUsersSuccess, deleteUsersSuccess} from '../reducers/authSlice';
 
 export const registerUser = (newUser) => async (dispatch) => {
     dispatch(setLoading(true));
@@ -52,6 +52,18 @@ export const fetchUsers = (page, limit) => async (dispatch) => {
       dispatch(setLoading(false));
     }
   };
+export const updateUser = (id, role) => async (dispatch) => {
+    dispatch(setLoading(true))
+    try {
+       const response = await axios.put(`/updateUsers/${id} ` , {role})
+       dispatch(updateUsersSuccess(response.data));
+    }
+    catch (error) { 
+        dispatch(setError(error.response.data.message));
+      } finally {
+        dispatch(setLoading(false));
+      }
+}
 export const deleteUsers = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {

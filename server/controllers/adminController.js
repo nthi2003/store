@@ -28,10 +28,10 @@ const getAllUsers = async( req , res ) => {
 }
 const updateUsers = async (req, res) => {
     const { id } = req.params;
-    const { isAdmin } = req.body;
+    const { role } = req.body;
 
     try {
-        const response = await adminService.updateUsers(id, isAdmin);
+        const response = await adminService.updateUsers(id, role);
         return res.status(200).json(response);
     } catch (e) {
         return res.status(500).json({

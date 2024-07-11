@@ -15,9 +15,13 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     phone: { type: String, required: true },
     address: addressSchema, 
-    isAdmin: { type: Boolean, default: false },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    role: { type: String, 
+        default: 'user' ,
+        enum: ['user' , 'admin']
+
+    },
+    active: { type: Boolean, default: true},
+
 });
 
 module.exports = mongoose.model('User', userSchema);

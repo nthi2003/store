@@ -1,10 +1,9 @@
-// authController.js
 
 const authService = require('../service/authService');
 
 const createUser = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword, phone } = req.body;
+        const { name, email, password, confirmPassword, phone, role , active } = req.body;
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*$/;
         const isCheckEmail = reg.test(email);
 
@@ -25,7 +24,7 @@ const createUser = async (req, res) => {
             });
         }
 
-        const response = await authService.createUser({ name, email, password, phone });
+        const response = await authService.createUser({ name, email, password, phone, role , active });
         return res.status(200).json(response)
     } catch (e) {
         return res.status(500).json({
