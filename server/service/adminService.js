@@ -56,7 +56,7 @@ const updateUsers = async(id, role) => {
         }
         return {
             status: 'success',
-            error: 'Cập nhạt thành công',
+            message: 'Cập nhật thành công',
             users
         }
     }
