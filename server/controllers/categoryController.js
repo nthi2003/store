@@ -1,9 +1,9 @@
 const categoryService = require('../service/categoryService')
 const createCategory = async (req, res) => {
     try {
-        const {name} = req.body;
+        const {name, image} = req.body;
         
-        const response = await categoryService.createCategory({name})
+        const response = await categoryService.createCategory({name, image})
         return res.status(200).json(response)
     } 
     catch (e) {
@@ -15,7 +15,9 @@ const createCategory = async (req, res) => {
 }
 const getAllCategory = async (req, res) => {
     try {
-        const response = await categoryService.getAllCategory()
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 9
+        const response = await categoryService.getAllCategory(page , limit )
         return res.status(200).json(response)
     }
     catch (e) {
@@ -42,15 +44,16 @@ const updateCategory = async (req, res) => {
 }
 const deleteCategory = async (req , res) => {
     const {id} = req.params;
+   
     try {
         const response = await categoryService.deleteCategory(id)
         return res.status(200).json(response)
     }
     catch (e) {
-        return {
+        return res.status(500).json({
             status: 'error',
             message: e.message
-        }
+        })
     }
 }
 module.exports = {

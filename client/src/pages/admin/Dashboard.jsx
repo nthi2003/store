@@ -14,13 +14,15 @@ import { useNavigate } from 'react-router-dom';
 import Content from './components/Content';
 import Product from './components/Product';
 import Users from './components/Users';
-
+import Category from './components/Category';
+import { AiTwotoneTag } from "react-icons/ai";
 const Dashboard = () => {
   const [active , setActive] = useState('default')
   const contentMap = {
     dashboard : <Content/>,
     products: <Product/>,
     Users: <Users/>,
+    Category : <Category/>,
     default: <div>Chọn một mục từ sidebar để xem nội dung</div>
   }
   const navigate = useNavigate();
@@ -124,6 +126,10 @@ const Dashboard = () => {
           <div className={` p-4 flex items-center cursor-pointer ${active === 'Users' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('Users')}>
             <FaUsers className='   mr-2'/>
             <span>Users</span>
+          </div>
+          <div className={` p-4 flex items-center cursor-pointer ${active === 'Category' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('Category')}>
+            <AiTwotoneTag className='   mr-2'/>
+            <span>Category</span>
           </div>
       
         </div>

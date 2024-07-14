@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { IoNewspaperOutline } from "react-icons/io5";
 import { FiYoutube } from "react-icons/fi";
@@ -13,19 +13,22 @@ import Product from '../components/Product';
 import Categorry from '../components/Categorry';
 
 const HomePage = () => {
-
+  const [toastShow , setToastShow] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if(toastShow) {
+      if (token) {
 
-      toast.success('Đăng nhập thành công'); 
-    
-    } else {
-     
-     toast.error('Chưa đăng nhập');
-     
+        toast.success('Đăng nhập thành công'); 
+      
+      } else {
+       
+       toast.error('Chưa đăng nhập');
+       
+      }
+      setToastShow(false)
     }
-  }, []);
+  }, [toastShow]);
   return (
     <div>
       <div className=' h-auto bg-[#03370f]'>

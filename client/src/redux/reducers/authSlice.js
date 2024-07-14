@@ -66,7 +66,6 @@ const authSlice = createSlice({
             state.totalUsers = totalUsers;
             state.totalPages = totalPages;
             state.currentPage = currentPage;
-       
             state.loading = false;
             state.error = null;
         },
@@ -85,7 +84,7 @@ const authSlice = createSlice({
             state.error = null;
         },
         deleteUsersSuccess: (state, action) => {
-            const id = action.payload.id;
+            const {id} = action.payload;
             state.users = state.users.filter(user => user._id !== id); 
             state.loading = false;
             state.error = null;

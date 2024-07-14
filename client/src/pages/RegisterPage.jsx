@@ -29,7 +29,7 @@ const RegisterPage = () => {
             const response = await dispatch(registerUser(formData));
             
             if (response && !response.error) {
-                toast.success('Đăng nhập thành công!');
+              
                 navigate('/');
             } else {
                 toast.error('Đăng kí không thành công ');

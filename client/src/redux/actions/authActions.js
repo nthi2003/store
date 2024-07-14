@@ -9,9 +9,7 @@ export const registerUser = (newUser) => async (dispatch) => {
         return response.data;
     } catch (error) {
         dispatch(setError(error.response.data.message));
-    } finally {
-        dispatch(setLoading(false));
-    }
+    } 
 };
 
 export const loginUser = (loginData) => async (dispatch) => {
@@ -22,9 +20,7 @@ export const loginUser = (loginData) => async (dispatch) => {
         return response.data;
     } catch (error) {
         dispatch(setError(error.response.data.message));
-    } finally {
-        dispatch(setLoading(false));
-    }
+    } 
 };
 
 export const logoutUser = () => (dispatch) => {
@@ -37,9 +33,7 @@ export const updateUserProfile = (updateData) => async (dispatch) => {
         dispatch(updateProfileSuccess(response.data));
     } catch (error) {
         dispatch(setError(error.response.data.message));
-    } finally {
-        dispatch(setLoading(false));
-    }
+    } 
 };
 export const fetchUsers = (page, limit) => async (dispatch) => {
     dispatch(setLoading(true));
@@ -48,9 +42,7 @@ export const fetchUsers = (page, limit) => async (dispatch) => {
       dispatch(fetchAllUsers(response.data));
     } catch (error) {
       dispatch(setError(error.response.data.message));
-    } finally {
-      dispatch(setLoading(false));
-    }
+    } 
   };
 export const updateUser = (id, role) => async (dispatch) => {
     dispatch(setLoading(true))
@@ -60,19 +52,15 @@ export const updateUser = (id, role) => async (dispatch) => {
     }
     catch (error) { 
         dispatch(setError(error.response.data.message));
-      } finally {
-        dispatch(setLoading(false));
-      }
+      } 
 }
 export const deleteUsers = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.delete(`/deleteUsers/${id}`)
+      await axios.delete(`/deleteUsers/${id}`)
       dispatch(deleteUsersSuccess({ id }));
     }
     catch (error) { 
         dispatch(setError(error.response.data.message));
-      } finally {
-        dispatch(setLoading(false));
-      }
+      } 
 }

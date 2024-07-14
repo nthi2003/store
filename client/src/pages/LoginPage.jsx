@@ -27,9 +27,7 @@ const LoginPage = () => {
       if (response && !response.error) {
         navigate('/');
       } else {
-       
-     
-      
+
         toast.error('Đăng nhập không thành công: ' + response.error);
       }
     } catch (error) {

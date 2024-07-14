@@ -1,20 +1,21 @@
 const Category = require('../model/Category')
-const createCategory = async({name}) => {
+const createCategory = async({name, image}) => {
     try {
-        const checkCatagory = await Category.findOne({name})
+        const checkCatagory = await Category.findOne({name, image})
         if (checkCatagory) {
             return {
                 status: 'error',
                 message: 'Category đã tồn tại'
             };
         }
-        const category = await Category.create({
-            name
+        const categorys = await Category.create({
+            name,
+            image
         })
         return {
             status: 'success',
             message: 'Thành công',
-            category
+            categorys
         }
     }
     catch (error) {
@@ -24,13 +25,19 @@ const createCategory = async({name}) => {
         }
     }
 }
-const getAllCategory = async () => {
+const getAllCategory = async (page , limit) => {
     try {
-         const category = await Category.find()
+         const skip = (page - 1) * limit
+         const categorys = await Category.find().skip(skip).limit(limit)
+         const totalCategory = await Category.countDocuments()
          return {
             status: 'success',
             message: 'Thành công',
-            category
+            categorys,
+            totalCategory,
+            totalPages: Math.ceil(totalCategory / limit),
+            currentPage: page,
+
          }
     }
     catch (error) {
@@ -42,11 +49,11 @@ const getAllCategory = async () => {
 }
 const updateCategory = async(id , name) => {
      try {
-         const category = await Category.findByIdAndUpdate(id , {name})
+         const categorys = await Category.findByIdAndUpdate(id , {name})
          return {
             status: 'success',
             message: 'Thành công',
-            category
+            categorys
          }
      }
      catch (error) {
@@ -57,8 +64,15 @@ const updateCategory = async(id , name) => {
      }
 }
 const deleteCategory = async(id) => {
+    const ChecckId = await Category.findById(id)
+    if(!ChecckId) {
+        return {
+            status: 'error',
+            message: 'Id không tồn tại'
+        }
+    }
     try {
-        const category = await Category.findByIdAndDelete(id)
+        await Category.findByIdAndDelete(id)
         return {
             status: 'success',
             message: 'Xóa category thành công',

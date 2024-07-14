@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
 import Pagination from './Pagination';
 import { deleteUsers, fetchUsers, updateUser } from '../../../redux/actions/authActions';
-import { CiSaveDown2 } from "react-icons/ci";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ const Users = () => {
   useEffect(() => {
     dispatch(fetchUsers(currentPage, 9));
   }, [dispatch, currentPage]);
-
+  
   const handlePageChange = (page) => {
     dispatch(fetchUsers(page, 9));
   };
@@ -46,20 +45,20 @@ const Users = () => {
           <table className='w-full table-auto'>
             <thead>
               <tr className='bg-gray-100 text-left'>
-                <th className='min-w-[20px] py-4 px-4 font-medium text-black items-center text-center'>ID</th>
-                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center text-center'>Name</th>
-                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center text-center'>Email</th>
-                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center text-center'>Phone</th>
-                <th className='min-w-[40px] py-4 px-4 font-medium text-black items-center text-center'>Role</th>
-                <th className='min-w-[420px] py-4 px-4 font-medium text-black items-center text-center xl:pl-11'>Address</th>
-                <th className='min-w-[220px] py-4 px-4 font-medium text-black items-center text-center'>Actions</th>
+                <th className='min-w-[20px] py-4 px-4 font-medium text-black items-center '>STT</th>
+                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Name</th>
+                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Email</th>
+                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Phone</th>
+                <th className='min-w-[40px] py-4 px-4 font-medium text-black items-center '>Role</th>
+                <th className='min-w-[420px] py-4 px-4 font-medium text-black items-center  xl:pl-11'>Address</th>
+                <th className='min-w-[220px] py-4 px-4 font-medium text-black items-center '>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users && users.map(user => (
+              {users && users.map((user , index) => (
                 <tr key={user._id}>
                   <td className='border-b border-[#eee] py-5 px-4'>
-                    <p className='text-black'>{user._id}</p>
+                    <p className='text-black'>{(currentPage - 1) * 9 + index + 1 }</p>
                   </td>
                   <td className='border-b border-[#eee] py-5 px-4'>
                     <p className='text-black'>{user.name}</p>
