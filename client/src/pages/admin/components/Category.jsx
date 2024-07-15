@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCategory, fetchCategory } from '../../../redux/actions/categoryAction';
 import { IoAddSharp } from "react-icons/io5";
 import { MdOutlineDelete } from 'react-icons/md';
+import AddCategory from './StateComponent/AddCategory';
 
 const Category = () => {
     const dispatch = useDispatch();
     const { categorys, totalPages, currentPage } = useSelector(state => state.category);
+    const [show , setShow] = useState(false)
 
     useEffect(() => {
         dispatch(fetchCategory(currentPage, 9));
@@ -18,13 +20,19 @@ const Category = () => {
     const handleDelete = (id) => {
         dispatch(deleteCategory(id))
     }
-    const handleSunmit = () => {
-        console.log(1)
+   
+    const handeleShowModel = () => {
+        setShow(true)
+   
     }
-
+    const handeleCloseModel = () => {
+        setShow(false)
+   
+    }
+    console.log(show)
     return (
         <div>
-            <button className='text-white bg-black w-[70px] p-2 mt-2 mb-2 l-4 ml-[1500px] flex' onClick={() => handleSunmit()}>
+            <button className='text-white bg-black w-[70px] p-2 mt-2 mb-2 l-4 ml-[1500px] flex' onClick={handeleShowModel}>
                 <IoAddSharp className='mt-1' />
                 <span>Add</span>
             </button>
@@ -67,6 +75,7 @@ const Category = () => {
                     <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
             </div>
+            <AddCategory show={show} onClose={handeleCloseModel}/>
         </div>
     );
 };
