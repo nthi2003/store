@@ -1,18 +1,30 @@
 const categoryService = require('../service/categoryService')
 const createCategory = async (req, res) => {
     try {
-        const {name, image} = req.body;
+        const { name } = req.body;
+        const file = req.files?.image;
+
+        if (!file) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Missing required parameter - file'
+            });
+        }
+
+  
+
+        const response = await categoryService.createCategory({ name, image: file.tempFilePath });
         
-        const response = await categoryService.createCategory({name, image})
-        return res.status(200).json(response)
-    } 
-    catch (e) {
+        return res.status(200).json(response);
+    } catch (error) {
         return res.status(500).json({
             status: 'error',
-            message: e.message
+            message: error.message
         });
     }
-}
+};
+
+
 const getAllCategory = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;

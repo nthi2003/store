@@ -1,30 +1,40 @@
 const Category = require('../model/Category')
-const createCategory = async({name, image}) => {
+const cloudinary = require('../utils/cloudinary')
+const createCategory = async ({ name, image }) => {
     try {
-        const checkCatagory = await Category.findOne({name, image})
-        if (checkCatagory) {
+        const result = await cloudinary.uploader.upload(image, {
+            folder: "categorys",
+        });
+
+        const checkCategory = await Category.findOne({ name });
+        if (checkCategory) {
             return {
                 status: 'error',
                 message: 'Category đã tồn tại'
             };
         }
-        const categorys = await Category.create({
+
+        const category = await Category.create({
             name,
-            image
-        })
+            image: {
+                public_id: result.public_id,
+                url: result.secure_url
+            }
+        });
+
         return {
             status: 'success',
             message: 'Thành công',
-            categorys
-        }
-    }
-    catch (error) {
+            category
+        };
+    } catch (error) {
         return {
             status: 'error',
             message: error.message,
-        }
+        };
     }
-}
+};
+
 const getAllCategory = async (page , limit) => {
     try {
          const skip = (page - 1) * limit

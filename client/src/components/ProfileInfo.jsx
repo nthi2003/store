@@ -72,7 +72,7 @@ const ProfileInfo = () => {
     }
 
     return (
-        <div className='mb-[200px]'>
+        <div className='mb-[200px] w-[800px]'>
             <form onSubmit={handleSubmit}>
                 <h1 className='text-xl p-2'>Thông tin tài khoản</h1>
                 <div className='grid grid-cols-2'>

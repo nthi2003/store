@@ -59,7 +59,7 @@ const Category = () => {
                                         <p className='text-black'>{category.name}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <img src={category.image} alt="" className='w-20 h-20' />
+                                        <img src={category.image.url} alt="" className='w-20 h-20' />
                                     </td>
                                     <td>
                                         <p className='text-black flex ml-10'>
