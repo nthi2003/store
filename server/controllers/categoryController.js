@@ -42,8 +42,9 @@ const getAllCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     const {id} = req.params;
     const {name} = req.body;
+    const file = req.files?.image;
     try {
-        const response = await categoryService.updateCategory(id,name);
+        const response = await categoryService.updateCategory(id, name, file ? file.tempFilePath : null);
         return res.status(200).json(response)
     }
     catch (e) {
@@ -54,20 +55,20 @@ const updateCategory = async (req, res) => {
     }
 
 }
-const deleteCategory = async (req , res) => {
-    const {id} = req.params;
-   
+const deleteCategory = async (req, res) => {
+    const { id } = req.params;
+
     try {
-        const response = await categoryService.deleteCategory(id)
-        return res.status(200).json(response)
-    }
-    catch (e) {
+        const response = await categoryService.deleteCategory(id);
+        return res.status(200).json(response);
+    } catch (error) {
         return res.status(500).json({
             status: 'error',
-            message: e.message
-        })
+            message: error.message
+        });
     }
-}
+};
+
 module.exports = {
     createCategory,
     getAllCategory,

@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { IoMdClose } from "react-icons/io";
 const AddCategory = ({ show, onClose }) => {
+    const [selectedImage , setSelectedImage] = useState(null)
+    const [imagePreview , setImagePreview] = useState(null)
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const fileUrl = URL.createObjectURL(file);
+            setSelectedImage(file)
+            setImagePreview(fileUrl)
+        }
+    }
+    const handleRemoveImage = () => {
+
+        if (imagePreview) {
+            URL.revokeObjectURL(imagePreview);
+        }
+        setSelectedImage(null);
+        setImagePreview(null);
+    };
+
+    const handleSummit = () =>{
+
+    }
     if (!show) return;
 
     return (
@@ -24,10 +47,29 @@ const AddCategory = ({ show, onClose }) => {
                             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                             <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                         </div>
-                        <input id="dropzone-file" type="file" className='hidden'  name="image" />
+                        <input id="dropzone-file" type="file" className='hidden' onChange={handleFileChange}  name="image" />
                     </label>
+                    {imagePreview && (
+                        <div className='mt-4 relative w-40 h-40 '>
+                            <img 
+                                src={imagePreview} 
+                                alt="Selected preview" 
+                                className=' border rounded w-full h-full object-cover '
+                            />
+                             <button 
+                                onClick={handleRemoveImage} 
+                                className='ml-4 bg-red-200 rounded-[20px] mt-1  text-white py-2 px-2  absolute top-1 right-1'
+                            >
+                                <IoMdClose className='text-red-600'/>
+                            </button>
+                        </div>
+                    )}
+                
 
                 </div>
+                <button onClick={handleSummit}>
+                    Add
+                </button>
 
 
 
