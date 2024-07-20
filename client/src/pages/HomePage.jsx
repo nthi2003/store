@@ -45,7 +45,7 @@ const HomePage = () => {
     if(toastShow) {
       if (token) {
 
-        toast.success('Đăng nhập thành công'); 
+        <Toaster/>
       
       } else {
        

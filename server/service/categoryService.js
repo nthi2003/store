@@ -24,7 +24,7 @@ const createCategory = async ({ name, image }) => {
 
         return {
             status: 'success',
-            message: 'Thành công',
+            message: 'Tạo category thành công',
             category
         };
     } catch (error) {
@@ -86,7 +86,7 @@ const updateCategory = async (id, name, image) => {
         const categorys = await Category.findByIdAndUpdate(id, updatedData)
         return {
             status: 'success',
-            message: 'Thành công',
+            message: 'Tạo Category thành công',
             categorys
         }
     }

@@ -42,7 +42,7 @@ const Header = ({ placeholder, onChange }) => {
 
     return (
         <div>
-            <div className='sticky top-0 z-10 bg-[#E30019] w-[2000px]'>
+            <div className='sticky top-0 z-10 bg-[#E30019] w-[1900px]'>
                 <div className='max-w-7xl ml-auto mr-auto px-2 flex'>
                     <div className='lg:py-4 flex'>
                         <div className='ml-[50px] mr-[20px]'>

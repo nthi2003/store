@@ -5,20 +5,24 @@ import { deleteCategory, fetchCategory } from '../../../redux/actions/categoryAc
 import { IoAddSharp } from "react-icons/io5";
 import { MdOutlineDelete } from 'react-icons/md';
 import AddCategory from './StateComponent/AddCategory';
-
+import toast, { Toaster } from 'react-hot-toast';
 const Category = () => {
     const dispatch = useDispatch();
     const { categorys, totalPages, currentPage } = useSelector(state => state.category);
     const [show , setShow] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchCategory(currentPage, 9));
+        dispatch(fetchCategory(currentPage, 6));
       }, [dispatch, currentPage]);
     const handlePageChange = (page) => {
-        dispatch(fetchCategory(page, 9));
+        dispatch(fetchCategory(page, 6));
     };
-    const handleDelete = (id) => {
-        dispatch(deleteCategory(id))
+    const handleDelete = async(id) => {
+      const response = await  dispatch(deleteCategory(id))
+      if (response.status === 'success') {
+        dispatch(fetchCategory(currentPage, 6))
+      }
+
     }
    
     const handeleShowModel = () => {
@@ -29,9 +33,10 @@ const Category = () => {
         setShow(false)
    
     }
-    console.log(show)
+
     return (
         <div>
+            <Toaster/>
             <button className='text-white bg-black w-[70px] p-2 mt-2 mb-2 l-4 ml-[1500px] flex' onClick={handeleShowModel}>
                 <IoAddSharp className='mt-1' />
                 <span>Add</span>
@@ -53,13 +58,13 @@ const Category = () => {
                             {categorys && categorys.map((category, index) => (
                                 <tr key={category._id}>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>{(currentPage - 1) * 9 + index + 1}</p>
+                                        <p className='text-black'>{(currentPage - 1) * 6 + index + 1}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>{category.name}</p>
+                                        <p className='text-black'>{category?.name}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <img src={category.image.url} alt="" className='w-20 h-20' />
+                                        <img src={category.image?.url} alt="" className='w-20 h-20' />
                                     </td>
                                     <td>
                                         <p className='text-black flex ml-10'>

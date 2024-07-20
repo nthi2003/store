@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
 import Pagination from './Pagination';
 import { deleteUsers, fetchUsers, updateUser } from '../../../redux/actions/authActions';
-
+import toast, { Toaster } from 'react-hot-toast';
 const Users = () => {
   const dispatch = useDispatch();
   const { users, totalPages, currentPage } = useSelector(state => state.auth);
@@ -17,8 +17,11 @@ const Users = () => {
     dispatch(fetchUsers(page, 9));
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteUsers(id)); 
+  const handleDelete = async(id) => {
+    const response = await dispatch(deleteUsers(id)); 
+    if (response.status === 'success') {
+      dispatch(fetchUsers(currentPage, ))
+    }
   };
 
   const handleRoleChange = (id, newRole) => {
@@ -40,6 +43,7 @@ const Users = () => {
 
   return (
     <div>
+       <Toaster />
       <div className='round-sm border border-gray-300 bg-white px-5 pt-6 pb-2.5'>
         <div className='max-w-full overflow-x-auto'>
           <table className='w-full table-auto'>

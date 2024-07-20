@@ -24,12 +24,12 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const response = await dispatch(loginUser(formData));
-      if (response && !response.error) {
+      if (response.status === 'success') {
+        <Toaster/>
         navigate('/');
-      } else {
-
-        toast.error('Đăng nhập không thành công: ' + response.error);
-      }
+        
+     }
+    
     } catch (error) {
       toast.error('Đăng nhập không thành công ');
     }

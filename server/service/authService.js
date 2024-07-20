@@ -28,7 +28,7 @@ const createUser = async ({ name, email, password, phone , role, active  }) => {
         })
         return {
             status: 'success',
-            message: 'Thành công',
+            message: 'Đăng kí  thành công',
             user,
             accessToken,
 
@@ -58,7 +58,7 @@ const loginUser = async (email, password) => {
             })
             return {
                 status: 'success',
-                message: 'Thành công',
+                message: ' Đăng nhập thành công',
                 user,
                 accessToken
             }

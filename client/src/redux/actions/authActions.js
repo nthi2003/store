@@ -1,6 +1,6 @@
 import axios from '../../axiosConfig';
 import { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess , fetchAllUsers ,updateUsersSuccess, deleteUsersSuccess} from '../reducers/authSlice';
-
+import toast, { Toaster } from 'react-hot-toast';
 export const registerUser = (newUser) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
@@ -17,6 +17,13 @@ export const loginUser = (loginData) => async (dispatch) => {
     try {
         const response = await axios.post('/login', loginData);
         dispatch(loginSuccess(response.data));
+        const {status , message } = response.data;
+        if (status === 'success') {
+            toast.success(message);
+        } else {
+            toast.error(message); 
+        }
+
         return response.data;
     } catch (error) {
         dispatch(setError(error.response.data.message));
@@ -57,8 +64,14 @@ export const updateUser = (id, role) => async (dispatch) => {
 export const deleteUsers = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      await axios.delete(`/deleteUsers/${id}`)
+     const response = await axios.delete(`/deleteUsers/${id}`)
       dispatch(deleteUsersSuccess({ id }));
+      const {status , message } = response.data;
+      if (status === 'success') {
+          toast.success(message);
+      } else {
+          toast.error(message); 
+      }
     }
     catch (error) { 
         dispatch(setError(error.response.data.message));

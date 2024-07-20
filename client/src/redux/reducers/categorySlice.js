@@ -37,6 +37,11 @@ const categorySlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        createCategorySuccess: (state, action) => {
+            state.categorys.push(action.payload);
+            state.loading = false;
+            state.error = null;
+        },
         deleteCategorySuccess : (state, action) => {
             const {id} = action.payload
             state.categorys = state.categorys.filter(category => category._id !== id) 
@@ -47,6 +52,6 @@ const categorySlice = createSlice({
     },
 });
 
-export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess} = categorySlice.actions;
+export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess , createCategorySuccess} = categorySlice.actions;
 
 export default categorySlice.reducer;
