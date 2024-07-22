@@ -3,55 +3,67 @@ import Pagination from './Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCategory, fetchCategory } from '../../../redux/actions/categoryAction';
 import { IoAddSharp } from "react-icons/io5";
-import { MdOutlineDelete } from 'react-icons/md';
+import { MdOutlineDelete, MdOutlineEdit } from 'react-icons/md';
 import AddCategory from './StateComponent/AddCategory';
+import UploadCategory from './StateComponent/UploadCategory';
 import toast, { Toaster } from 'react-hot-toast';
+
 const Category = () => {
     const dispatch = useDispatch();
     const { categorys, totalPages, currentPage } = useSelector(state => state.category);
-    const [show , setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [editCategoryId, setEditCategoryId] = useState(null);  // State to hold the ID of the category being edited
 
     useEffect(() => {
         dispatch(fetchCategory(currentPage, 6));
-      }, [dispatch, currentPage]);
+    }, [dispatch, currentPage]);
+
     const handlePageChange = (page) => {
         dispatch(fetchCategory(page, 6));
     };
-    const handleDelete = async(id) => {
-      const response = await  dispatch(deleteCategory(id))
-      if (response.status === 'success') {
-        dispatch(fetchCategory(currentPage, 6))
-      }
 
-    }
-   
-    const handeleShowModel = () => {
-        setShow(true)
-   
-    }
-    const handeleCloseModel = () => {
-        setShow(false)
-   
-    }
+    const handleDelete = async (id) => {
+        const response = await dispatch(deleteCategory(id));
+        if (response.status === 'success') {
+            dispatch(fetchCategory(currentPage, 6));
+            toast.success('Category deleted successfully');
+        }
+    };
+
+    const handleShowModel = () => {
+        setShow(true);
+    };
+
+    const handleCloseModel = () => {
+        setShow(false);
+    };
+
+    const handleCloseModelEdit = () => {
+        setShowEdit(false);
+    };
+
+    const handleEditModel = (id) => {
+        setEditCategoryId(id); // Set the category ID to be edited
+        setShowEdit(true);
+    };
 
     return (
         <div>
-            <Toaster/>
-            <button className='text-white bg-black w-[70px] p-2 mt-2 mb-2 l-4 ml-[1500px] flex' onClick={handeleShowModel}>
+            <Toaster />
+            <button className='text-white bg-black w-[70px] p-2 mt-2 mb-2 l-4 ml-[1500px] flex' onClick={handleShowModel}>
                 <IoAddSharp className='mt-1' />
                 <span>Add</span>
             </button>
             <div className='round-sm border border-gray-300 bg-white px-5 pt-6 pb-2.5'>
-
                 <div className='max-w-full overflow-x-auto'>
-
                     <table className='w-full table-auto'>
                         <thead>
                             <tr className='bg-gray-100 text-left'>
                                 <th className='min-w-[20px] py-4 px-4 font-medium text-black items-center '>STT</th>
                                 <th className='min-w-[30px] py-4 px-4 font-medium text-black items-center '>Name</th>
                                 <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Image</th>
-                                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Status</th>
+                                <th className='min-w-[120px] py-4 px-4 font-medium text-black items-center '>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,13 +78,16 @@ const Category = () => {
                                     <td className='border-b border-[#eee] py-5 px-4'>
                                         <img src={category.image?.url} alt="" className='w-20 h-20' />
                                     </td>
-                                    <td>
-                                        <p className='text-black flex ml-10'>
+                                    <td className='border-b border-[#eee] py-5 px-4'>
+                                        <div className='text-black flex'>
                                             <div className='bg-red-200 border rounded-[20px] p-2 mr-2'>
                                                 <MdOutlineDelete className='text-red-500' onClick={() => handleDelete(category._id)} />
                                             </div>
-
-                                        </p></td>
+                                            <div className='bg-blue-200 border rounded-[20px] p-2 mr-2'>
+                                                <MdOutlineEdit className='text-blue-500' onClick={() => handleEditModel(category._id)} />
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -80,7 +95,8 @@ const Category = () => {
                     <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
             </div>
-            <AddCategory show={show} onClose={handeleCloseModel}/>
+            <AddCategory show={show} onClose={handleCloseModel} />
+            <UploadCategory showEdit={showEdit} onClose={handleCloseModelEdit} categoryId={editCategoryId} />
         </div>
     );
 };

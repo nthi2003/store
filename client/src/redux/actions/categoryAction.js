@@ -1,6 +1,6 @@
 import axios from '../../axiosConfig';
 import toast from 'react-hot-toast';
-import {fetchAllCategorys , setError ,setLoading , deleteCategorySuccess, createCategorySuccess } from '../reducers/categorySlice'
+import {fetchAllCategorys , setError ,setLoading , deleteCategorySuccess, createCategorySuccess, updateCategorySuccess } from '../reducers/categorySlice'
 
 export const fetchCategory = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
@@ -31,9 +31,19 @@ export const createCategory = (categoryData) => async (dispatch) => {
         }
 
     } catch (error) {
-        dispatch(setError(error.response?.data?.message ));
+        dispatch(setError(error.response.data.message ));
     } 
 };
+export const updateCategory = (id , name , image) => async (dispatch) => {
+    dispatch(setLoading(true))
+    try {
+        const response = await axios.put(`updateCategory/${id}` , {name , image})
+        dispatch(updateCategorySuccess(response.data))
+    }
+    catch (error){
+        dispatch(setError(error.response.data.message)); 
+    }
+}
 export const deleteCategory = (id) => async(dispatch)  => {
     dispatch(setLoading(true));
     try {

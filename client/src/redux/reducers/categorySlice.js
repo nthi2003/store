@@ -42,6 +42,19 @@ const categorySlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        updateCategorySuccess: (state, action) => {
+         
+            const index = state.categorys.findIndex(category => category._id === action.payload.id);
+            if(index !== -1) {
+                 state.categorys[index] = {
+                    id: action.payload.id,
+                    name :action.payload.name,
+                    image :action.payload.image,
+
+                      
+                 }
+            }
+        },
         deleteCategorySuccess : (state, action) => {
             const {id} = action.payload
             state.categorys = state.categorys.filter(category => category._id !== id) 
@@ -52,6 +65,6 @@ const categorySlice = createSlice({
     },
 });
 
-export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess , createCategorySuccess} = categorySlice.actions;
+export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess , createCategorySuccess, updateCategorySuccess} = categorySlice.actions;
 
 export default categorySlice.reducer;
