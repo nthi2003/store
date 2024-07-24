@@ -97,6 +97,39 @@ const updateCategory = async (id, name, image) => {
         }
     }
 }
+const deleteImgateCategory = async (id) => {
+    try {
+
+        const category = await Category.findById(id);
+
+        if (!category) {
+            return {
+                status: 'error',
+                message: 'id không tồn tại'
+            };
+        }
+
+        if (category.image && category.image.public_id) {
+
+            await cloudinary.uploader.destroy(category.image.public_id);
+        }
+
+        await Category.updateOne(
+            { _id: id },
+            { $set: { 'image.public_id': '', 'image.url': '' } }
+        );
+
+        return {
+            status: 'success',
+            message: 'Xóa ảnh thành công'
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        };
+    }
+};
 const deleteCategory = async (id) => {
     try {
 
@@ -131,6 +164,7 @@ module.exports = {
     createCategory,
     updateCategory,
     getAllCategory,
-    deleteCategory
+    deleteCategory,
+    deleteImgateCategory
 
 }

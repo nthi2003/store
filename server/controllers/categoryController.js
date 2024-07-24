@@ -55,6 +55,19 @@ const updateCategory = async (req, res) => {
     }
 
 }
+const deleteImgateCategory = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const response = await categoryService.deleteImgateCategory(id);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+}
 const deleteCategory = async (req, res) => {
     const { id } = req.params;
 
@@ -73,6 +86,7 @@ module.exports = {
     createCategory,
     getAllCategory,
     updateCategory,
+    deleteImgateCategory,
     deleteCategory
     
 }

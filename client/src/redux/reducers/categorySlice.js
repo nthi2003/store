@@ -43,16 +43,16 @@ const categorySlice = createSlice({
             state.error = null;
         },
         updateCategorySuccess: (state, action) => {
-         
-            const index = state.categorys.findIndex(category => category._id === action.payload.id);
-            if(index !== -1) {
-                 state.categorys[index] = {
-                    id: action.payload.id,
-                    name :action.payload.name,
-                    image :action.payload.image,
-
-                      
-                 }
+            const updatedCategory = action.payload.category;
+            const index = state.categorys.findIndex(cat => cat._id === updatedCategory._id);
+            if (index !== -1) {
+                state.categorys[index] = updatedCategory;
+            }
+        },
+        deleteImageCategorySuccess: (state, action) => {
+            const updatedCategory = state.categorys.find(cat => cat._id === action.payload.id);
+            if (updatedCategory) {
+                updatedCategory.image = { public_id: '', url: '' };
             }
         },
         deleteCategorySuccess : (state, action) => {
@@ -65,6 +65,6 @@ const categorySlice = createSlice({
     },
 });
 
-export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess , createCategorySuccess, updateCategorySuccess} = categorySlice.actions;
+export const {fetchAllCategorys , setLoading , setError , deleteCategorySuccess , createCategorySuccess, updateCategorySuccess , deleteImageCategorySuccess} = categorySlice.actions;
 
 export default categorySlice.reducer;

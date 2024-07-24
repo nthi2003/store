@@ -1,6 +1,6 @@
 import axios from '../../axiosConfig';
 import toast from 'react-hot-toast';
-import {fetchAllCategorys , setError ,setLoading , deleteCategorySuccess, createCategorySuccess, updateCategorySuccess } from '../reducers/categorySlice'
+import {fetchAllCategorys , setError ,setLoading , deleteImageCategorySuccess, createCategorySuccess, updateCategorySuccess  } from '../reducers/categorySlice'
 
 export const fetchCategory = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
@@ -34,21 +34,44 @@ export const createCategory = (categoryData) => async (dispatch) => {
         dispatch(setError(error.response.data.message ));
     } 
 };
-export const updateCategory = (id , name , image) => async (dispatch) => {
-    dispatch(setLoading(true))
+export const updateCategory = (id, name, image) => async (dispatch) => {
+    dispatch(setLoading(true));
     try {
-        const response = await axios.put(`updateCategory/${id}` , {name , image})
-        dispatch(updateCategorySuccess(response.data))
+
+        const formData = new FormData();
+        formData.append('name', name);
+        if (image) {
+            formData.append('image', image);
+        }
+
+        const response = await axios.put(`/updateCategory/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        dispatch(updateCategorySuccess(response.data));
+    } catch (error) {
+        dispatch(setError(error.response?.data?.message || 'Có lỗi xảy ra'));
+    } finally {
+        dispatch(setLoading(false));
     }
-    catch (error){
-        dispatch(setError(error.response.data.message)); 
+};
+export const deleteImgae = (id) => async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+        await axios.delete(`/deleteImageCategory/${id}`);
+        dispatch(deleteImageCategorySuccess({ id }));
+    }
+    catch (error) {
+        dispatch(setError(error.response.data.message));
     }
 }
 export const deleteCategory = (id) => async(dispatch)  => {
     dispatch(setLoading(true));
     try {
        const response =  await axios.delete(`/deleteCategory/${id}`);
-        dispatch(deleteCategorySuccess({ id }));
+        dispatch(deleteImageCategorySuccess({ id }));
         const {status , message } = response.data;
         if (status === 'success') {
             toast.success(message);

@@ -8,4 +8,5 @@ router.post('/createCategory', authenToken , authorization ,  categoryService.cr
 router.get('/getAllCategory', authenToken , authorization , categoryService.getAllCategory);
 router.put('/updateCategory/:id', authenToken , authorization , categoryService.updateCategory);
 router.delete('/deleteCategory/:id', authenToken , authorization , categoryService.deleteCategory);
+router.delete('/deleteImageCategory/:id', authenToken , authorization , categoryService.deleteImgateCategory);
 module.exports = router;
