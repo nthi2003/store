@@ -32,7 +32,7 @@ const AddCategory = ({ show, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!name || !selectedImage) {
-            alert('Điền thông tin còn thiếu.');
+            alert('Điền thưông tin còn thiếu.');
             return;
         }
         const categoryData = {
@@ -41,8 +41,7 @@ const AddCategory = ({ show, onClose }) => {
         };
         try {
             await dispatch(createCategory(categoryData)); 
-             
-            dispatch(fetchCategory(1, 9)); 
+            dispatch(fetchCategory(1, 5)); 
             onClose();
             setName('')
             setSelectedImage(null); 

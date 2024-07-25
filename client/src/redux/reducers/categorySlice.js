@@ -43,16 +43,21 @@ const categorySlice = createSlice({
             state.error = null;
         },
         updateCategorySuccess: (state, action) => {
-            const updatedCategory = action.payload.category;
-            const index = state.categorys.findIndex(cat => cat._id === updatedCategory._id);
+            const {id , name , image} = action.payload;
+            const index = state.categorys.findIndex(cat => cat._id === id);
             if (index !== -1) {
-                state.categorys[index] = updatedCategory;
+                state.categorys[index] = {
+                    ...state.categorys[index],
+                    name : name,
+                    image : image
+                };
             }
         },
         deleteImageCategorySuccess: (state, action) => {
             const updatedCategory = state.categorys.find(cat => cat._id === action.payload.id);
             if (updatedCategory) {
                 updatedCategory.image = { public_id: '', url: '' };
+           
             }
         },
         deleteCategorySuccess : (state, action) => {

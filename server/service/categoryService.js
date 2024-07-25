@@ -86,7 +86,7 @@ const updateCategory = async (id, name, image) => {
         const categorys = await Category.findByIdAndUpdate(id, updatedData)
         return {
             status: 'success',
-            message: 'Tạo Category thành công',
+            message: 'Sửa Category thành công',
             categorys
         }
     }

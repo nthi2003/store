@@ -37,7 +37,7 @@ const Users = () => {
       await dispatch(updateUser(id, newRole));
       await dispatch(fetchUsers(currentPage, 9));
     } catch (error) {
-      console.error('Error updating user role:', error);
+      console.error( error);
     }
   };
 

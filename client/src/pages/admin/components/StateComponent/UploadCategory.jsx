@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCategory, deleteImgae } from '../../../../redux/actions/categoryAction';
+import { updateCategory, deleteImage, fetchCategory } from '../../../../redux/actions/categoryAction';
 import { IoMdClose } from 'react-icons/io';
+import { fetchAllCategorys } from '../../../../redux/reducers/categorySlice';
 
 const UploadCategory = ({ showEdit, onClose, categoryId }) => {
     const dispatch = useDispatch();
     const category = useSelector(state => state.category.categorys.find(cat => cat._id === categoryId));
-    
+    const { currentPage } = useSelector(state => state.category);
     const [formData, setFormData] = useState({
         name: '',
         image: null
@@ -41,20 +42,22 @@ const UploadCategory = ({ showEdit, onClose, categoryId }) => {
 
     const handleRemoveImage = async () => {
         if (categoryId) {
-            await dispatch(deleteImgae(categoryId));
+            await dispatch(deleteImage(categoryId));
             setPreviewImage('');
             setFormData({ ...formData, image: null });
             setSelectedImage(null);
         }
     };
 
-    const handleUpdate = (e) => {
+    const handleUpdate = async(e) => {
         e.preventDefault();
         const { name } = formData;
 
         if (categoryId) {
-            dispatch(updateCategory(categoryId, name, selectedImage));
-            onClose();
+           await dispatch(updateCategory(categoryId, name, selectedImage));
+           dispatch(fetchCategory(currentPage, 5));
+            
+           onClose();
         }
     };
 

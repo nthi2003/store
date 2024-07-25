@@ -13,21 +13,21 @@ const Category = () => {
     const { categorys, totalPages, currentPage } = useSelector(state => state.category);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [editCategoryId, setEditCategoryId] = useState(null);  // State to hold the ID of the category being edited
+    const [editCategoryId, setEditCategoryId] = useState(null); 
 
     useEffect(() => {
-        dispatch(fetchCategory(currentPage, 6));
+        dispatch(fetchCategory(currentPage, 5));
     }, [dispatch, currentPage]);
 
-    const handlePageChange = (page) => {
-        dispatch(fetchCategory(page, 6));
+    const handlePageChange = (currentPage) => {
+        dispatch(fetchCategory(currentPage, 5));
     };
 
     const handleDelete = async (id) => {
         const response = await dispatch(deleteCategory(id));
         if (response.status === 'success') {
-            dispatch(fetchCategory(currentPage, 6));
-            toast.success('Category deleted successfully');
+            dispatch(fetchCategory(currentPage, 5));
+            
         }
     };
 
@@ -44,7 +44,7 @@ const Category = () => {
     };
 
     const handleEditModel = (id) => {
-        setEditCategoryId(id); // Set the category ID to be edited
+        setEditCategoryId(id);
         setShowEdit(true);
     };
 
@@ -70,7 +70,7 @@ const Category = () => {
                             {categorys && categorys.map((category, index) => (
                                 <tr key={category._id}>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>{(currentPage - 1) * 6 + index + 1}</p>
+                                        <p className='text-black'>{(currentPage - 1) * 5 + index + 1}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
                                         <p className='text-black'>{category?.name}</p>

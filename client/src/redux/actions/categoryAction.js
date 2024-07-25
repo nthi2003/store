@@ -44,20 +44,24 @@ export const updateCategory = (id, name, image) => async (dispatch) => {
             formData.append('image', image);
         }
 
-        const response = await axios.put(`/updateCategory/${id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        const {data} = await axios.put(`/updateCategory/${id}`, formData);
 
-        dispatch(updateCategorySuccess(response.data));
+        dispatch(updateCategorySuccess(data));
+        const {status, message } = data;
+        if (status === 'success') {
+            toast.success(message);
+        }
+        else {
+            toast.error(message);
+        }
+
     } catch (error) {
-        dispatch(setError(error.response?.data?.message || 'Có lỗi xảy ra'));
+        dispatch(setError(error.response?.data?.message ));
     } finally {
         dispatch(setLoading(false));
     }
 };
-export const deleteImgae = (id) => async (dispatch) => {
+export const deleteImage = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
         await axios.delete(`/deleteImageCategory/${id}`);
