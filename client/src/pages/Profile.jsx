@@ -4,12 +4,15 @@ import FooterComponent from '../components/FooterComponent'
 import { FaUser } from "react-icons/fa";
 import { FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 import OrderUser from '../components/OrderUser';
 import ProfileInfo from '../components/ProfileInfo';
 import HeartUser from '../components/HeartUser';
 
+
 const Profile = () => {
+  const user = useSelector(state => state.auth.user);
   const [active , setActive] = useState('default')
   const contentMap = {
     profile: <ProfileInfo/>,
@@ -26,7 +29,7 @@ const Profile = () => {
             <div className='bg-white w-[300px]  '>
               <div className='p-3 flex border-b border-slate-500'>
                 <img className='w-[48px] h-[48px]' src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" />
-                <div className='p-3'>Quoc Thi</div>
+                <div className='ml-2 mt-2'>{user?.name}</div>
               </div>
               <div className=''>
                 <div className={`p-4 flex items-center cursor-pointer ${active === 'profile' ? 'bg-gray-200' : ''}`} onClick={() => setActive('profile')}>

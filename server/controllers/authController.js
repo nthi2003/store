@@ -87,7 +87,7 @@ const getProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
     try {
-        const userId = req.user.id
+        const userId = req.user.id;
         const { name, email, password, phone, address } = req.body;
         const updateDataProfile = {
             name,
@@ -95,18 +95,16 @@ const updateUserProfile = async (req, res) => {
             password,
             phone,
             address
-        }
+        };
         const response = await authService.updateUserProfile(userId, updateDataProfile);
-        return res.status(200).json(response)
-    }
-    catch (e) {
+        return res.status(200).json(response);
+    } catch (e) {
         return res.status(500).json({
             status: 'error',
             message: e.message
-        })
-     }
-
-}
+        });
+    }
+};
 module.exports = {
     createUser,
     loginUser,

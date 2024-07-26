@@ -34,14 +34,17 @@ export const logoutUser = () => (dispatch) => {
     dispatch(logout());
 };
 export const updateUserProfile = (updateData) => async (dispatch) => {
-    dispatch(setLoading(true));
+    dispatch(setLoading({ loading: true }));
     try {
         const response = await axios.put('/profileUpdate', updateData);
+        console.log('Response from server:', response.data);
         dispatch(updateProfileSuccess(response.data));
     } catch (error) {
-        dispatch(setError(error.response.data.message));
+        console.error('Error in updateUserProfile:', error.response.data.message);
+        dispatch(setError({ error: error.response.data.message }));
     } 
 };
+
 export const fetchUsers = (page, limit) => async (dispatch) => {
     dispatch(setLoading(true));
     try {

@@ -1,4 +1,3 @@
-// authService.js
 
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
@@ -96,44 +95,48 @@ const getProfile = async (userId) => {
             }
          }
 }
-const updateUserProfile = async (userId , updateDataProfile) => {
+const updateUserProfile = async (userId, updateDataProfile) => {
     try {
-        const  user = await User.findById(userId)
+        const user = await User.findById(userId);
         if (!user) {
             return {
                 status: 'error',
                 message: 'Người dùng không tồn tại'
-            }
+            };
         }
-        if (updateDataProfile.name)  user.name = updateDataProfile.name
-        if (updateDataProfile.email)  user.email = updateDataProfile.email
-        if (updateDataProfile.phone)  user.phone = updateDataProfile.phone
-        if (updateDataProfile.password) {
-            const hashedPassword = await bcrypt.hashSync(updateDataProfile.password , 10)
-            user.password = hashedPassword
+
+        if (updateDataProfile.name !== undefined) user.name = updateDataProfile.name;
+        if (updateDataProfile.email !== undefined) user.email = updateDataProfile.email;
+        if (updateDataProfile.phone !== undefined) user.phone = updateDataProfile.phone;
+
+        if (updateDataProfile.password !== undefined) {
+            const hashedPassword = await bcrypt.hash(updateDataProfile.password, 10);
+            user.password = hashedPassword;
         }
-        if(updateDataProfile.address){
-            user.address = {
-                street: updateDataProfile.address.street || user.address.street,
-                city: updateDataProfile.address.city || user.address.city,
-                district: updateDataProfile.address.district || user.address.district,
-               
-            }
+
+        if (updateDataProfile.address !== undefined) {
+            if (!user.address) user.address = {};
+
+            if (updateDataProfile.address.street !== undefined) user.address.street = updateDataProfile.address.street;
+            if (updateDataProfile.address.city !== undefined) user.address.city = updateDataProfile.address.city;
+            if (updateDataProfile.address.district !== undefined) user.address.district = updateDataProfile.address.district;
         }
+
         await user.save();
         return {
             status: 'success',
             message: 'Cập nhật thông tin thành công',
             user
-        }
-    }
-    catch (error) {
+        };
+    } catch (error) {
         return {
-            status: "error",
+            status: 'error',
             error: error.message
-        }
+        };
     }
-}
+};
+
+
 
 module.exports = {
     createUser,

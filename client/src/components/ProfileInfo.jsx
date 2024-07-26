@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AiTwotoneSave } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { updateUserProfile } from '../redux/actions/authActions';
 
 const ProfileInfo = () => {
@@ -11,7 +10,6 @@ const ProfileInfo = () => {
         name: '',
         email: '',
         phone: '',
-
         address: {
             street: '',
             district: '',
@@ -25,8 +23,6 @@ const ProfileInfo = () => {
                 name: user.name || '',
                 email: user.email || '',
                 phone: user.phone || '',
-        
-        
                 address: {
                     street: user.address?.street || '',
                     district: user.address?.district || '',
@@ -58,11 +54,14 @@ const ProfileInfo = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
 
         const updateData = { ...formData };
 
-    
+        for (const key in updateData.address) {
+            if (!updateData.address[key] && user.address && user.address[key]) {
+                updateData.address[key] = user.address[key];
+            }
+        }
 
         dispatch(updateUserProfile(updateData));
     };

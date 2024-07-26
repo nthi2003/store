@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const storedUser = localStorage.getItem('user');
 let initialState = {
     user: null,
@@ -8,9 +7,7 @@ let initialState = {
     error: null,
     loading: false,
     isAuthenticated: false,
-   
 };
-
 
 if (storedUser) {
     try {
@@ -47,9 +44,18 @@ const authSlice = createSlice({
             state.loading = false;
         },
         updateProfileSuccess: (state, action) => {
+            console.log('updateProfileSuccess action payload:', action.payload);
             const updatedUser = action.payload.user;
-            state.user = updatedUser;
-            localStorage.setItem('user', JSON.stringify(updatedUser));
+            state.user = {
+                ...state.user,
+                ...updatedUser,
+                address: {
+                    ...state.user?.address,
+                    ...updatedUser?.address,
+                },
+            };
+            console.log('Updated state.user:', state.user);
+            localStorage.setItem('user', JSON.stringify(state.user));
             state.loading = false;
             state.error = null;
         },
@@ -60,9 +66,8 @@ const authSlice = createSlice({
             localStorage.removeItem('token');
         },
         fetchAllUsers: (state, action) => {
-
             const { users, totalUsers, totalPages, currentPage } = action.payload;
-            state.users= users;
+            state.users = users;
             state.totalUsers = totalUsers;
             state.totalPages = totalPages;
             state.currentPage = currentPage;
@@ -72,27 +77,24 @@ const authSlice = createSlice({
         updateUsersSuccess: (state, action) => {
             const { id, role } = action.payload;
             const index = state.users.findIndex(user => user._id === id);
-        
             if (index !== -1) {
                 state.users[index] = {
                     ...state.users[index],
                     role: role
                 };
             }
-        
             state.loading = false;
             state.error = null;
         },
         deleteUsersSuccess: (state, action) => {
-            const {id} = action.payload;
+            const { id } = action.payload;
             state.users = state.users.filter(user => user._id !== id); 
             state.loading = false;
             state.error = null;
         },
-
     },
 });
 
-export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess ,fetchAllUsers, updateUsersSuccess, deleteUsersSuccess } = authSlice.actions;
+export const { setLoading, setError, registerSuccess, logout, loginSuccess, updateProfileSuccess, fetchAllUsers, updateUsersSuccess, deleteUsersSuccess } = authSlice.actions;
 
 export default authSlice.reducer;
