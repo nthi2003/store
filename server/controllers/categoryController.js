@@ -7,7 +7,7 @@ const createCategory = async (req, res) => {
         if (!file) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Missing required parameter - file'
+                message: 'Không tìm thấy file'
             });
         }
 
@@ -28,7 +28,7 @@ const createCategory = async (req, res) => {
 const getAllCategory = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5
+        const limit = parseInt(req.query.limit) || 5
         const response = await categoryService.getAllCategory(page , limit )
         return res.status(200).json(response)
     }

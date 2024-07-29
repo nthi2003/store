@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const categoryService = require('../controllers/categoryController');
+const categoryController = require('../controllers/categoryController');
 const {authenToken , authorization} = require('../middleware/authToken')
 
 
-router.post('/createCategory', authenToken , authorization ,  categoryService.createCategory);
-router.get('/getAllCategory', authenToken , authorization , categoryService.getAllCategory);
-router.put('/updateCategory/:id', authenToken , authorization , categoryService.updateCategory);
-router.delete('/deleteCategory/:id', authenToken , authorization , categoryService.deleteCategory);
-router.delete('/deleteImageCategory/:id', authenToken , authorization , categoryService.deleteImgateCategory);
+router.post('/createCategory', authenToken , authorization ,  categoryController.createCategory);
+router.get('/getAllCategory', authenToken , authorization , categoryController.getAllCategory);
+router.put('/updateCategory/:id', authenToken , authorization , categoryController.updateCategory);
+router.delete('/deleteCategory/:id', authenToken , authorization , categoryController.deleteCategory);
+router.delete('/deleteImageCategory/:id', authenToken , authorization , categoryController.deleteImgateCategory);
 module.exports = router;

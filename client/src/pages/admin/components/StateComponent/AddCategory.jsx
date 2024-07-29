@@ -74,7 +74,7 @@ const AddCategory = ({ show, onClose }) => {
                             placeholder='Tên loại sản phẩm ...'
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required
+                            
                         />
                     </div>
                     <div className='items-center justify-center w-full mt-9'>
