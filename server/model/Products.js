@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
-
 const ProductSchema = new Schema({
     name: { type: String, required: true },
     image: {
@@ -11,8 +9,8 @@ const ProductSchema = new Schema({
     },
     price: { type: String, required: true },
     CPU: { type: String, required: false },
-    RAM: { type: String, required: false },
-    SD: { type: String, required: false },
+    CPUDETAIL: { type: String, required: false },
+    RAMDETAIL: { type: String, required: false },
     GC: { type: String, required: false },
     Screen: { type: String, required: false },
     Port: { type: String, required: false },
@@ -25,9 +23,8 @@ const ProductSchema = new Schema({
     Battery: { type: String, required: false },
     Weight: { type: String, required: false },
     Size: { type: String, required: false },
-
     LCD: { type: String, required: false },
-  
+    HZ: { type: String, required: false },
     VGA: { type: String, required: false },
     SSD: { type: String, required: false },
     categoryid: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },

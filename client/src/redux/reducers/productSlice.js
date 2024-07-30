@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setLoading } from "./authSlice";
 
 let initialState = {
     error : null,
@@ -8,7 +7,7 @@ let initialState = {
     products : []
 }
 const productSlice = createSlice({
-    name : 'products',
+    name : 'product',
     initialState,
     reducers: {
         setLoading : (state , action) => {
@@ -17,7 +16,17 @@ const productSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload.error;
         },
+        fetchAllProducts : (state, action) => {
+            const { products , totalProduct , totalPages, currentPage} = action.payload;
+            state.products = products;
+            state.totalProduct = totalProduct;
+            state.totalPages = totalPages;
+            state.currentPage = currentPage;
+            state.loading = false;
+            state.error = null;
+        },
        
     }
 })
+export const {fetchAllProducts, setLoading , setError} = productSlice.actions
 export default productSlice.reducer;

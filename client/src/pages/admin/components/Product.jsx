@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Pagination from './Pagination'
 import { MdOutlineDelete, MdOutlineEdit } from 'react-icons/md'
 import { Toaster } from 'react-hot-toast'
 import { IoAddSharp } from 'react-icons/io5'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProduct } from '../../../redux/actions/productAction'
 
 const Product = () => {
+  const dispatch = useDispatch()
+  const { products , totalPages, currentPage} = useSelector(state => state.product)
+  useEffect(() => {
+    dispatch(fetchProduct(currentPage , 5));
+  }, [dispatch , currentPage])
   return (
     <div>
             <Toaster />
@@ -27,68 +34,95 @@ const Product = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {categorys && categorys.map((category, index) => ( */}
-                                <tr >
+                                 {products.map((product , index) => (
+                                <tr key={product._id} >
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>1</p>
+                                        <p className='text-black'>{(currentPage - 1 ) * 5 + index + 1}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>Laptop gaming ASUS ROG Strix G16 G614JI N4125W</p>
+                                        <p className='text-black'>{product.name}</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <img src='https://product.hstatic.net/200000722513/product/ava_1141b8e21a7f4d91ab18c0725bc56d5e_grande.png' alt="" className='w-20 h-20' />
+                                        <img src={product.image.url} alt="" className='w-20 h-20' />
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
-                                        <p className='text-black'>49.990.000₫</p>
+                                        <p className='text-black'>{product.price}đ</p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
                                         <p className='text-black'>
                                           <div>
                                             <div className='flex '>
                                               <span className='font-bold'>CPU</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <p>{product.CPUDETAIL}</p>
                                               </div>
                                             <div className='flex '>
                                               <span className='font-bold'>RAM</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <p>{product.RAMDETAIL }</p>
                                               </div>
                                             <div className='flex '>
-                                              <span className='font-bold'>Card đồ họa</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <span className='font-bold'>SSD</span>
+                                              <p>{product.SD}</p>
                                               </div>
                                             <div className='flex '>
-                                              <span className='font-bold'>Màn hình</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <span className='font-bold'>Screen</span>
+                                              <p>{product.Screen}</p>
                                               </div>
                                             <div className='flex '>
-                                              <span className='font-bold'>Cổng giao tiếp</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <span className='font-bold'>PORT</span>
+                                              <p>{product.Port}</p>
                                               </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Keyboard</span>
+                                              <p>{product.Keyboard}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Audio</span>
+                                              <p>{product.Audio}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Lan</span>
+                                              <p>{product.Lan}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Bluetooth</span>
+                                              <p>{product.Bluetooth}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Webcam</span>
+                                              <p>{product.Webcam}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>Size</span>
+                                              <p>{product.Size}</p>
+                                              </div>
+                                             
+
+
                                           </div>
                                         </p>
                                     </td>
                                     <td className='border-b border-[#eee] py-5 px-4'>
                                         <p className='text-black'>
                                           <div>
-                                            <div className='flex '>
+                                          <div className='flex '>
+                                              <span className='font-bold'>HZ</span>
+                                              <p>{product.HZ}</p>
+                                              </div>
+                                              <div className='flex '>
+                                              <span className='font-bold'>VGA</span>
+                                              <p>{product.VGA}</p>
+                                              </div>
+                                              <div className='flex '>
                                               <span className='font-bold'>CPU</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <p>{product.CPU}</p>
                                               </div>
-                                            <div className='flex '>
+                                              <div className='flex '>
+                                              <span className='font-bold'>SSD</span>
+                                              <p>{product.SSD}</p>
+                                              </div>
+                                              <div className='flex '>
                                               <span className='font-bold'>RAM</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
-                                              </div>
-                                            <div className='flex '>
-                                              <span className='font-bold'>Card đồ họa</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
-                                              </div>
-                                            <div className='flex '>
-                                              <span className='font-bold'>Màn hình</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
-                                              </div>
-                                            <div className='flex '>
-                                              <span className='font-bold'>Cổng giao tiếp</span>
-                                              <p>13th Gen Intel® Core™ i7-13650HX Processor 2.6 GHz 24M  Cache, up to 4.9 GHz, 14 cores: 6 P-cores and 8 E-cores)</p>
+                                              <p>{product.RAM}</p>
                                               </div>
                                           </div>
                                         </p>
@@ -104,8 +138,9 @@ const Product = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            {/* ))} */}
+                      ))}
                         </tbody>
+                        
                     </table>
                     <Pagination    />
                 </div>
