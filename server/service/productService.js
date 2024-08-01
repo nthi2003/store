@@ -2,7 +2,7 @@ const Product = require('../model/Products');
 const Category = require('../model/Category');
 const cloudinary = require('../utils/cloudinary');
 
-const createProduct = async ({ name, price, image, categoryid, CPU, CPUDETAIL, RAMDETAIL, RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ }) => {
+const createProduct = async ({ name, price, image, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL, RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ }) => {
     try {
         const result = await cloudinary.uploader.upload(image, {
             folder: 'products',
@@ -39,6 +39,7 @@ const createProduct = async ({ name, price, image, categoryid, CPU, CPUDETAIL, R
                 url: result.secure_url
             },
             categoryid,
+            categoryName,
             CPU,
             CPUDETAIL,
             RAMDETAIL,
@@ -61,16 +62,19 @@ const createProduct = async ({ name, price, image, categoryid, CPU, CPUDETAIL, R
             VGA,
             Color,
             OS,
-            HZ
+            HZ,
+            Stock
+          
+           
+
         });
 
         return {
             status: 'success',
             message: 'Sản phẩm đã được tạo thành công',
-            product: {
-                product,
-                categoryName: category.name
-            },
+            product
+
+          
         };
     } catch (error) {
         return {

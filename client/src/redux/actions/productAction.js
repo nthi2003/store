@@ -1,6 +1,6 @@
 import axios from '../../axiosConfig';
 
-import { fetchAllProducts, setError, setLoading  } from '../reducers/productSlice';
+import { fetchAllProducts, setError, setLoading,  } from '../reducers/productSlice';
 export const fetchProduct = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
     try {
@@ -11,3 +11,11 @@ export const fetchProduct = (page , limit) => async(dispatch) => {
         dispatch(setError(error.response.data.message))
     }
 }
+// export const createProoduct = (ProductData) =>async(dispatch) =>  {
+//     dispatch(setLoading(true));
+//     try {
+        
+//     }
+//     catch (error) {}
+
+// }

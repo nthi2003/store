@@ -25,6 +25,11 @@ const productSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        createProoductSuccess : (state, action) => {
+            state.products.push(action.payload)
+            state.loading = false;
+            state.error = null
+        }
        
     }
 })

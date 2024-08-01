@@ -8,8 +8,10 @@ const ProductSchema = new Schema({
         url: { type: String, required: true }
     },
     price: { type: String, required: true },
+    Stock: { type: String, required: true },
     CPU: { type: String, required: false },
     CPUDETAIL: { type: String, required: false },
+    RAM : { type: String, required: false },
     RAMDETAIL: { type: String, required: false },
     GC: { type: String, required: false },
     Screen: { type: String, required: false },
@@ -27,7 +29,9 @@ const ProductSchema = new Schema({
     HZ: { type: String, required: false },
     VGA: { type: String, required: false },
     SSD: { type: String, required: false },
+    
     categoryid: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    categoryName: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });
 

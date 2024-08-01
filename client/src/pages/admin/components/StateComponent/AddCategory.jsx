@@ -118,7 +118,7 @@ const AddCategory = ({ show, onClose }) => {
                     >
                         {loading ? 'Creating...' : 'Add'}
                     </button>
-                    {error && <p className='text-red-500 mt-4'>{error}</p>}
+                 
                 </form>
             </div>
         </div>
