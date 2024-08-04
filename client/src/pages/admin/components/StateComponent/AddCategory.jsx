@@ -32,7 +32,7 @@ const AddCategory = ({ show, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!name || !selectedImage) {
-            alert('Điền thưông tin còn thiếu.');
+            console.log('Điền thưông tin còn thiếu.');
             return;
         }
         const categoryData = {

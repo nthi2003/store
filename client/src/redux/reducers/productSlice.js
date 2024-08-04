@@ -33,5 +33,5 @@ const productSlice = createSlice({
        
     }
 })
-export const {fetchAllProducts, setLoading , setError} = productSlice.actions
+export const {fetchAllProducts, setLoading , setError , createProoductSuccess} = productSlice.actions
 export default productSlice.reducer;
