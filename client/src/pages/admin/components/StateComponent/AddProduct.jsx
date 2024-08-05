@@ -14,7 +14,7 @@ const AddProduct = ({ show, onClose }) => {
     const [formData, setFormData] = useState({
         name: '',
         price: '',
-        image: null, // Sửa giá trị mặc định thành null
+        image: null, 
         categoryid: '',
         categoryName: '',
         Stock: '',
@@ -40,12 +40,12 @@ const AddProduct = ({ show, onClose }) => {
     }, [dispatch]);
 
     useEffect(() => {
-        // Cập nhật ảnh xem trước mỗi khi selectedImage thay đổi
+
         if (selectedImage) {
             const objectUrl = URL.createObjectURL(selectedImage);
             setImagePreview(objectUrl);
 
-            return () => URL.revokeObjectURL(objectUrl); // Giải phóng tài nguyên khi component unmount
+            return () => URL.revokeObjectURL(objectUrl);
         }
     }, [selectedImage]);
 

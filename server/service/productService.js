@@ -2,7 +2,7 @@ const Product = require('../model/Products');
 const Category = require('../model/Category');
 const cloudinary = require('../utils/cloudinary');
 
-const createProduct = async ({ name, price, image, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL, RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ }) => {
+const createProduct = async ({ name, price, image, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL, RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ }) => {
     try {
         const result = await cloudinary.uploader.upload(image, {
             folder: 'products',
@@ -34,6 +34,7 @@ const createProduct = async ({ name, price, image, categoryid, categoryName, Sto
         const product = await Product.create({
             name,
             price,
+            title,
             image: {
                 public_id: result.public_id,
                 url: result.secure_url

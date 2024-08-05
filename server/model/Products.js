@@ -9,6 +9,7 @@ const ProductSchema = new Schema({
     },
     price: { type: String, required: true },
     Stock: { type: String, required: true },
+    title : { type: String, required: false},
     CPU: { type: String, required: false },
     CPUDETAIL: { type: String, required: false },
     RAM : { type: String, required: false },

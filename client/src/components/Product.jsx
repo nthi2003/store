@@ -1,4 +1,4 @@
-    import React from 'react';
+    import React, { useEffect } from 'react';
     import { FaTruck, FaArrowRight, FaArrowLeft } from "react-icons/fa";
     import Slider from "react-slick";
     import "slick-carousel/slick/slick.css";
@@ -7,6 +7,9 @@
     import { BsCpu } from "react-icons/bs";
     import { LiaMicrochipSolid } from "react-icons/lia";
     import { CiStar } from "react-icons/ci";
+    import { useDispatch, useSelector } from 'react-redux';
+    import { fetchProduct } from '../redux/actions/productAction';
+    import { MdScreenshotMonitor } from "react-icons/md";
     const NextArrow = (props) => {
         const { className, style, onClick } = props;
         return (
@@ -33,6 +36,12 @@
     };
 
     const Product = ({hTitle , shTitle}) => {
+        const {products} = useSelector(state => state.product);
+        const dispatch = useDispatch()
+        useEffect(() => {
+            dispatch(fetchProduct());
+          }, [dispatch])
+        
         const settings = {
             dots: true,
             infinite: false,
@@ -93,478 +102,68 @@
                 <div className='bg-white'>
                     <div className="slider-container p-2 ">
                         <Slider {...settings}>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
+                        {products.map((product, index) => (
+                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px]' key={product._id}>
                                 <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
+                                    <img src={product.image.url} alt="" />
                                 </div>
                                 <div>
                                     <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
+                                        <span className='font-bold text-[12px]'>{product.name}</span>
                                     </div>
                                     <div className='p-2'>
                                         <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
+                                            {product.CPU && (
+                                                <div className='flex'>
+                                                    <BsCpu className='mt-[2px]' />
+                                                    <span className='text-[10px] p-1'>{product.CPU}</span>
+                                                </div>
+                                            )}
+                                            {product.VGA && (
                                                 <div className='flex'>
                                                     <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
+                                                    <span className='text-[10px] p-1'>{product.VGA}</span>
                                                 </div>
+                                            )}
+                                            {product.RAM && (
                                                 <div className='flex'>
                                                     <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
+                                                    <span className='text-[10px] p-1'>{product.RAM}</span>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            )}
+                                            {product.Screen && (
+                                                <div className='flex'>
+                                                    <MdScreenshotMonitor className='mt-[2px]' />
+                                                    <span className='text-[10px] p-1'>{product.Screen}</span>
+                                                </div>
+                                            )}
 
+                                         
+                                        </div>
                                     </div>
                                     <div className='m-2 flex'>
                                         <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
                                     </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
+                                    <div className='m-2 flex'>
+                                        <span className='text-[15px] text-red-500'>{product.price}</span>
                                         <div className='ml-2'>
                                             <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
                                         </div>
                                     </div>
                                     <div className='flex m-2'>
                                         <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
+                                        <CiStar className='mt-[3px] text-yellow-600' />
                                         <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
                                     </div>
                                 </div>
                             </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
+                        ))}
+                           
+                            
+                          
 
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px] '>
-                                <div className='p-2'>
-                                    <img src="https://product.hstatic.net/200000722513/product/pc_gvn_-_i7_4070ti_sup_-_3_5b067243bc1f40308af972effb11172d_medium.png" alt="" />
-                                </div>
-                                <div>
-                                    <div className='p-3'>
-                                        <span className='font-bold text-[12px]'>PC GVN x MSI Dragon X (Intel i7-14700F/ VGA RTX 4070)</span>
-
-                                    </div>
-                                    <div className='p-2'>
-                                        <div className='bg-[#ECECEC] p-3'>
-                                            <div className='flex'>
-                                                <BsCpu className='mt-[2px]' />
-                                                <span className='text-[10px] p-1'>i7 14700K</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <div className='flex'>
-                                                    <BsGpuCard className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>RTX 4070 Super</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <LiaMicrochipSolid className='mt-[2px]' />
-                                                    <span className='text-[10px] p-1'>B760</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className='m-2 flex'>
-                                        <span className='text-[12px] line-through '>72.520.000₫</span>
-
-
-                                    </div>
-                                    <div className='m-2 flex '>
-                                        <span className='text-[15px] text-red-500'>71.990.000₫</span>
-                                        <div className='ml-2'>
-                                            <span className='px-4 bg-[#FFEDED] text-red-500 border border-solid border-[#E30019]'>-3%</span>
-                                        </div>
-                                    </div>
-                                    <div className='flex m-2'>
-                                        <span className='text-yellow-600 text-sm'>4.7</span>
-                                        <CiStar className='mt-[3px] text-yellow-600'/>
-                                        <span className='text-[12px] mt-[2px]'>(5 đánh giá)</span>
-
-                                    </div>
-                                </div>
-                            </div>
+                           
+                            
 
                             
 

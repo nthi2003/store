@@ -2,7 +2,7 @@ const productService = require('../service/productService');
 
 const createProduct = async (req, res) => {
     try {
-        const { name, price, categoryid, categoryName , CPU, CPUDETAIL, RAMDETAIL, Stock , RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ } = req.body;
+        const { name, price, categoryid, title, categoryName , CPU, CPUDETAIL, RAMDETAIL, Stock , RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ } = req.body;
         const file = req.files?.image;
 
         if (!file) {
@@ -18,6 +18,7 @@ const createProduct = async (req, res) => {
             image: file.tempFilePath ,
             categoryid,
             categoryName,
+            title,
             CPU,
             CPUDETAIL,
             RAMDETAIL,

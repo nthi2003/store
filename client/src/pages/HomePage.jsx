@@ -24,6 +24,7 @@ import { IoIosLogOut } from 'react-icons/io';
 const HomePage = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
