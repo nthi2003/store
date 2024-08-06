@@ -25,13 +25,19 @@ const productSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
-        createProoductSuccess : (state, action) => {
+        createProductSuccess : (state, action) => {
             state.products.push(action.payload)
             state.loading = false;
+            state.error = null
+        },
+        deleteProductSuccess : (state, action) => {
+            const {id} = action.payload
+            state.products = state.products.filter(product => product.id!== id)
+            state.loading = false
             state.error = null
         }
        
     }
 })
-export const {fetchAllProducts, setLoading , setError , createProoductSuccess} = productSlice.actions
+export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess} = productSlice.actions
 export default productSlice.reducer;

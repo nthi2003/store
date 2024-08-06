@@ -137,7 +137,7 @@ const deleteCategory = async (id) => {
         if (!category) {
             return {
                 status: 'error',
-                message: 'Id không tồn tại'
+                message: 'Category không tồn tại'
             };
         }
 

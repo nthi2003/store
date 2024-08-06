@@ -1,6 +1,7 @@
+import toast from 'react-hot-toast';
 import axios from '../../axiosConfig';
 
-import { fetchAllProducts, setError, setLoading, createProoductSuccess } from '../reducers/productSlice';
+import { fetchAllProducts, setError, setLoading, createProductSuccess, deleteProductSuccess } from '../reducers/productSlice';
 export const fetchProduct = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
     try {
@@ -38,7 +39,7 @@ export const createProduct = (productData) =>async(dispatch) =>  {
         formData.append('categoryName', productData.categoryName)
 
         const {data} = await axios.post('createProduct',formData )
-        dispatch(createProoductSuccess(data))
+        dispatch(createProductSuccess(data))
         
 
         
@@ -47,4 +48,23 @@ export const createProduct = (productData) =>async(dispatch) =>  {
         dispatch(setError(error.response.data.message ));
     }
 
+}
+export  const deleteProduct = (id) => async (dispatch) => {
+    dispatch(setLoading(true))
+    try {
+        const response = await axios.delete(`deleteProduct/${id}`);
+        dispatch(deleteProductSuccess({id}))
+        const {status , message } = response.data;
+        if (status === 'success') {
+            toast.success(message);
+        } else {
+            toast.error(message); 
+        }
+
+        return response.data;
+        
+    }
+    catch (error) {
+        dispatch(setError(error.response.data.message));
+    }
 }

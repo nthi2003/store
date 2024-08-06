@@ -8,4 +8,6 @@ router.post('/createProduct', authenToken, authorization,  productsController.cr
 
 router.get('/getAllProducts', authenToken, authorization,  productsController.getAllProducts);
 
+router.delete('/deleteProduct/:id', authenToken, authorization, productsController.deleteProduct)
+
 module.exports = router;

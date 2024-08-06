@@ -201,7 +201,7 @@ const AddProduct = ({ show, onClose }) => {
                             <div className='mb-2 mt-2'>
                                 <span className='font-bold'>Specifications</span>
                             </div>
-                            {['CPU', 'RAM', 'Screen', 'PORT', 'Keyboard', 'SSD', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size', 'HZ', 'VGA'].map(spec => (
+                            {['CPUDETAIL', 'RAMRAMDETAIL', 'Screen', 'PORT', 'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size'].map(spec => (
                                 <div key={spec}>
                                     <span>{spec}</span>
                                     <input

@@ -105,8 +105,36 @@ const getAllProducts = async (page, limit) => {
         };
     }
 };
+const deleteProduct = async(id) => {
+    try {
+        const product = await Product.findById(id);
+        if(!product) {
+            return {
+                status: 'error',
+                message: 'Sản phẩm không tồn tại'
+            }
+        }
+        if(product.image && product.image.public_id) {
+            await cloudinary.uploader.destroy(product.image.public_id)
+        }
+        await Product.findByIdAndDelete(id)
+        return {
+            status: 'success',
+            message : 'Xóa sản phẩm thành công'
+
+        }
+
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+}
 
 module.exports = {
     createProduct,
-    getAllProducts
+    getAllProducts,
+    deleteProduct
 };
