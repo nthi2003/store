@@ -1,53 +1,36 @@
 const productService = require('../service/productService');
-
 const createProduct = async (req, res) => {
     try {
-        const { name, price, categoryid, title, categoryName , CPU, CPUDETAIL, RAMDETAIL, Stock , RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ } = req.body;
-        const file = req.files?.image;
+        const { name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
+                RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+                Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ } = req.body;
+        const images = req.files;
 
-        if (!file) {
+        if (!images || images.length === 0) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Không tìm thấy file'
+                message: 'Không tìm thấy tệp'
             });
         }
 
-        const response = await productService.createProduct({
-            name,
-            price,
-            image: file.tempFilePath ,
-            categoryid,
-            categoryName,
-            title,
-            CPU,
-            CPUDETAIL,
-            RAMDETAIL,
-            RAM,
-            Wifi,
-            SSD,
-            GC,
-            Screen,
-            Port,
-            Keyboard,
-            Audio,
-            Lan,
-            Bluetooth,
-            Webcam,
-            OPS,
-            Battery,
-            Weight,
-            Size,
-            LCD,
-            VGA,
-            Color,
-            OS,
-            HZ,
-            Stock
-           
+        await productService.uploadImages(images);
+
+        if (!categoryid) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'CategoryID không tồn tại'
+            });
+        }
+
+        const product = await productService.createProduct({
+            name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
+            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+            Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images
         });
 
-        return res.status(200).json(response);
+        return res.status(200).json(product);
     } catch (error) {
+        console.error('Lỗi khi tạo sản phẩm:', error);
         return res.status(500).json({
             status: 'error',
             message: error.message

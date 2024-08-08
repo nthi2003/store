@@ -1,44 +1,60 @@
 const Product = require('../model/Products');
 const Category = require('../model/Category');
 const cloudinary = require('../utils/cloudinary');
-
-const createProduct = async ({ name, price, image, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL, RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery, Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ }) => {
+const fs = require('fs');
+const uploadImages = async (files) => {
     try {
-        const result = await cloudinary.uploader.upload(image, {
-            folder: 'products',
-        });
+        const imageUrls = [];
+        
+        for (const file of files) {
+            const result = await cloudinary.uploader.upload(file.path, { folder: 'products' });
+      
+            imageUrls.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            });
+        }
 
+        return imageUrls;
+    } catch (error) {
+       
+        return { status: 'error', message: error.message };
+    }
+};
+
+const createProduct = async ({
+    name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
+    RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+    Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images
+}) => {
+    try {
         if (!categoryid) {
-            return {
-                status: 'error',
-                message: 'CategoryID không tồn tại'
-            };
+            return { status: 'error', message: 'CategoryID không tồn tại' };
         }
 
         const category = await Category.findById(categoryid);
         if (!category) {
-            return {
-                status: 'error',
-                message: 'Không tìm thấy doanh mục'
-            };
+            return { status: 'error', message: 'Không tìm thấy danh mục' };
         }
 
         const checkProduct = await Product.findOne({ name });
         if (checkProduct) {
-            return {
-                status: 'error',
-                message: 'Sản phẩm đã tồn tại'
-            };
+            return { status: 'error', message: 'Sản phẩm đã tồn tại' };
         }
+
+        const uploadResults = await uploadImages(images);
+     
+
+        const imageUrls = uploadResults.map(result => ({
+            public_id: result.public_id,
+            url: result.secure_url
+        }));
 
         const product = await Product.create({
             name,
             price,
             title,
-            image: {
-                public_id: result.public_id,
-                url: result.secure_url
-            },
+            images: imageUrls,
             categoryid,
             categoryName,
             CPU,
@@ -65,25 +81,14 @@ const createProduct = async ({ name, price, image, title, categoryid, categoryNa
             OS,
             HZ,
             Stock
-          
-           
-
         });
 
-        return {
-            status: 'success',
-            message: 'Sản phẩm đã được tạo thành công',
-            product
-
-          
-        };
+        return { status: 'success', message: 'Sản phẩm đã được tạo thành công', product };
     } catch (error) {
-        return {
-            status: 'error',
-            message: error.message,
-        };
+        return { status: 'error', message: error.message };
     }
 };
+
 
 const getAllProducts = async (page, limit) => {
     try {
@@ -114,8 +119,8 @@ const deleteProduct = async(id) => {
                 message: 'Sản phẩm không tồn tại'
             }
         }
-        if(product.image && product.image.public_id) {
-            await cloudinary.uploader.destroy(product.image.public_id)
+        if(product.images && product.image.public_id) {
+            await cloudinary.uploader.destroy(product.images.public_id)
         }
         await Product.findByIdAndDelete(id)
         return {
@@ -136,5 +141,7 @@ const deleteProduct = async(id) => {
 module.exports = {
     createProduct,
     getAllProducts,
-    deleteProduct
+    deleteProduct,
+    uploadImages
+
 };

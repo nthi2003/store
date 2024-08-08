@@ -3,37 +3,26 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
     name: { type: String, required: true },
-    image: {
-        public_id: { type: String, required: true },
-        url: { type: String, required: true }
-    },
-    price: { type: String, required: true },
-    Stock: { type: String, required: true },
-    title : { type: String, required: false},
-    CPU: { type: String, required: false },
-    CPUDETAIL: { type: String, required: false },
-    RAM : { type: String, required: false },
-    RAMDETAIL: { type: String, required: false },
-    GC: { type: String, required: false },
-    Screen: { type: String, required: false },
-    Port: { type: String, required: false },
-    Keyboard: { type: String, required: false },
-    Audio: { type: String, required: false },
-    Lan: { type: String, required: false },
-    Bluetooth: { type: String, required: false },
-    Webcam: { type: String, required: false },
-    OPS: { type: String, required: false },
-    Battery: { type: String, required: false },
-    Weight: { type: String, required: false },
-    Size: { type: String, required: false },
-    LCD: { type: String, required: false },
-    HZ: { type: String, required: false },
-    VGA: { type: String, required: false },
-    SSD: { type: String, required: false },
-    
-    categoryid: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    price: { type: Number, required: true },
+    images: [{ public_id: String, url: String }],
+    categoryid: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     categoryName: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
+    CPU: { type: String },
+    CPUDETAIL: { type: String },
+    RAMDETAIL: { type: String },
+    RAM: { type: String },
+    Screen: { type: String },
+    Keyboard: { type: String },
+    Audio: { type: String },
+    Lan: { type: String },
+    Bluetooth: { type: String },
+    Webcam: { type: String },
+    Weight: { type: String },
+    Size: { type: String },
+    HZ: { type: String },
+    VGA: { type: String },
+    SSD: { type: String },
+    Stock: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

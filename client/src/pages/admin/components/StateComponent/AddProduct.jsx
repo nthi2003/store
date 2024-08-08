@@ -7,14 +7,14 @@ import { IoMdClose } from 'react-icons/io';
 
 const AddProduct = ({ show, onClose }) => {
     const dispatch = useDispatch();
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]);
     const { categorys } = useSelector(state => state.category);
 
     const [formData, setFormData] = useState({
         name: '',
         price: '',
-        image: null, 
+        images: [], 
         categoryid: '',
         categoryName: '',
         Stock: '',
@@ -40,14 +40,14 @@ const AddProduct = ({ show, onClose }) => {
     }, [dispatch]);
 
     useEffect(() => {
-
-        if (selectedImage) {
-            const objectUrl = URL.createObjectURL(selectedImage);
-            setImagePreview(objectUrl);
-
-            return () => URL.revokeObjectURL(objectUrl);
+        if (selectedImages.length > 0) {
+            const imageUrls = selectedImages.map(file => URL.createObjectURL(file));
+            setImagePreviews(imageUrls);
+            return () => {
+                imageUrls.forEach(url => URL.revokeObjectURL(url));
+            };
         }
-    }, [selectedImage]);
+    }, [selectedImages]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,23 +58,22 @@ const AddProduct = ({ show, onClose }) => {
     };
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setSelectedImage(file);
+        const files = Array.from(e.target.files);
+        setSelectedImages(files);
         setFormData(prev => ({
             ...prev,
-            image: file
+            images: files
         }));
     };
 
-    const handleRemoveImage = () => {
-        if (imagePreview) {
-            URL.revokeObjectURL(imagePreview);
-        }
-        setSelectedImage(null);
-        setImagePreview(null);
+    const handleRemoveImage = (index) => {
+        const newImages = selectedImages.filter((_, i) => i !== index);
+        const newPreviews = imagePreviews.filter((_, i) => i !== index);
+        setSelectedImages(newImages);
+        setImagePreviews(newPreviews);
         setFormData(prev => ({
             ...prev,
-            image: null
+            images: newImages
         }));
     };
 
@@ -101,7 +100,7 @@ const AddProduct = ({ show, onClose }) => {
         setFormData({
             name: '',
             price: '',
-            image: null,
+            images: [],
             categoryid: '',
             categoryName: '',
             Stock: '',
@@ -121,8 +120,8 @@ const AddProduct = ({ show, onClose }) => {
             VGA: '',
             SSD: ''
         });
-        setSelectedImage(null);
-        setImagePreview(null);
+        setSelectedImages([]);
+        setImagePreviews([]);
         onClose();
     };
 
@@ -164,7 +163,7 @@ const AddProduct = ({ show, onClose }) => {
                             </div>
                         </div>
                         <div className='items-center justify-center w-full mt-9'>
-                            <span className='font-bold'>Image</span>
+                            <span className='font-bold'>Images</span>
                             <label htmlFor="dropzone-file" className='flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed'>
                                 <div>
                                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
@@ -175,25 +174,30 @@ const AddProduct = ({ show, onClose }) => {
                                 <input
                                     id="dropzone-file"
                                     type="file"
+                                    multiple
                                     className='hidden'
                                     onChange={handleFileChange}
-                                    name="image"
+                                    name="images"
                                     required
                                 />
                             </label>
-                            {imagePreview && (
-                                <div className='mt-4 relative w-40 h-40'>
-                                    <img 
-                                        src={imagePreview} 
-                                        alt="Selected preview" 
-                                        className='border rounded w-full h-full object-cover'
-                                    />
-                                    <button 
-                                        onClick={handleRemoveImage} 
-                                        className='ml-4 bg-red-200 rounded-[20px] mt-1 text-white py-2 px-2 absolute top-1 right-1'
-                                    >
-                                        <IoMdClose className='text-red-600'/>
-                                    </button>
+                            {imagePreviews.length > 0 && (
+                                <div className='mt-4 grid grid-cols-3 gap-4'>
+                                    {imagePreviews.map((preview, index) => (
+                                        <div key={index} className='relative'>
+                                            <img 
+                                                src={preview} 
+                                                alt="Selected preview" 
+                                                className='border rounded w-full h-full object-cover'
+                                            />
+                                            <button 
+                                                onClick={() => handleRemoveImage(index)} 
+                                                className='ml-4 bg-red-200 rounded-[20px] mt-1 text-white py-2 px-2 absolute top-1 right-1'
+                                            >
+                                                <IoMdClose className='text-red-600'/>
+                                            </button>
+                                        </div>
+                                    ))}
                                 </div>
                             )}
                         </div>
@@ -201,7 +205,7 @@ const AddProduct = ({ show, onClose }) => {
                             <div className='mb-2 mt-2'>
                                 <span className='font-bold'>Specifications</span>
                             </div>
-                            {['CPUDETAIL', 'RAMRAMDETAIL', 'Screen', 'PORT', 'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size'].map(spec => (
+                            {['CPUDETAIL', 'RAMDETAIL', 'Screen', 'PORT', 'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size'].map(spec => (
                                 <div key={spec}>
                                     <span>{spec}</span>
                                     <input
@@ -239,15 +243,9 @@ const AddProduct = ({ show, onClose }) => {
                             >
                                 <option value="">Select a category</option>
                                 {
-                                    categorys && categorys.length > 0 ? (
-                                        categorys.map((category) => (
-                                            <option key={category._id} value={category._id}>
-                                                {category.name}
-                                            </option>
-                                        ))
-                                    ) : (
-                                        <option value="">Chưa có danh mục</option>
-                                    )
+                                    categorys && categorys.length > 0 && categorys.map(category => (
+                                        <option key={category._id} value={category._id}>{category.name}</option>
+                                    ))
                                 }
                             </select>
                         </div>
@@ -261,17 +259,12 @@ const AddProduct = ({ show, onClose }) => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <button
-                            type="submit"
-                            className='bg-black text-white p-2 mt-10 w-full'
-                        >
-                            Add
-                        </button>
+                        <button type="submit" className="mt-5 text-white bg-black p-3 text-center font-bold rounded-md">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default AddProduct;
