@@ -14,7 +14,7 @@ const AddProduct = ({ show, onClose }) => {
     const [formData, setFormData] = useState({
         name: '',
         price: '',
-        images: [], 
+        images: [],
         categoryid: '',
         categoryName: '',
         Stock: '',
@@ -178,23 +178,23 @@ const AddProduct = ({ show, onClose }) => {
                                     className='hidden'
                                     onChange={handleFileChange}
                                     name="images"
-                                    required
                                 />
                             </label>
+
                             {imagePreviews.length > 0 && (
                                 <div className='mt-4 grid grid-cols-3 gap-4'>
                                     {imagePreviews.map((preview, index) => (
                                         <div key={index} className='relative'>
-                                            <img 
-                                                src={preview} 
-                                                alt="Selected preview" 
+                                            <img
+                                                src={preview}
+                                                alt="Selected preview"
                                                 className='border rounded w-full h-full object-cover'
                                             />
-                                            <button 
-                                                onClick={() => handleRemoveImage(index)} 
+                                            <button
+                                                onClick={() => handleRemoveImage(index)}
                                                 className='ml-4 bg-red-200 rounded-[20px] mt-1 text-white py-2 px-2 absolute top-1 right-1'
                                             >
-                                                <IoMdClose className='text-red-600'/>
+                                                <IoMdClose className='text-red-600' />
                                             </button>
                                         </div>
                                     ))}

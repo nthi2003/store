@@ -409,7 +409,7 @@ const HomePage = () => {
         </div>
         <Product hTitle = 'PC bán chạy' shTitle = 'Trả góp 0%' />
         <Product hTitle = 'Laptop gaming bán chạy' shTitle = 'Miễn phí giao hàng' />
-        <Product hTitle = 'Laptop văn phòng bán chạy' shTitle = 'Miễn phí giao hàng' />
+        <Product hTitle = 'Bàn phím văn phòng bán chạy' shTitle = 'Miễn phí giao hàng' />
         
         <Categorry/>
       </div>

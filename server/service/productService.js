@@ -1,23 +1,30 @@
 const Product = require('../model/Products');
 const Category = require('../model/Category');
 const cloudinary = require('../utils/cloudinary');
-const fs = require('fs');
+
 const uploadImages = async (files) => {
     try {
         const imageUrls = [];
         
         for (const file of files) {
             const result = await cloudinary.uploader.upload(file.path, { folder: 'products' });
-      
-            imageUrls.push({
-                public_id: result.public_id,
-                url: result.secure_url
-            });
+            console.log(result); 
+            
+            if (result && result.public_id && result.secure_url) {
+                imageUrls.push({
+                    public_id: result.public_id,
+                    url: result.secure_url
+                });
+            } else {
+                return {
+                    status: 'error',
+                    message: 'Không có file ảnh hợp lệ',
+                };
+            }
         }
 
         return imageUrls;
     } catch (error) {
-       
         return { status: 'error', message: error.message };
     }
 };
@@ -43,18 +50,17 @@ const createProduct = async ({
         }
 
         const uploadResults = await uploadImages(images);
-     
 
-        const imageUrls = uploadResults.map(result => ({
-            public_id: result.public_id,
-            url: result.secure_url
-        }));
+
+        if (uploadResults.status === 'error') {
+            return uploadResults;
+        }
 
         const product = await Product.create({
             name,
             price,
             title,
-            images: imageUrls,
+            images: uploadResults, 
             categoryid,
             categoryName,
             CPU,
@@ -119,7 +125,7 @@ const deleteProduct = async(id) => {
                 message: 'Sản phẩm không tồn tại'
             }
         }
-        if(product.images && product.image.public_id) {
+        if(product.images && product.images.public_id) {
             await cloudinary.uploader.destroy(product.images.public_id)
         }
         await Product.findByIdAndDelete(id)

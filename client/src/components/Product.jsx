@@ -36,12 +36,18 @@
     };
 
     const Product = ({hTitle , shTitle}) => {
+        
         const {products} = useSelector(state => state.product);
         const dispatch = useDispatch()
         useEffect(() => {
             dispatch(fetchProduct());
           }, [dispatch])
-        
+          const filteredProducts = products.filter((product) => {
+            if (hTitle === 'PC bán chạy') return product.categoryName === 'PC';
+            if (hTitle === 'Laptop gaming bán chạy') return product.categoryName === 'Laptop';
+            if (hTitle === 'Bàn phím văn phòng bán chạy') return product.categoryName === 'Bàn phím';
+            return true;
+          });
         const settings = {
             dots: true,
             infinite: false,
@@ -102,10 +108,10 @@
                 <div className='bg-white'>
                     <div className="slider-container p-2 ">
                         <Slider {...settings}>
-                        {products.map((product, index) => (
+                        {filteredProducts.map((product, index) => (
                             <div className='bg-white border border-solid border-1 border-slate-200 rounded-[1px]' key={product._id}>
                                 <div className='p-2'>
-                                    <img src={product.image.url} alt="" />
+                                    <img src={product.images[0].url} alt="" />
                                 </div>
                                 <div>
                                     <div className='p-3'>

@@ -16,15 +16,15 @@ const Product = () => {
   useEffect(() => {
     dispatch(fetchProduct(currentPage, 5));
   }, [dispatch, currentPage])
-  const handleDelete = async(id) => {
-      const response = await dispatch(deleteProduct(id));
-      if (response.status === 'success') {
-        dispatch(fetchProduct(currentPage, 5))
-      }    
+  const handleDelete = async (id) => {
+    const response = await dispatch(deleteProduct(id));
+    if (response.status === 'success') {
+      dispatch(fetchProduct(currentPage, 5))
+    }
   }
   const handlePageChange = (currentPage) => {
     dispatch(fetchProduct(currentPage, 5));
-};
+  };
   const handleEditModel = () => {
 
   }
@@ -68,8 +68,8 @@ const Product = () => {
                     <p className='text-black'>{product.name ? product.name.slice(0, 20) : ''}...</p>
                   </td>
                   <td className='border-b border-[#eee] py-5 px-4'>
-                    {product.image ? (
-                      <img src={product.image.url} className='w-20 h-20' alt={product.name} />
+                    {product.images && product.images.length > 0 ? (
+                      <img src={product.images[0].url} className='w-20 h-20' alt={product.name} />
                     ) : (
                       <AiFillPicture className='w-20 h-20' />
                     )}
@@ -79,71 +79,71 @@ const Product = () => {
                   </td>
                   <td className='border-b border-[#eee] py-5 px-4'>
                     <div className='text-black'>
-      
-                        <div className='flex '>
-                          <span className='font-bold'>CPU</span>
-                          <p className='ml-2'>{product.CPUDETAIL ? product.CPUDETAIL.slice(0, 20) : ''}...</p>
-                        </div>
-        
 
-                           <div className='flex '>
-                          <span className='font-bold'>RAM</span>
-                          <p className='ml-2'>{product.RAMDETAIL ? product.RAMDETAIL.slice(0, 20) : ''}...</p>
-                        </div>
+                      <div className='flex '>
+                        <span className='font-bold'>CPU</span>
+                        <p className='ml-2'>{product.CPUDETAIL ? product.CPUDETAIL.slice(0, 20) : ''}...</p>
+                      </div>
 
-                      
-                        <div className='flex '>
-                          <span className='font-bold'>SSD</span>
-                          <p className='ml-2' >{product.SSD}</p>
-                        </div>
-                 
-                  
-                        <div className='flex '>
-                          <span className='font-bold'>Screen</span>
-                          <p className='ml-2'>{product.Screen ? product.Screen.slice(0, 20) : ''}...</p>
-                        </div>
-               
-                
-                        <div className='flex '>
-                          <span className='font-bold'>PORT</span>
-                          <p className='ml-2'>{product.Port ? product.Port.slice(0, 20) : ''}...</p>
-                        </div>
-              
-                   
-                        <div className='flex '>
-                          <span className='font-bold'>Keyboard</span>
-                          <p className='ml-2'>{product.Keyboard ? product.Keyboard.slice(0, 20) : ''}...</p>
-                        </div>
-             
-                 
-                        <div className='flex '>
-                          <span className='font-bold'>Audio</span>
-                          <p className='ml-2'>{product.Audio}</p>
-                        </div>
-              
-           
-                        <div className='flex '>
-                          <span className='font-bold'>Lan</span>
-                          <p className='ml-2'>{product.Lan}</p>
-                        </div>
-               
-                  
-                        <div className='flex '>
-                          <span className='font-bold'>Bluetooth</span>
-                          <p className='ml-2'>{product.Bluetooth}</p>
-                        </div>
- 
-                        <div className='flex '>
-                          <span className='font-bold'>Webcam</span>
-                          <p className='ml-2' >{product.Webcam}</p>
-                        </div>
 
-         
-                        <div className='flex '>
-                          <span className='font-bold'>Size</span>
-                          <p className='ml-2'>{product.Size}</p>
-                        </div>
-   
+                      <div className='flex '>
+                        <span className='font-bold'>RAM</span>
+                        <p className='ml-2'>{product.RAMDETAIL ? product.RAMDETAIL.slice(0, 20) : ''}...</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>SSD</span>
+                        <p className='ml-2' >{product.SSD}</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Screen</span>
+                        <p className='ml-2'>{product.Screen ? product.Screen.slice(0, 20) : ''}...</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>PORT</span>
+                        <p className='ml-2'>{product.Port ? product.Port.slice(0, 20) : ''}...</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Keyboard</span>
+                        <p className='ml-2'>{product.Keyboard ? product.Keyboard.slice(0, 20) : ''}...</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Audio</span>
+                        <p className='ml-2'>{product.Audio}</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Lan</span>
+                        <p className='ml-2'>{product.Lan}</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Bluetooth</span>
+                        <p className='ml-2'>{product.Bluetooth}</p>
+                      </div>
+
+                      <div className='flex '>
+                        <span className='font-bold'>Webcam</span>
+                        <p className='ml-2' >{product.Webcam}</p>
+                      </div>
+
+
+                      <div className='flex '>
+                        <span className='font-bold'>Size</span>
+                        <p className='ml-2'>{product.Size}</p>
+                      </div>
+
                     </div>
                   </td>
                   <td className='border-b border-[#eee] py-5 px-4'>
@@ -199,16 +199,16 @@ const Product = () => {
                     </div>
                   </td>
                   <td className='border-b border-[#eee] py-5 px-4'>
-                                        <div className='text-black flex'>
-                                            <div className='bg-red-200 border rounded-[20px] p-2 mr-2'>
-                                                <MdOutlineDelete className='text-red-500' onClick={() => handleDelete(product._id)} />
-                                            </div>
-                                            <div className='bg-blue-200 border rounded-[20px] p-2 mr-2'>
-                                                <MdOutlineEdit className='text-blue-500' onClick={() => handleEditModel(product._id)} />
-                                            </div>
-                                        </div>
-                                    </td>
-                  
+                    <div className='text-black flex'>
+                      <div className='bg-red-200 border rounded-[20px] p-2 mr-2'>
+                        <MdOutlineDelete className='text-red-500' onClick={() => handleDelete(product._id)} />
+                      </div>
+                      <div className='bg-blue-200 border rounded-[20px] p-2 mr-2'>
+                        <MdOutlineEdit className='text-blue-500' onClick={() => handleEditModel(product._id)} />
+                      </div>
+                    </div>
+                  </td>
+
                 </tr>
               ))}
             </tbody>

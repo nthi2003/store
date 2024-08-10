@@ -2,7 +2,7 @@ const categoryService = require('../service/categoryService')
 const createCategory = async (req, res) => {
     try {
         const { name } = req.body;
-        const file = req.files?.image;
+        const file = req.file;
 
         if (!file) {
             return res.status(400).json({
@@ -11,10 +11,7 @@ const createCategory = async (req, res) => {
             });
         }
 
-  
-
-        const response = await categoryService.createCategory({ name, image: file.tempFilePath });
-        
+        const response = await categoryService.createCategory({ name, image: file.path }); // Sử dụng file.path
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({

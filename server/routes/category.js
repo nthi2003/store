@@ -3,8 +3,8 @@ const router = express.Router();
 const categoryController = require('../controllers/categoryController');
 const {authenToken , authorization} = require('../middleware/authToken')
 
-
-router.post('/createCategory', authenToken , authorization ,  categoryController.createCategory);
+const upload = require('../middleware/upload');
+router.post('/createCategory', authenToken, authorization, upload.single('image'), categoryController.createCategory);
 router.get('/getAllCategory', authenToken , authorization , categoryController.getAllCategory);
 router.put('/updateCategory/:id', authenToken , authorization , categoryController.updateCategory);
 router.delete('/deleteCategory/:id', authenToken , authorization , categoryController.deleteCategory);

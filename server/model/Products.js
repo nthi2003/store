@@ -4,7 +4,18 @@ const Schema = mongoose.Schema;
 const ProductSchema = new Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
-    images: [{ public_id: String, url: String }],
+    images: [
+         {
+            public_id : {
+                type: String,
+                required: true
+            },
+            url : {
+                type: String,
+                required: true
+            }
+        },
+    ],
     categoryid: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     categoryName: { type: String, required: true },
     CPU: { type: String },
