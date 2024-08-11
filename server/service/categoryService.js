@@ -82,11 +82,12 @@ const updateCategory = async (id, name, image) => {
             };
         }
 
-        const categorys = await Category.findByIdAndUpdate(id, updatedData)
+        const updatedCategory = await Category.findByIdAndUpdate(id, updatedData, { new: true });
+
         return {
             status: 'success',
             message: 'Sửa Category thành công',
-            categorys
+            category: updatedCategory
         }
     }
     catch (error) {
@@ -95,7 +96,8 @@ const updateCategory = async (id, name, image) => {
             error: error.message,
         }
     }
-}
+}   
+
 const deleteImgateCategory = async (id) => {
     try {
 

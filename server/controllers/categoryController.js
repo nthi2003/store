@@ -11,7 +11,7 @@ const createCategory = async (req, res) => {
             });
         }
 
-        const response = await categoryService.createCategory({ name, image: file.path }); // Sử dụng file.path
+        const response = await categoryService.createCategory({ name, image: file.path }); 
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({
