@@ -7,21 +7,15 @@ import { AiFillPicture } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProduct, fetchProduct } from '../../../redux/actions/productAction'
 import AddProduct from './StateComponent/AddProduct'
-<<<<<<< HEAD
 import UpdateProducts from './StateComponent/UpdateProducts'
-=======
->>>>>>> origin/main
 
 
 const Product = () => {
   const dispatch = useDispatch()
   const { products, totalPages, currentPage } = useSelector(state => state.product)
   const [show, setShow] = useState(false)
-<<<<<<< HEAD
   const [showEdit, setShowEdit] = useState(false);
   const [editProductId , setEditProductId] = useState(null)
-=======
->>>>>>> origin/main
   useEffect(() => {
     dispatch(fetchProduct(currentPage, 5));
   }, [dispatch, currentPage])
@@ -34,13 +28,7 @@ const Product = () => {
   const handlePageChange = (currentPage) => {
     dispatch(fetchProduct(currentPage, 5));
   };
-<<<<<<< HEAD
 
-=======
-  const handleEditModel = () => {
-
-  }
->>>>>>> origin/main
   const handleShow = () => {
     setShow(true)
 
@@ -48,7 +36,6 @@ const Product = () => {
   const handleCloseShow = () => {
     setShow(false)
   }
-<<<<<<< HEAD
   const handleCloseEdit = () => {
     setShowEdit(false);
   }
@@ -58,8 +45,6 @@ const Product = () => {
     setShowEdit(true);
     console.log(setEditProductId)
   }
-=======
->>>>>>> origin/main
   return (
     <div>
       <Toaster />
@@ -229,11 +214,7 @@ const Product = () => {
                         <MdOutlineDelete className='text-red-500' onClick={() => handleDelete(product._id)} />
                       </div>
                       <div className='bg-blue-200 border rounded-[20px] p-2 mr-2'>
-<<<<<<< HEAD
                         <MdOutlineEdit className='text-blue-500' onClick={() => handleEdit(product._id)} />
-=======
-                        <MdOutlineEdit className='text-blue-500' onClick={() => handleEditModel(product._id)} />
->>>>>>> origin/main
                       </div>
                     </div>
                   </td>
@@ -244,10 +225,7 @@ const Product = () => {
 
           </table>
           <AddProduct show={show} onClose={handleCloseShow} />
-<<<<<<< HEAD
           <UpdateProducts Editshow={showEdit} onClose={handleCloseEdit} productId={editProductId} />
-=======
->>>>>>> origin/main
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
       </div>
