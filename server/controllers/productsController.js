@@ -65,9 +65,30 @@ const deleteProduct = async (req, res) => {
         })
     }
 }
+const updateProduct = async (req, res) => {
+    try {
+        const {id} = req.params
+    const updateData = req.body
+    console.log("req.files:", req.files);
+
+    const newImages =  req.files ?  req.files.map(file => file.path) : [];
+    console.log("newImages:", newImages);
+    const {imagesToDelete } = req.body;
+    const  response = await productService.updateProduct(id, updateData, newImages, imagesToDelete);
+    return res.status(200).json(response);
+
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message
+        })
+    }
+
+}
 
 module.exports = {
     createProduct,
     getAllProducts,
-    deleteProduct
+    deleteProduct,
+    updateProduct
 };

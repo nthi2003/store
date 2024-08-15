@@ -65,6 +65,7 @@ const updateCategory = async (id, name, image) => {
                 message: 'Category không tồn tại'
             };
         }
+        
         const updatedData = { name };
         if (image) {
             if (category.image && category.image.public_id) {

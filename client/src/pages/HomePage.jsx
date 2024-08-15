@@ -63,7 +63,7 @@ const HomePage = () => {
        <img src="https://file.hstatic.net/200000722513/file/pc_-_topbar_ae727c35df2d4cff9f0c611a7d19cc15.png" alt="" />
        </div>
       </div>
-      <div className='sticky top-0 z-10 bg-[#E30019] w-[2000px]'>
+      <div className='sticky top-0 z-10 bg-[#E30019] '>
                 <div className='max-w-7xl ml-auto mr-auto px-2 flex'>
                     <div className='lg:py-4 flex'>
                         <div className='ml-[50px] mr-[20px]'>
@@ -190,50 +190,50 @@ const HomePage = () => {
             </div>
 
       <Toaster />
-       <div className='bg-white border-b border-gray-200 p-2'>
+       <div className='bg-white h-[40px]'>
         <div className='max-w-7xl mx-auto px-3'>
           <ul className='flex'>
             <li className='w-auto p-2 ml-10'>
               <a href="" className='flex items-center ml-6 mr-6'>
                 <span className='p-1'><AiOutlineTags /></span>
-                <span className='text-nowrap text-xs pt-1'>Săn Voucher GEARVN</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Săn Voucher GEARVN</span>
               </a>
             </li>
-            <li className='w-auto p-2 border-l'>
+            <li className='w-auto p-2 mx-2 border-l'>
               <a href="" className='flex items-center ml-3 mr-6'>
                 <span className='p-1'><IoNewspaperOutline /></span>
-                <span className='text-nowrap text-xs pt-1'>Tin công nghệ</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Tin công nghệ</span>
               </a>
             </li>
-            <li className='w-auto p-2 border-l'>
+            <li className='w-auto p-2 mx-2 border-l'>
               <a href="" className='flex items-center ml-3 mr-6'>
                 <span className='p-1'><FiYoutube /></span>
-                <span className='text-nowrap text-xs pt-1'>Video</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Video</span>
               </a>
             </li>
-            <li className='w-auto p-2 border-l'>
+            <li className='w-auto p-2 mx-2 border-l'>
               <a href="" className='flex items-center ml-3 mr-6'>
                 <span className='p-1'><RiBankCardLine /></span>
-                <span className='text-nowrap text-xs pt-1'>Hướng dẫn thanh toán</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Hướng dẫn thanh toán</span>
               </a>
             </li>
-            <li className='w-auto p-2 border-l'>
+            <li className='w-auto p-2 mx-2 border-l'>
               <a href="" className='flex items-center ml-3 mr-6'>
                 <span className='p-1'><GrMoney /></span>
-                <span className='text-nowrap text-xs pt-1'>Hướng dẫn trả góp</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Hướng dẫn trả góp</span>
               </a>
             </li>
-            <li className='w-auto p-2 border-l'>
+            <li className='w-auto p-2 mx-2 border-l'>
               <a href="" className='flex items-center ml-3 mr-6'>
                 <span className='p-1'><IoShieldCheckmarkOutline /></span>
-                <span className='text-nowrap text-xs pt-1'>Tra cứu bảo hành</span>
+                <span className='text-nowrap text-xs pt-1 font-bold'>Tra cứu bảo hành</span>
               </a>
             </li>
           </ul>
         </div>
       </div>
       
-      <section className='bg-gray-300 h-[491px] flex '>
+      <section className='bg-gray-200 h-[491px] flex '>
         <div className='lg:w-20% ml-[360px] mt-4'>
           <div className=' bg-white h-72 w-[220px]'>
 

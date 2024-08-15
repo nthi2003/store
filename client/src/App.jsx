@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import Profile from './pages/Profile';
 import Dashboard from './pages/admin/Dashboard';
 import { useSelector } from 'react-redux';
+import ProductDetails from './components/ProductDetails';
 
 const App = () => {
   const { isAuthenticated, user } = useSelector(state => state.auth);
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/profile' element={isAuthenticated ? <Profile /> : <Navigate to='/login' />} />
           <Route path='/dashboard' element={isAuthenticated && user?.role === 'admin' ? <Dashboard /> : <Navigate to='/' />} />
           <Route path='*' element={<Navigate to='/' />} />
+          <Route path='/products' element={<ProductDetails/>} />
         </Routes>
       </Router>
     </div>

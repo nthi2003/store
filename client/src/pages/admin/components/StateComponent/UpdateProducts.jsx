@@ -94,7 +94,14 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
         }));
     }
     const handleCategoryChange = (e) => {
-        
+        const selectedCategoryId = e.target.value;
+        const selectedCategory = categorys.find(category => category._id === selectedCategoryId)
+        setFormData(prev => ({
+            ...prev,
+            categoryid: selectedCategoryId,
+            categoryName: selectedCategory ? selectedCategory.name : '',
+            
+        })) 
 
     }
     const handleUpdate = () => {

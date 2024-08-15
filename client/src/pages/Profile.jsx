@@ -9,16 +9,17 @@ import { useSelector } from 'react-redux';
 import OrderUser from '../components/OrderUser';
 import ProfileInfo from '../components/ProfileInfo';
 import HeartUser from '../components/HeartUser';
+import Default from '../components/Default';
 
 
 const Profile = () => {
   const user = useSelector(state => state.auth.user);
-  const [active , setActive] = useState('default')
+  const [active , setActive] = useState('profile')
   const contentMap = {
     profile: <ProfileInfo/>,
     order: <OrderUser/>,
     heart: <HeartUser/>,
-    default: <div>Chọn một mục từ sidebar để xem nội dung</div>
+
   }
   return (
     <div>
