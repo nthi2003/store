@@ -1,4 +1,5 @@
 const productService = require('../service/productService');
+
 const createProduct = async (req, res) => {
     try {
         const { name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
@@ -67,24 +68,53 @@ const deleteProduct = async (req, res) => {
 }
 const updateProduct = async (req, res) => {
     try {
-        const {id} = req.params
-    const updateData = req.body
-    console.log("req.files:", req.files);
+        const { id } = req.params;
+        const {
+            name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
+            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+            Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ
+        } = req.body;
+        const images = req.files;
 
-    const newImages =  req.files ?  req.files.map(file => file.path) : [];
-    console.log("newImages:", newImages);
-    const {imagesToDelete } = req.body;
-    const  response = await productService.updateProduct(id, updateData, newImages, imagesToDelete);
-    return res.status(200).json(response);
+        if (!categoryid) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'CategoryID không tồn tại'
+            });
+        }
 
+        const product = await productService.getAllProducts(id);
+        if (!product) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Sản phẩm không tồn tại'
+            });
+        }
+
+        let imageUrls = product.images; 
+        if (images && images.length > 0) {
+            const uploadResults = await productService.uploadImages(images);
+            if (uploadResults.status === 'error') {
+                return res.status(400).json(uploadResults);
+            }
+            imageUrls = uploadResults; 
+        }
+
+        const updatedProduct = await productService.updateProduct(id, {
+            name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
+            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+            Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images: imageUrls
+        });
+
+        return res.status(200).json(updatedProduct);
     } catch (error) {
+        console.error('Lỗi khi cập nhật sản phẩm:', error);
         return res.status(500).json({
             status: 'error',
             message: error.message
-        })
+        });
     }
-
-}
+};
 
 module.exports = {
     createProduct,
