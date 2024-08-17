@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct } from '../../../../redux/actions/productAction';
+import { createProduct, fetchProduct } from '../../../../redux/actions/productAction';
 import { fetchCategory } from '../../../../redux/actions/categoryAction';
 import { IoMdClose } from 'react-icons/io';
+import { setError } from '../../../../redux/reducers/productSlice';
 
 const AddProduct = ({ show, onClose }) => {
     const dispatch = useDispatch();
@@ -87,7 +88,7 @@ const AddProduct = ({ show, onClose }) => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         const requiredFields = ['name', 'price', 'categoryid', 'categoryName', 'Stock'];
         for (let field of requiredFields) {
@@ -96,7 +97,9 @@ const AddProduct = ({ show, onClose }) => {
                 return;
             }
         }
-        dispatch(createProduct(formData));
+        try {
+         await dispatch(createProduct(formData));
+         await dispatch(fetchProduct());
         setFormData({
             name: '',
             price: '',
@@ -122,7 +125,11 @@ const AddProduct = ({ show, onClose }) => {
         });
         setSelectedImages([]);
         setImagePreviews([]);
+
         onClose();
+        } catch (error) {
+            dispatch(setError(error));
+        }
     };
 
     if (!show) return null;

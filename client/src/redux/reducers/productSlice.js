@@ -12,9 +12,11 @@ const productSlice = createSlice({
     reducers: {
         setLoading : (state , action) => {
             state.loading = action.payload.loading;
+            state.error = null;
         },
         setError: (state, action) => {
-            state.error = action.payload.error;
+            state.loading = false;
+            state.error = action.payload?.error || null
         },
         fetchAllProducts : (state, action) => {
             const { products , totalProduct , totalPages, currentPage} = action.payload;
@@ -30,6 +32,60 @@ const productSlice = createSlice({
             state.loading = false;
             state.error = null
         },
+        updateProductSuccess : (state, action) => {
+            const {
+              _id,
+              name,
+              images,
+              price,
+              categoryid,
+              categoryName,
+              CPU,
+              CPUDETAIL,
+              RAMDETAIL,
+              RAM,
+              Screen,
+              Keyboard,
+              Audio,
+              Lan,
+              Bluetooth,
+              Webcam,
+              Weight,
+              Size,
+              HZ,
+              VGA,
+              SSD,
+              Stock,
+            } = action.payload;
+          
+            const index = state.products.findIndex((product) => product._id === _id);
+            if (index !== -1) {
+              state.products[index] = {
+                ...state.products[index],
+                name,
+                images,
+                price,
+                categoryid,
+                categoryName,
+                CPU,
+                CPUDETAIL,
+                RAMDETAIL,
+                RAM,
+                Screen,
+                Keyboard,
+                Audio,
+                Lan,
+                Bluetooth,
+                Webcam,
+                Weight,
+                Size,
+                HZ,
+                VGA,
+                SSD,
+                Stock,
+              };
+            }
+          },
         deleteProductSuccess : (state, action) => {
             const {id} = action.payload
             state.products = state.products.filter(product => product.id!== id)
@@ -39,5 +95,5 @@ const productSlice = createSlice({
        
     }
 })
-export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess} = productSlice.actions
+export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess, updateProductSuccess} = productSlice.actions
 export default productSlice.reducer;

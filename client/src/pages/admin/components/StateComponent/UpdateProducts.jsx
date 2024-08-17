@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateProduct } from '../../../../redux/actions/productAction';
 
 const UpdateProducts = ({ Editshow, onClose, productId }) => {
     const dispatch = useDispatch();
@@ -104,7 +105,10 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
         })) 
 
     }
-    const handleUpdate = () => {
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock));
+        onClose();
 
     }
     if (!Editshow) return

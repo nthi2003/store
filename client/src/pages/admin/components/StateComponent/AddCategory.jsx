@@ -41,7 +41,7 @@ const AddCategory = ({ show, onClose }) => {
         };
         try {
             await dispatch(createCategory(categoryData)); 
-            dispatch(fetchCategory(1, 5)); 
+            await dispatch(fetchCategory(1, 5)); 
             onClose();
             setName('')
             setSelectedImage(null); 
