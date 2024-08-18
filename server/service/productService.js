@@ -117,6 +117,29 @@ const getAllProducts = async (page, limit) => {
     }
 };
 
+const getProductDetails = async (id) => {
+    try {
+       const getProduct = await Product.findById(id)
+       if(!getProduct) {
+        return {
+            status: 'error',
+            message: 'Không tìm tháy sản phẩm'
+        }
+       }
+       return {
+        status : 'success',
+        message : 'Thành công',
+        getProduct
+       }
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+} 
+
 const deleteProduct = async(id) => {
     try {
         const product = await Product.findById(id);
@@ -162,5 +185,6 @@ module.exports = {
     deleteProduct,
     uploadImages,
     updateProduct,
+    getProductDetails
 
 };
