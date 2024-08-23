@@ -22,7 +22,7 @@ const App = () => {
           <Route path='/profile' element={isAuthenticated ? <Profile /> : <Navigate to='/login' />} />
           <Route path='/dashboard' element={isAuthenticated && user?.role === 'admin' ? <Dashboard /> : <Navigate to='/' />} />
           <Route path='*' element={<Navigate to='/' />} />
-          <Route path='/products' element={<ProductDetails/>} />
+          <Route path='/products/:id' element={<ProductDetails/>} />
         </Routes>
       </Router>
     </div>

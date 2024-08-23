@@ -31,9 +31,7 @@ const RegisterPage = () => {
             if (response && !response.error) {
               
                 navigate('/');
-            } else {
-                toast.error('Đăng kí không thành công ');
-            }
+            } 
             
         } catch (error) {
             

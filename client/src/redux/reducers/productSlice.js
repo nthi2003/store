@@ -4,7 +4,8 @@ let initialState = {
     error : null,
     loading : false,
     isAuthenticated : false,
-    products : []
+    products : [],
+    productDetails: null,
 }
 const productSlice = createSlice({
     name : 'product',
@@ -24,6 +25,11 @@ const productSlice = createSlice({
             state.totalProduct = totalProduct;
             state.totalPages = totalPages;
             state.currentPage = currentPage;
+            state.loading = false;
+            state.error = null;
+        },
+        getProductDetailsSuccess: (state, action) => {
+            state.productDetails = action.payload;
             state.loading = false;
             state.error = null;
         },
@@ -95,5 +101,5 @@ const productSlice = createSlice({
        
     }
 })
-export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess, updateProductSuccess} = productSlice.actions
+export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess, updateProductSuccess , getProductDetailsSuccess} = productSlice.actions
 export default productSlice.reducer;
