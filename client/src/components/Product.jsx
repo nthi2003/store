@@ -144,7 +144,7 @@ const Product = ({ hTitle, shTitle }) => {
                                         </div>
                                     </div>
                                     <div className='flex justify-between p-3'>
-                                        <span className='text-[14px] text-[#E30019]'>{product.price}</span>
+                                        <span className='text-[14px] text-[#E30019] font-bold'>{product.price.toLocaleString()}₫</span>
                                         <div className='flex items-center'>
                                             <CiStar className='text-[#F7D303]' />
                                             <span className='text-[14px] text-[#F7D303]'>{product.rating}</span>

@@ -5,7 +5,7 @@ let initialState = {
     loading : false,
     isAuthenticated : false,
     products : [],
-    productDetails: null,
+    product: null,
 }
 const productSlice = createSlice({
     name : 'product',
@@ -29,7 +29,7 @@ const productSlice = createSlice({
             state.error = null;
         },
         getProductDetailsSuccess: (state, action) => {
-            state.productDetails = action.payload;
+            state.product = action.payload;
             state.loading = false;
             state.error = null;
         },

@@ -119,8 +119,8 @@ const getAllProducts = async (page, limit) => {
 
 const getProductDetails = async (id) => {
     try {
-       const getProduct = await Product.findById(id)
-       if(!getProduct) {
+       const product = await Product.findById(id)
+       if(!product) {
         return {
             status: 'error',
             message: 'Không tìm tháy sản phẩm'
@@ -129,7 +129,7 @@ const getProductDetails = async (id) => {
        return {
         status : 'success',
         message : 'Thành công',
-        getProduct
+        product
        }
     }
     catch (error) {
