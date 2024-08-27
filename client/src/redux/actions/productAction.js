@@ -45,6 +45,10 @@ export const createProduct = (productData) => async (dispatch) => {
         formData.append('SSD', productData.SSD);
         formData.append('categoryid', productData.categoryid);
         formData.append('categoryName', productData.categoryName);
+        formData.append('GC', productData.GC);
+        formData.append('Color', productData.Color);
+        formData.append('Wifi', productData.Wifi);
+        formData.append('OS', productData.OS);
 
         for (const image of productData.images) {
             formData.append('images', image);
@@ -85,7 +89,13 @@ export const updateProduct = (
     HZ,
     VGA,
     SSD,
-    Stock) => async (dispatch) => {
+    Stock,
+    OS,
+    Wifi,
+    Color,
+
+
+  ) => async (dispatch) => {
     dispatch(setLoading(true)); 
     try {
       const formData = new FormData();
@@ -109,6 +119,10 @@ export const updateProduct = (
       formData.append("VGA", VGA);
       formData.append("SSD", SSD);
       formData.append("Stock", Stock);
+      formData.append("OS", OS);
+      formData.append("Wifi", Wifi);
+      formData.append("Color", Color);
+ 
       if (images) {
         for (let i = 0; i < images.length; i++) {
           formData.append("images", images[i]);

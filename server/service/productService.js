@@ -31,7 +31,7 @@ const uploadImages = async (files) => {
 
 const createProduct = async ({
     name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
-    RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+    RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, Battery,
     Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images
 }) => {
     try {
@@ -69,7 +69,7 @@ const createProduct = async ({
             RAM,
             Wifi,
             SSD,
-            GC,
+      
             Screen,
             Port,
             Keyboard,
@@ -77,7 +77,7 @@ const createProduct = async ({
             Lan,
             Bluetooth,
             Webcam,
-            OPS,
+        
             Battery,
             Weight,
             Size,
@@ -116,7 +116,28 @@ const getAllProducts = async (page, limit) => {
         };
     }
 };
+const deleteImageProduct = async (id) => {
+    try {
+        const product = await Product.findById(id);
+        if (!product) {
+            return {
+                status: 'error',
+                message: 'không tìm thấy sản phẩm '
+            }
+        }
+        if (product.images && product.images.public_id) {
 
+            await cloudinary.uploader.destroy(product.images.public_id);
+        }
+
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        };
+    }
+}
 const getProductDetails = async (id) => {
     try {
        const product = await Product.findById(id)
@@ -185,6 +206,7 @@ module.exports = {
     deleteProduct,
     uploadImages,
     updateProduct,
-    getProductDetails
+    getProductDetails,
+    deleteImageProduct
 
 };

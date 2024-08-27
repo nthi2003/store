@@ -56,7 +56,11 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                 Size: product.Size,
                 HZ: product.HZ,
                 VGA: product.VGA,
-                SSD: product.SSD
+                SSD: product.SSD,
+                Color: product.Color,
+                Wifi: product.Wifi,
+                OS: product.OS,
+                LCD: product.LCD
             });
             setSelectedImages(product.images.map(img => img.url))
            
@@ -107,7 +111,7 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
     }
     const handleUpdate = (e) => {
         e.preventDefault();
-        dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock));
+        dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color  ));
         onClose();
 
     }
@@ -190,7 +194,7 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                             <div className='mb-2 mt-2'>
                                 <span className='font-bold'>Specifications</span>
                             </div>
-                            {['CPUDETAIL', 'RAMDETAIL', 'Screen',  'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size'].map(spec => (
+                            {['CPUDETAIL', 'RAMDETAIL', 'Screen',  'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size' , 'OS', 'Wifi' , 'Color'  ].map(spec => (
                                 <div key={spec}>
                                     <span>{spec}</span>
                                     <input
@@ -244,7 +248,7 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <button type="submit" className="mt-5 text-white bg-black p-3 text-center font-bold rounded-md">Submit</button>
+                        <button type="submit" className='mt-4 bg-blue-500 text-white px-4 py-2 rounded'>Update</button>
                     </form>
                 </div>
             </div>

@@ -42,7 +42,7 @@ const createProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
     try {
         const page = parseInt(req.params.page) || 1;
-        const limit = parseInt(req.query.limit) || 5;
+        const limit = parseInt(req.query.limit) || 2;
         const response = await productService.getAllProducts(page, limit);
         return res.status(200).json(response);
     } catch (e) {
@@ -86,7 +86,7 @@ const updateProduct = async (req, res) => {
         const { id } = req.params;
         const {
             name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
-            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, Battery,
             Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ
         } = req.body;
         const images = req.files;
@@ -117,7 +117,7 @@ const updateProduct = async (req, res) => {
 
         const updatedProduct = await productService.updateProduct(id, {
             name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
-            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, OPS, Battery,
+            RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, Battery,
             Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images: imageUrls
         });
 
@@ -130,11 +130,25 @@ const updateProduct = async (req, res) => {
         });
     }
 };
+const deleteImageProduct = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const response = await productService.deleteImageProduct(id);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+}
 
 module.exports = {
     createProduct,
     getAllProducts,
     deleteProduct,
     updateProduct,
-    getProductDetails
+    getProductDetails,
+    deleteImageProduct
 };

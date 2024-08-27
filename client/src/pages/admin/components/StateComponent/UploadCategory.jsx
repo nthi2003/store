@@ -72,7 +72,7 @@ const UploadCategory = ({ showEdit, onClose, categoryId }) => {
             </button>
             <div className='bg-white p-5 w-[700px] h-[800px]'>
                 <div className='text-[50px] text-center'>
-                    <span className='text-[50px]'>Update Category</span>
+                     <span className='text-[50px]'>Update Category</span>
                 </div>
                 <div>
                     <form onSubmit={handleUpdate}>

@@ -33,7 +33,12 @@ const AddProduct = ({ show, onClose }) => {
         Size: '',
         HZ: '',
         VGA: '',
-        SSD: ''
+        SSD: '',
+        GC : '',
+        Color: '',
+        Wifi : '',
+        OS : '',
+        
     });
 
     useEffect(() => {
@@ -121,7 +126,11 @@ const AddProduct = ({ show, onClose }) => {
             Size: '',
             HZ: '',
             VGA: '',
-            SSD: ''
+            SSD: '',
+            GC : '',
+            Color: '',
+            Wifi : '',
+            OS : '',
         });
         setSelectedImages([]);
         setImagePreviews([]);
@@ -212,7 +221,7 @@ const AddProduct = ({ show, onClose }) => {
                             <div className='mb-2 mt-2'>
                                 <span className='font-bold'>Specifications</span>
                             </div>
-                            {['CPUDETAIL', 'RAMDETAIL', 'Screen', 'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size'].map(spec => (
+                            {['CPUDETAIL', 'RAMDETAIL', 'Screen', 'Keyboard', 'Audio', 'Lan', 'Bluetooth', 'Webcam', 'Weight', 'Size' , 'Color' , 'OS' , 'LCD' , 'Wifi'].map(spec => (
                                 <div key={spec}>
                                     <span>{spec}</span>
                                     <input

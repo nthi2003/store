@@ -125,10 +125,20 @@ const Product = () => {
                         <p className='ml-2'>{product.Keyboard ? product.Keyboard.slice(0, 20) : ''}...</p>
                       </div>
 
-
+                   
+                      
+                     
                       <div className='flex '>
-                        <span className='font-bold'>Audio</span>
-                        <p className='ml-2'>{product.Audio}</p>
+                        <span className='font-bold'>Wifi</span>
+                        <p className='ml-2'>{product.Wifi}</p>
+                      </div>
+                      <div className='flex '>
+                        <span className='font-bold'>Color</span>
+                        <p className='ml-2'>{product.Color}</p>
+                      </div>
+                      <div className='flex '>
+                        <span className='font-bold'>Hệ điều hành</span>
+                        <p className='ml-2'>{product.OS}</p>
                       </div>
 
 

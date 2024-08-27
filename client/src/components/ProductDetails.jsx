@@ -252,7 +252,7 @@ const ProductDetails = () => {
                             </span>
                             <div className='text-gray-400'>/</div>
                             <span className='text-blue-400 ml-2 mr-2'>
-                                PC GVN
+                                {product.product.categoryName}
                             </span>
                             <div className='text-gray-400'>/</div>
                             <span className='ml-2 text-gray-700'>
@@ -260,7 +260,7 @@ const ProductDetails = () => {
                             </span>
                         </div>
                     </div>
-                    <div className='bg-gray-200 h-'>
+                    <div className='bg-gray-200 '>
                         <div className='flex max-w-[1200px] mx-auto bg-white'>
                             <div className='w-[30%] p-5'>
                                 <img src={product.product.images[selectedImageIndex].url} alt={product.product.name} className='w-full h-auto object-cover' />
@@ -278,7 +278,7 @@ const ProductDetails = () => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className='w-[65%] p-5 border-gray-200 border-l'>
+                            <div className='w-[65%] p-5 border-gray-200 h-full border-l'>
                                 <h1 className='text-[24px] font-[600]'>{product.product.name}</h1>
                                 <h2 className='text-[34px] font-[600] text-red-500'>{product.product.price.toLocaleString()}₫</h2>
                                 <div className='border w-full border-red-200 rounded-[5px]'>
@@ -325,12 +325,13 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div className=' max-w-[1200px] mx-auto grid grid-cols-3 grid-rows-2'>
-                        <div className=' bg-white mt-3 w-[800px] h-[500px] col-start-1 col-end-3 row-start-1 row-end-3'>
+                   <div className='bg-gray-200 '>
+                   <div className=' max-w-[1200px] mx-auto grid grid-cols-3 grid-rows-2'>
+                        <div className=' bg-white mt-3w-[800px] min-h-[700px]  col-start-1 col-end-3 row-start-1 row-end-3'>
                             <div className='p-2'>
                                 <span className=''>Thông tin sản phẩm</span>
                             </div>
-                            <div>
+                            <div className=''>
                                 <span className='p-2 font-[800] text-[20px]'>Thông số kỹ thuật:</span>
                                 <div className='p-2'>
                                     <table className='border-[#eeeeee] w-full h-[20px] '>
@@ -364,13 +365,48 @@ const ProductDetails = () => {
                                         <tr>
                                             <td className='bg-gray-200 border-[#eeeeee] border'>
                                                 <div className='p-2 font-[600]'>
-                                                KEYBOARD
+                                                Webcam
                                                 </div>
                                             </td>
-                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Keyboard}</td>
+                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Webcam}</td>
                                             <td className='bg-white border-[#eeeeee] border p-2' >36 Tháng</td>
                                         </tr>
-
+                                        <tr>
+                                            <td className='bg-gray-200 border-[#eeeeee] border'>
+                                                <div className='p-2 font-[600]'>
+                                                Màn hình
+                                                </div>
+                                            </td>
+                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Screen}</td>
+                                            <td className='bg-white border-[#eeeeee] border p-2' >36 Tháng</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='bg-gray-200 border-[#eeeeee] border'>
+                                                <div className='p-2 font-[600]'>
+                                                AUDIO
+                                                </div>
+                                            </td>
+                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Audio}</td>
+                                            <td className='bg-white border-[#eeeeee] border p-2' >36 Tháng</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='bg-gray-200 border-[#eeeeee] border'>
+                                                <div className='p-2 font-[600]'>
+                                                Kích thước
+                                                </div>
+                                            </td>
+                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Size}</td>
+                                            <td className='bg-white border-[#eeeeee] border p-2' >36 Tháng</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='bg-gray-200 border-[#eeeeee] border'>
+                                                <div className='p-2 font-[600]'>
+                                                Cân Nặng
+                                                </div>
+                                            </td>
+                                            <td className='bg-white  border-[#eeeeee] border p-2'>{product.product.Weight}</td>
+                                            <td className='bg-white border-[#eeeeee] border p-2' >36 Tháng</td>
+                                        </tr>
 
                                     </table>
                                 </div>
@@ -401,6 +437,7 @@ const ProductDetails = () => {
 
                         </div>
                     </div>
+                   </div>
                 </div>
 
 
