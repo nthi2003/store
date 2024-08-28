@@ -9,7 +9,7 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
     const product = useSelector(state => state.product.products.find(product => product._id === productId))
     const { categorys } = useSelector(state => state.category);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [imagePreviews, setImagePreviews] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]); //xem trc
     const [formData, setFormData] = useState({
         name: '',
         price: '',
@@ -62,10 +62,17 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                 OS: product.OS,
                 LCD: product.LCD
             });
-            setSelectedImages(product.images.map(img => img.url))
+            setSelectedImages(product.images.map(img => img.url));
+            setImagePreviews(product.images.map(img => img.url)); 
            
         }
-    }, [product])
+    }, [product]);
+    useEffect(() => {
+        return () => {
+            imagePreviews.forEach(preview => URL.revokeObjectURL(preview));
+        };
+    }, [imagePreviews]);
+    
     const handleChange = (e) => {
         const {name , value }  = e.target;
        setFormData(prev => ({
@@ -76,19 +83,20 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
     }
 
   
+   
     const handleFileChange = (e) => {
-      const files = Array.from(e.target.files)
-      setSelectedImages(files)
-      setFormData(prev => (
-        {
+        const files = Array.from(e.target.files);
+        const filePreviews = files.map(file => URL.createObjectURL(file));
+        setSelectedImages(files);
+        setImagePreviews(filePreviews);
+
+        setFormData(prev => ({
             ...prev,
-            images : files
-        }
-      ))
-
+            images: files
+        }));
     }
-    const handleRemoveImage = (index) => {
 
+    const handleRemoveImage = (index) => {
         const newImages = selectedImages.filter((_, i) => i !== index);
         const newPreviews = imagePreviews.filter((_, i) => i !== index);
         setSelectedImages(newImages);
@@ -170,9 +178,9 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                                 />
                             </label>
 
-                            {selectedImages.length > 0 && (
+                            {imagePreviews.length > 0 && (
                                 <div className='mt-4 grid grid-cols-3 gap-4'>
-                                    {selectedImages.map((preview, index) => (
+                                    {imagePreviews.map((preview, index) => (
                                         <div key={index} className='relative'>
                                             <img
                                                 src={preview}

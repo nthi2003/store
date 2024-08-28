@@ -116,7 +116,7 @@ const getAllProducts = async (page, limit) => {
         };
     }
 };
-const deleteImageProduct = async (id) => {
+const deleteImageProduct = async (id , publicIDToDelete) => {
     try {
         const product = await Product.findById(id);
         if (!product) {
@@ -125,9 +125,18 @@ const deleteImageProduct = async (id) => {
                 message: 'không tìm thấy sản phẩm '
             }
         }
-        if (product.images && product.images.public_id) {
-
-            await cloudinary.uploader.destroy(product.images.public_id);
+        const imageIndex = product.images.findIndex( img => img.public_id === publicIDToDelete);
+        if (imageIndex === 1 ) {
+            return {
+                status: 'error',
+                message: 'Không tìm thấy ảnh với public_id này'
+            };
+        }
+        await cloudinary.uploader.destroy(publicIdToDelete)
+            
+        return {
+            status : 'succsess',
+            message : 'Xóa ảnh thành công'
         }
 
     }
