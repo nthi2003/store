@@ -39,9 +39,9 @@ const getAllCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     const {id} = req.params;
     const {name} = req.body;
-    const file = req.files?.image;
+    const file = req.file;
     try {
-        const response = await categoryService.updateCategory(id, name, file ? file.tempFilePath : null);
+        const response = await categoryService.updateCategory(id, name, file ? file.path : null);
         return res.status(200).json(response)
     }
     catch (e) {
@@ -52,19 +52,19 @@ const updateCategory = async (req, res) => {
     }
 
 }
-const deleteImgateCategory = async (req, res) => {
-    const { id } = req.params;
+    const deleteImgateCategory = async (req, res) => {
+        const { id } = req.params;
 
-    try {
-        const response = await categoryService.deleteImgateCategory(id);
-        return res.status(200).json(response);
-    } catch (error) {
-        return res.status(500).json({
-            status: 'error',
-            message: error.message
-        });
+        try {
+            const response = await categoryService.deleteImgateCategory(id);
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json({
+                status: 'error',
+                message: error.message
+            });
+        }
     }
-}
 const deleteCategory = async (req, res) => {
     const { id } = req.params;
 

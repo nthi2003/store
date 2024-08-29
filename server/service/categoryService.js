@@ -56,7 +56,7 @@ const getAllCategory = async (page, limit) => {
         }
     }
 }
-const updateCategory = async (id, name, image) => {
+const updateCategory = async (id, name, imagePath) => {
     try {
         const category = await Category.findById(id);
         if (!category) {
@@ -67,14 +67,12 @@ const updateCategory = async (id, name, image) => {
         }
         
         const updatedData = { name };
-        if (image) {
-            if (category.image && category.image.public_id) {
-                await cloudinary.uploader.destroy(category.image.public_id);
-            }
+        if (imagePath) {
+      
+           
 
-            const result = await cloudinary.uploader.upload(image, {
+            const result = await cloudinary.uploader.upload(imagePath, {
                 folder: "categorys",
-
             });
 
             updatedData.image = {
@@ -87,17 +85,17 @@ const updateCategory = async (id, name, image) => {
 
         return {
             status: 'success',
-            message: 'Sửa Category thành công',
+            message: 'Cập nhật thành công',
             category: updatedCategory
         }
-    }
-    catch (error) {
+    } catch (error) {
         return {
             status: 'error',
-            error: error.message,
+            message: error.message
         }
     }
-}   
+}
+
 
 const deleteImgateCategory = async (id) => {
     try {

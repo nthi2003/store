@@ -64,13 +64,15 @@ export const updateCategory = (id, name, image) => async (dispatch) => {
 export const deleteImage = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        await axios.delete(`/deleteImageCategory/${id}`);
+        const response = await axios.delete(`/deleteImageCategory/${id}`);
         dispatch(deleteImageCategorySuccess({ id }));
+        toast.success(response.data.message); 
+    } catch (error) {
+        dispatch(setError(error.response?.data?.message));
+        toast.error(error.response?.data?.message); 
+        dispatch(setLoading(false));
     }
-    catch (error) {
-        dispatch(setError(error.response.data.message));
-    }
-}
+};
 export const deleteCategory = (id) => async(dispatch)  => {
     dispatch(setLoading(true));
     try {

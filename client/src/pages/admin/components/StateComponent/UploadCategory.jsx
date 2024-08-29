@@ -16,7 +16,7 @@ const UploadCategory = ({ showEdit, onClose, categoryId }) => {
     });
     const [previewImage, setPreviewImage] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
-
+    console.log(showEdit)
     useEffect(() => {
         if (category) {
             setFormData({
@@ -41,12 +41,15 @@ const UploadCategory = ({ showEdit, onClose, categoryId }) => {
         }
     };
 
-    const handleRemoveImage = async () => {
+    const handleRemoveImage =  () => {
+   
         if (categoryId) {
-            await dispatch(deleteImage(categoryId));
+             dispatch(deleteImage(categoryId));
+          
             setPreviewImage('');
             setFormData({ ...formData, image: null });
             setSelectedImage(null);
+          
         }
     };
 
@@ -57,8 +60,9 @@ const UploadCategory = ({ showEdit, onClose, categoryId }) => {
         if (categoryId) {
            await dispatch(updateCategory(categoryId, name, selectedImage));
            dispatch(fetchCategory(currentPage, 5));
+
             
-           onClose();
+          
         }
         
     };
