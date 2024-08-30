@@ -8,7 +8,7 @@ const uploadImages = async (files) => {
         
         for (const file of files) {
             const result = await cloudinary.uploader.upload(file.path, { folder: 'products' });
-            console.log(result); 
+       
             
             if (result && result.public_id && result.secure_url) {
                 imageUrls.push({
@@ -116,37 +116,7 @@ const getAllProducts = async (page, limit) => {
         };
     }
 };
-const deleteImageProduct = async (id , publicIDToDelete) => {
-    try {
-        const product = await Product.findById(id);
-        if (!product) {
-            return {
-                status: 'error',
-                message: 'không tìm thấy sản phẩm '
-            }
-        }
-        const imageIndex = product.images.findIndex( img => img.public_id === publicIDToDelete);
-        if (imageIndex === 1 ) {
-            return {
-                status: 'error',
-                message: 'Không tìm thấy ảnh với public_id này'
-            };
-        }
-        await cloudinary.uploader.destroy(publicIdToDelete)
-            
-        return {
-            status : 'succsess',
-            message : 'Xóa ảnh thành công'
-        }
 
-    }
-    catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        };
-    }
-}
 const getProductDetails = async (id) => {
     try {
        const product = await Product.findById(id)
@@ -196,6 +166,45 @@ const deleteProduct = async(id) => {
             message: error.message
         }
     }
+}
+const deleteImageProduct = async (id , imageId) => {
+    try {
+        const product = await Product.findById(id);
+        if(!product) {
+            return {
+                status: 'error',
+                message: 'Sản phẩm không tồn tại '
+            }
+        }
+        const imageArray = product.images.findIndex(image => image._id.toString() === imageId);
+
+        if(imageArray === -1) {
+            return {
+                status : 'error',
+                message : 'Ảnh không tồn tại'
+            }
+        }
+        const imageToDelete = product.images[imageArray]
+        if (imageToDelete.public_id) {
+             await cloudinary.uploader.destroy(imageToDelete.public_id)
+    
+        }
+        product.images.splice(imageArray, 1);
+        await product.save();
+
+        return {
+            status: 'success',
+            message: 'Xóa ảnh thành công'
+        };
+
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+
 }
 const updateProduct = async (id, updateData) => {
     try {

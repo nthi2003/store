@@ -31,7 +31,7 @@ const createProduct = async (req, res) => {
 
         return res.status(200).json(product);
     } catch (error) {
-        console.error('Lỗi khi tạo sản phẩm:', error);
+
         return res.status(500).json({
             status: 'error',
             message: error.message
@@ -131,10 +131,11 @@ const updateProduct = async (req, res) => {
     }
 };
 const deleteImageProduct = async (req, res) => {
-    const { id } = req.params;
+    const { id, imageId  } = req.params;
 
     try {
-        const response = await productService.deleteImageProduct(id);
+        const response = await productService.deleteImageProduct(id, imageId);
+        console.log(imageId)
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({

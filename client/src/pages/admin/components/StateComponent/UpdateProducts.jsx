@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProduct } from '../../../../redux/actions/productAction';
+import { deleteImageProduct, updateProduct } from '../../../../redux/actions/productAction';
 
 const UpdateProducts = ({ Editshow, onClose, productId }) => {
     const dispatch = useDispatch();
     const product = useSelector(state => state.product.products.find(product => product._id === productId))
     const { categorys } = useSelector(state => state.category);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [imagePreviews, setImagePreviews] = useState([]); //xem trc
+    const [imagePreviews, setImagePreviews] = useState([]); //xem trc 
     const [formData, setFormData] = useState({
         name: '',
         price: '',
@@ -96,16 +96,22 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
         }));
     }
 
-    const handleRemoveImage = (index) => {
-        const newImages = selectedImages.filter((_, i) => i !== index);
-        const newPreviews = imagePreviews.filter((_, i) => i !== index);
-        setSelectedImages(newImages);
-        setImagePreviews(newPreviews);
-        setFormData(prev => ({
-            ...prev,
-            images: newImages
-        }));
-    }
+    const handleRemoveImage = async (index) => {
+        if (productId) {
+            const imageId = product.images[index]._id;
+            try {
+              
+                await dispatch(deleteImageProduct(productId, imageId));
+               
+                
+            } catch (error) {
+               return {
+                 status : "error",
+                 message : error.message
+               }
+            }
+        }
+    };
     const handleCategoryChange = (e) => {
         const selectedCategoryId = e.target.value;
         const selectedCategory = categorys.find(category => category._id === selectedCategoryId)
@@ -117,12 +123,18 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
         })) 
 
     }
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color  ));
-        onClose();
-
-    }
+    const handleUpdate = async (e) => {
+        e.preventDefault(); 
+    
+     
+        if (formData.images.length === 0) {
+            // Cập nhật sản phẩm mà không có ảnh mới
+            await dispatch(updateProduct(productId, formData.name, [], formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color ));
+        } else {
+            // Cập nhật sản phẩm với ảnh mới
+            await dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color ));
+        }
+    };
     if (!Editshow) return
     return (
         <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
@@ -188,7 +200,7 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
                                                 className='border rounded w-full h-full object-cover'
                                             />
                                             <button
-                                                onClick={() => handleRemoveImage(index)}
+                                                 onClick={() => handleRemoveImage(index)}
                                                 className='ml-4 bg-red-200 rounded-[20px] mt-1 text-white py-2 px-2 absolute top-1 right-1'
                                             >
                                                 <IoMdClose className='text-red-600' />

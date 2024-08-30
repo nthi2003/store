@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import axios from '../../axiosConfig';
 
-import { fetchAllProducts, setError, setLoading, createProductSuccess, deleteProductSuccess , updateProductSuccess, getProductDetailsSuccess } from '../reducers/productSlice';
+import { fetchAllProducts, setError, setLoading, createProductSuccess, deleteProductSuccess , updateProductSuccess, getProductDetailsSuccess, deleteImageProductSuccess } from '../reducers/productSlice';
 export const fetchProduct = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
     try {
@@ -146,7 +146,25 @@ export const updateProduct = (
     }
   }
   
+export const deleteImageProduct = (id , imageId ) => async(dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const response = await axios.delete(`/deleteProduct/${id}/images/${imageId}`)
+    dispatch(deleteImageProductSuccess({id , imageId}));
+    const { status, message } = response.data;
+    if (status === 'success') {
+      toast.success(message);
+  } else {
+      toast.error(message); 
+  }
+  return response.data
+  }
+  catch(error) {
+    dispatch(setError(error.response?.data?.message));
+    toast.error(error.response?.data?.message); 
 
+  }
+}
 export  const deleteProduct = (id) => async (dispatch) => {
     dispatch(setLoading(true))
     try {

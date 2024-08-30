@@ -54,9 +54,9 @@ const categorySlice = createSlice({
             }
         },
         deleteImageCategorySuccess: (state, action) => {
-            const updatedCategory = state.categorys.find(cat => cat._id === action.payload.id);
-            if (updatedCategory) {
-                updatedCategory.image = { public_id: '', url: '' };
+            const deleteImage = state.categorys.find(cat => cat._id === action.payload.id);
+            if (deleteImage) {
+                deleteImage.image = { public_id: '', url: '' };
            
             }
         },

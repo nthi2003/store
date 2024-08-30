@@ -10,5 +10,5 @@ router.get('/getAllProducts', authenToken, authorization,  productsController.ge
 router.put('/updateProduct/:id', upload.array('images', 10), authenToken, authorization, productsController.updateProduct)
 router.delete('/deleteProduct/:id', authenToken, authorization, productsController.deleteProduct)
 router.get('/getProductDetails/:id', authenToken, authorization, productsController.getProductDetails)
-
+router.delete('/deleteProduct/:id/images/:imageId', authenToken, authorization, productsController.deleteImageProduct)
 module.exports = router;

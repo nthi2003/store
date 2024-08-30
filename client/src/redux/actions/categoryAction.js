@@ -89,7 +89,7 @@ export const deleteCategory = (id) => async(dispatch)  => {
     
     }
     catch (error) {
-        toast.error('Có lỗi xảy ra khi xóa người dùng.');
-        dispatch(setError(error.response.data.message));
+        dispatch(setError(error.response?.data?.message));
+        toast.error(error.response?.data?.message); 
     }
 }

@@ -92,6 +92,20 @@ const productSlice = createSlice({
               };
             }
           },
+        deleteImageProductSuccess : (state , action) => {
+            const {id , imageId } = action.payload;
+            const productIndex = state.products.findIndex(product => product._id === id);
+
+            if (productIndex !== -1) {
+                state.products[productIndex].images = state.products[productIndex].images.filter(img =>  img._id !== imageId)
+            }
+            if (state.product && state.product._id === id) {
+                state.product.images = state.product.images.filter(img => img._id !== imageId);
+            }
+
+            state.loading = false;
+            state.error = null;
+        },
         deleteProductSuccess : (state, action) => {
             const {id} = action.payload
             state.products = state.products.filter(product => product.id!== id)
@@ -101,5 +115,5 @@ const productSlice = createSlice({
        
     }
 })
-export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess, updateProductSuccess , getProductDetailsSuccess} = productSlice.actions
+export const {fetchAllProducts, setLoading , setError , createProductSuccess, deleteProductSuccess, updateProductSuccess , getProductDetailsSuccess , deleteImageProductSuccess} = productSlice.actions
 export default productSlice.reducer;
