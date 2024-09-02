@@ -10,15 +10,18 @@ import { MdScreenshotMonitor } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduct } from '../redux/actions/productAction';
 import { Link } from 'react-router-dom';
+import { CiCircleChevRight } from "react-icons/ci";
 
 const NextArrow = (props) => {
     const { className, style, onClick } = props;
     return (
         <div
             className={className}
-            style={{ ...style, display: "block", right: "20px", zIndex: 100, background: '#000' }}
+            style={{ ...style, display: "block", right: "20px", zIndex: 100, background: '#343131' , borderRadius:'100%' }}
             onClick={onClick}
-        />
+        >
+         <CiCircleChevRight className='text-white'/>
+        </div>
     );
 };
 
@@ -27,7 +30,7 @@ const PrevArrow = (props) => {
     return (
         <div
             className={className}
-            style={{ ...style, display: "block", left: "20px", zIndex: 100, background: '#000' }}
+            style={{ ...style, display: "block", left: "20px", zIndex: 100, background: '#343131' , borderRadius: '100%' }}
             onClick={onClick}
         />
     );
