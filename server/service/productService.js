@@ -95,7 +95,22 @@ const createProduct = async ({
     }
 };
 
-
+const getAll  = async () => {
+    try {
+      const products = await Product.find();
+      return {
+        status: 'success',
+        message: 'Thành công',
+        products
+      }
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        };  
+    }
+}
 const getAllProducts = async (page, limit) => {
     try {
         const skip = (page - 1) * limit;
@@ -225,6 +240,7 @@ module.exports = {
     uploadImages,
     updateProduct,
     getProductDetails,
-    deleteImageProduct
+    deleteImageProduct,
+    getAll
 
 };

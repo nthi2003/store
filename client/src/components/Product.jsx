@@ -8,7 +8,7 @@ import { LiaMicrochipSolid } from "react-icons/lia";
 import { CiStar } from "react-icons/ci";
 import { MdScreenshotMonitor } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProduct } from '../redux/actions/productAction';
+import { fetchProduct, getAll } from '../redux/actions/productAction';
 import { Link } from 'react-router-dom';
 import { CiCircleChevRight } from "react-icons/ci";
 
@@ -39,12 +39,12 @@ const PrevArrow = (props) => {
 const Product = ({ hTitle, shTitle }) => {
 
     const dispatch = useDispatch();
-    const { products } = useSelector(state => state.product);
+    const { products } = useSelector(state => state.product.products);
 
     const [productId, setProductId] = useState(null);
   
     useEffect(() => {
-        dispatch(fetchProduct());
+        dispatch(getAll());
     }, [dispatch]);
 
     const filteredProducts = products.filter(product => {

@@ -235,7 +235,7 @@ const HomePage = () => {
       </div>
 
       <div className='min-h-screen'>
-        {/* <div className='fixed hidden lg:block'>
+        <div className='fixed hidden lg:block'>
           <div className='left-4 w-[150px] ml-[180px] mt-4'>
             <a href="">
               <img src="https://file.hstatic.net/200000722513/file/pc_side_web.png" alt="" />
@@ -248,7 +248,7 @@ const HomePage = () => {
               <img src="https://file.hstatic.net/200000722513/file/side_web_laptop_gaming.png" alt="" />
             </a>
           </div>
-        </div> */}
+        </div>
         
         <div className='bg-gray-200  flex '>
           <div className='lg:w-20% ml-[360px] mt-4'>

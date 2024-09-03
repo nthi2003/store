@@ -126,12 +126,12 @@ const UpdateProducts = ({ Editshow, onClose, productId }) => {
     const handleUpdate = async (e) => {
         e.preventDefault(); 
     
-     
-        if (formData.images.length === 0) {
-            // Cập nhật sản phẩm mà không có ảnh mới
+       
+        if (Array.isArray(formData.images) && formData.images.length === 0) {
+
             await dispatch(updateProduct(productId, formData.name, [], formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color ));
         } else {
-            // Cập nhật sản phẩm với ảnh mới
+   
             await dispatch(updateProduct(productId, formData.name, formData.images, formData.price, formData.categoryid, formData.categoryName, formData.CPU, formData.CPUDETAIL, formData.RAMDETAIL, formData.RAM, formData.Screen, formData.Keyboard, formData.Audio, formData.Lan, formData.Bluetooth, formData.Webcam, formData.Weight, formData.Size, formData.HZ, formData.VGA, formData.SSD, formData.Stock , formData.OS , formData.Wifi , formData.Color ));
         }
     };

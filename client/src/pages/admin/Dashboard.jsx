@@ -17,13 +17,13 @@ import Users from './components/Users';
 import Category from './components/Category';
 import { AiTwotoneTag } from "react-icons/ai";
 const Dashboard = () => {
-  const [active , setActive] = useState('default')
+  const [active , setActive] = useState('dashboard')
   const contentMap = {
     dashboard : <Content/>,
     products: <Product/>,
     Users: <Users/>,
     Category : <Category/>,
-    default: <div>Chọn một mục từ sidebar để xem nội dung</div>
+
   }
   const navigate = useNavigate();
   const dispatch = useDispatch();

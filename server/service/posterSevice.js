@@ -30,7 +30,14 @@ const uploadImages = async (files) => {
 }
 const createPoster = async (posterData , files) => {
     try {
-        const { porterHeaderLinks, porterSlickLinks, porterLeftSlickLinks, porterBottomSlickLinks, porterBottomLinks } = posterData;
+        const { 
+            LinkPosterHeader, 
+            LinkPorterSlick, 
+            LinkPorterLeftSlick, 
+            LinkPorterBottomSlick, 
+            LinkPorterBottom 
+        } = posterData;
+
         const processedHeader = await uploadImages(files.headerFiles);
         const processedSlick  = await uploadImages(files.slickFiles);
         const processedLeftSlick  = await uploadImages(files.leftSlickFiles);
@@ -38,11 +45,16 @@ const createPoster = async (posterData , files) => {
         const processedBottom  = await uploadImages(files.bottomFiles);
 
         const newPoster = new Poster ( {
-            posterHeader: processedHeader.map((img, index) => ({...img, link: porterHeaderLinks[index] })),
-            posterSlick : processedSlick.map((img , index) => ({...img , link: porterSlickLinks[index] })),
-            porterLeftSlick: processedLeftSlick.map((img, index) => ({ ...img, link: porterLeftSlickLinks[index] })),
-            porterBottomSlick: processedBottomSlick.map((img, index) => ({ ...img, link: porterBottomSlickLinks[index] })),
-            porterBottom: processedBottom.map((img, index) => ({ ...img, link: porterBottomLinks[index] })),
+            porterHeader: processedHeader,
+            LinkPosterHeader: LinkPosterHeader,
+            porterSlick: processedSlick,
+            LinkPorterSlick: LinkPorterSlick,
+            porterLeftSlick: processedLeftSlick,
+            LinkPorterLeftSlick: LinkPorterLeftSlick,
+            porterBottomSlick: processedBottomSlick,
+            LinkPorterBottomSlick: LinkPorterBottomSlick,
+            porterBottom: processedBottom,
+            LinkPorterBottom: LinkPorterBottom
       
         })
         await newPoster.save()

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import axios from '../../axiosConfig';
 
-import { fetchAllProducts, setError, setLoading, createProductSuccess, deleteProductSuccess , updateProductSuccess, getProductDetailsSuccess, deleteImageProductSuccess } from '../reducers/productSlice';
+import { fetchAllProducts, setError, setLoading, createProductSuccess, deleteProductSuccess , updateProductSuccess, getProductDetailsSuccess, deleteImageProductSuccess , getAllSuccess } from '../reducers/productSlice';
 export const fetchProduct = (page , limit) => async(dispatch) => {
     dispatch(setLoading(true))
     try {
@@ -20,6 +20,16 @@ export const getProductDetails = (id) => async (dispatch) => {
   } catch (error) {
       dispatch(setError(error.response?.data?.message ));
   }
+}
+export const getAll = () => async (dispatch) =>  {
+  dispatch(setLoading(true))
+  try {
+    const response = await axios.get(`/getAll`)
+    dispatch(getAllSuccess(response.data))
+}
+catch (error) {
+    dispatch(setError(error.response.data.message))
+}
 }
 export const createProduct = (productData) => async (dispatch) => {
     dispatch(setLoading(true));
