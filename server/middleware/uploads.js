@@ -1,6 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 
+// Cấu hình lưu trữ tệp
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
 
 const uploads = multer({
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+    limits: { fileSize: 100 * 1024 * 1024 } // 100MB
 }).fields([
     { name: 'headerFiles', maxCount: 10 },
     { name: 'slickFiles', maxCount: 10 },
