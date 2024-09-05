@@ -7,6 +7,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
   product : productReducer,
+  poster : posterReducer,
 
 });
 

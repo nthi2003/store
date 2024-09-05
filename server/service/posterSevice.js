@@ -31,7 +31,6 @@ const createPoster = async (posterData, files) => {
             LinkPorterBottom
         } = posterData;
 
-        // Upload các tệp và lấy URL
         const processedHeader = files.headerFiles ? await uploadImages(files.headerFiles) : [];
         const processedSlick = files.slickFiles ? await uploadImages(files.slickFiles) : [];
         const processedLeftSlick = files.leftSlickFiles ? await uploadImages(files.leftSlickFiles) : [];
@@ -57,7 +56,25 @@ const createPoster = async (posterData, files) => {
         throw new Error(error.message);
     }
 };
+const getAll = async () => {
+    try {
+       const poster = await Poster.find();
+       return {
+        stasus : 'success',
+        message : 'Thành công',
+        poster
+       }
+    }
+    catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+}
 
 module.exports = {
-    createPoster
+    createPoster,
+    getAll,
+    getAllPosterPage
 };

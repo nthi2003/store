@@ -6,7 +6,13 @@ import { deleteImageProduct, updateProduct } from '../../../../redux/actions/pro
 
 const UpdateProducts = ({ Editshow, onClose, productId }) => {
     const dispatch = useDispatch();
-    const product = useSelector(state => state.product.products.find(product => product._id === productId))
+    const product = useSelector(state => {
+        const products = state.product.products;
+        if (Array.isArray(products)) {
+            return products.find(product => product._id === productId);
+        }
+        return null;
+    });
     const { categorys } = useSelector(state => state.category);
     const [selectedImages, setSelectedImages] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]); //xem trc 
