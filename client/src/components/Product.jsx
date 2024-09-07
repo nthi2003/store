@@ -47,12 +47,13 @@ const Product = ({ hTitle, shTitle }) => {
         dispatch(getAll());
     }, [dispatch]);
 
-    const filteredProducts = products.filter(product => {
+    const filteredProducts = Array.isArray(products) ? products.filter(product => {
         if (hTitle === 'PC bán chạy') return product.categoryName === 'PC';
         if (hTitle === 'Laptop gaming bán chạy') return product.categoryName === 'Laptop';
         if (hTitle === 'Bàn phím văn phòng bán chạy') return product.categoryName === 'Bàn phím';
         return true;
-    });
+    }) : [];
+
 
     const settings = {
         dots: true,

@@ -18,12 +18,14 @@ import { GiShoppingCart } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../redux/actions/authActions';
 import { TbClipboardPlus } from 'react-icons/tb';
+
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { IoIosLogOut } from 'react-icons/io';
-
+import {getAllPoster} from '../redux/actions/posterAction'
 const HomePage = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
+
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +58,12 @@ const HomePage = () => {
       setToastShow(false)
     }
   }, [toastShow]);
+  const posters = useSelector(state => state.poster);
+
+  console.log(posters)
+  useEffect(() => {
+       dispatch(getAllPoster())
+      }, [dispatch]);
   return (
     <div>
 
@@ -348,105 +356,77 @@ const HomePage = () => {
             </div>
           </div>
           <div className='w-[70%] mt-4 mr-[360px] ml-2'>
-            <div className='grid grid-rows-3 grid-cols-3 '>
-              <div className='col-start-1 col-end-3 row-start-1 row-end-3 rounded-[30px]'>
-                <img src="https://file.hstatic.net/200000722513/file/gearvn-sam-may-moi-he-vui-phoi-phoi-banner_5e36e05190c841f4b9e66710eee5ad85.jpg" alt="" />
-              </div>
-              <div>
-                <a href="">
-                  <div>
-                    <img src="https://file.hstatic.net/200000722513/file/right_1_117ab1d46da04c35af8ae2ae170887c1.png" alt="" className='h-full' />
-                  </div>
-                </a>
-              </div>
-              <div>
-                <a href="">
-                  <div>
-                    <img src="https://file.hstatic.net/200000722513/file/right_1_117ab1d46da04c35af8ae2ae170887c1.png" alt="" />
-                  </div>
-                </a>
-              </div>
-              <div>
-                <a href="">
-                  <div>
-                    <img src="https://file.hstatic.net/200000722513/file/right_1_117ab1d46da04c35af8ae2ae170887c1.png" alt="" />
-                  </div>
-                </a>
-              </div>
-              <div>
-                <a href="">
-                  <div>
-                    <img src="https://file.hstatic.net/200000722513/file/right_1_117ab1d46da04c35af8ae2ae170887c1.png" alt="" />
-                  </div>
-                </a>
-              </div>
-              <div>
-                <a href="">
-                  <div>
-                    <img src="https://file.hstatic.net/200000722513/file/right_1_117ab1d46da04c35af8ae2ae170887c1.png" alt="" />
-                  </div>
-                </a>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-   
-          
-        <div className='bg-gray-200  '>
-         <div className=' fixed w-[40px] h-[40px] mt-[100px]  ml-[1580px]'>
-          <span className='animate-ping rounded-full bg-sky-400 opacity-75 absolute  w-full h-full'></span>
-          <a href="https://zalo.me/0766524605" className='relative inline-flex rounded-full  bg-sky-500 w-full h-full'>
-            <img src="https://file.hstatic.net/200000722513/file/icon_zalo__1__f5d6f273786c4db4a3157f494019ab1e.png" className='' alt="" />
-          </a>
-
-         </div>
-
-          <div className='grid grid-rows-1 grid-cols-4 mx-[360px]'>
-            <div className='mt-2  '>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-            <div className='mt-2  ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-            <div className='mt-2  ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-            <div className='mt-2 ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-          </div>
-          <div className='flex px-[360px] mt-2'>
-            <div className='mr-3 rounded-[20px]'>
-              <img src="https://file.hstatic.net/200000722513/file/pc_-_may_bo_gvn_b53d8e3709b142828f7231b80dc03aa9.png" alt="" className='rounded-[5px]' />
-            </div>
-            <div className=''>
-              <img src="https://file.hstatic.net/200000722513/file/banner_promotion_2_20720b3c3bef4fdea0b762238a9fd183.png" alt="" className='rounded-[5px]' />
-            </div>
-          </div>
-          <Product hTitle='PC bán chạy' shTitle='Trả góp 0%' />
-          <Product hTitle='Laptop gaming bán chạy' shTitle='Miễn phí giao hàng' />
-          <Product hTitle='Bàn phím văn phòng bán chạy' shTitle='Miễn phí giao hàng' />
-
-          <Categorry />
-        </div>
-        
-      </div>
-      
-
-      <FooterComponent />
+  
+          {posters && Array.isArray(posters) ? (
+  posters.map(poster => (
+    <div key={poster._id} className='relative'>
+      <img className='w-full h-auto' src={poster.url} alt={poster.title} />
     </div>
-  );
-}
+  ))
+) : (
+  <div className='text-center p-4'>
+    <p>Không có hình ảnh</p>
+  </div>
+)}
+ <div className=' fixed w-[40px] h-[40px] mt-[100px]  ml-[1580px]'>
+              <span className='animate-ping rounded-full bg-sky-400 opacity-75 absolute  w-full h-full'></span>
+              <a href="https://zalo.me/0766524605" className='relative inline-flex rounded-full  bg-sky-500 w-full h-full'>
+                <img src="https://file.hstatic.net/200000722513/file/icon_zalo__1__f5d6f273786c4db4a3157f494019ab1e.png" className='' alt="" />
+              </a>
 
-export default HomePage;
+            </div>
+
+
+              </div>
+
+            </div>
+      
+              
+            <div className='bg-gray-200  '>
+           
+              <div className='grid grid-rows-1 grid-cols-4 mx-[360px]'>
+                <div className='mt-2  '>
+                  <a href="">
+                    <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
+                  </a>
+                </div>
+                <div className='mt-2  ml-2'>
+                  <a href="">
+                    <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
+                  </a>
+                </div>
+                <div className='mt-2  ml-2'>
+                  <a href="">
+                    <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
+                  </a>
+                </div>
+                <div className='mt-2 ml-2'>
+                  <a href="">
+                    <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div className='flex px-[360px] mt-2'>
+                <div className='mr-3 rounded-[20px]'>
+                  <img src="https://file.hstatic.net/200000722513/file/pc_-_may_bo_gvn_b53d8e3709b142828f7231b80dc03aa9.png" alt="" className='rounded-[5px]' />
+                </div>
+                <div className=''>
+                  <img src="https://file.hstatic.net/200000722513/file/banner_promotion_2_20720b3c3bef4fdea0b762238a9fd183.png" alt="" className='rounded-[5px]' />
+                </div>
+              </div>
+              <Product hTitle='PC bán chạy' shTitle='Trả góp 0%' />
+              <Product hTitle='Laptop gaming bán chạy' shTitle='Miễn phí giao hàng' />
+              <Product hTitle='Bàn phím văn phòng bán chạy' shTitle='Miễn phí giao hàng' />
+
+              <Categorry />
+            </div>
+            
+          </div>
+          
+
+          <FooterComponent />
+        </div>
+      );
+    }
+
+    export default HomePage;

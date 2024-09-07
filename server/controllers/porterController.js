@@ -32,8 +32,29 @@ const getAll = async (req, res) => {
         })
     }
 }
-
+const updatePoster = async (req, res) => {
+   
+       const posterId =  req.params.id;
+       const posterData = req.body;
+       const files = req.files
+       try {
+           const uploadPoster = await posterSevice.updatePoster(posterId, posterData, files);
+           res.status(200).json({
+             status : 'success',
+             message : 'Cập nhật thành công poster',
+            uploadPoster
+           })
+       }
+    
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
 module.exports = {
     createPoster,
-    getAll  
+    getAll,
+    updatePoster
 };
