@@ -87,7 +87,10 @@ const updatePoster = async (id, posterData, files) => {
         const processedBottom = files.headerFiles ? await uploadImages(files.bottomFiles) : null;
         const poster = await Poster.findById(id);
         if (!poster) {
-            console.log('Poster không tồn tại')
+            return {
+                status: 'error',
+                message : 'Không có ảnh'
+            }
         }
         if (processedHeader) {
             poster.porterHeader = processedHeader;
@@ -126,9 +129,61 @@ const updatePoster = async (id, posterData, files) => {
         return { status: 'error', message: error.message }
     }
 }
+const deleteImagesPoster = async (id, imageId, imageType) => {
+    try {
+        const poster = await Poster.findById(id);
+        if (!poster) {
+            return {
+                status: 'error',
+                message: 'Không có ảnh'
+            };
+        }
+
+        const imageTypeMap = {
+            porterHeader: poster.porterHeader,
+            porterSlick: poster.porterSlick,
+            porterLeftSlick: poster.porterLeftSlick,
+            porterBottomSlick: poster.porterBottomSlick,
+            porterBottom: poster.porterBottom
+        };
+
+        const images = imageTypeMap[imageType];
+        if (!images) {
+            return {
+                status: 'error',
+                message: 'Không có ảnh '
+            };
+        }
+
+        const imagesIndex = images.findIndex(image => image._id.toString() === imageId);
+        if (imagesIndex === -1) {
+            return {
+                status: 'error',
+                message: 'Không tìm thấy ảnh'
+            };
+        }
+
+        await cloudinary.uploader.destroy(images[imagesIndex].public_id);
+
+        images.splice(imagesIndex, 1);
+        await poster.save();
+
+        return {
+            status: 'success',
+            message: 'Xóa hình ảnh thành công'
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            message: error.message
+        };
+    }
+};
+
 module.exports = {
     createPoster,
     getAll,
-    updatePoster
+    updatePoster,
+    deleteImagesPoster
 
 };

@@ -147,7 +147,7 @@ const deleteImageProduct = async (req, res) => {
 
     try {
         const response = await productService.deleteImageProduct(id, imageId);
-        console.log(imageId)
+        
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({

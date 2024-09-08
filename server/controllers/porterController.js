@@ -47,14 +47,36 @@ const updatePoster = async (req, res) => {
        }
     
     catch (error) {
-        res.status(400).json({
-            success: false,
+        res.status(500).json({
+            status: 'error',
             message: error.message
         });
     }
 }
+const deleteImagesPoster = async (req, res) => {
+    const { id, imageId, imageType } = req.params;
+
+    if (!id || !imageId || !imageType) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Thiếu tham số'
+        });
+    }
+
+    try {
+        const response = await posterSevice.deleteImagesPoster(id, imageId, imageType);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     createPoster,
     getAll,
-    updatePoster
+    updatePoster,
+    deleteImagesPoster
 };
