@@ -3,8 +3,6 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCategory, deleteImage, fetchCategory } from '../../../../redux/actions/categoryAction';
 import { IoMdClose } from 'react-icons/io';
-import { fetchAllCategorys } from '../../../../redux/reducers/categorySlice';
-import { fetchAllProducts } from '../../../../redux/reducers/productSlice';
 
 const UploadCategory = ({ showEdit, onClose, categoryId }) => {
     const dispatch = useDispatch();

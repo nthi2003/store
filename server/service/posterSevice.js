@@ -25,10 +25,11 @@ const createPoster = async (posterData, files) => {
     try {
         const {
             LinkPosterHeader,
-            LinkPorterSlick,
-            LinkPorterLeftSlick,
-            LinkPorterBottomSlick,
-            LinkPorterBottom
+            LinkPosterSlick,
+            LinkPosterLeftSlick,
+            LinkPosterBottomSlick,
+            LinkPosterBottom,
+            LinkPosterLeftRight
         } = posterData;
 
         const processedHeader = files.headerFiles ? await uploadImages(files.headerFiles) : [];
@@ -36,26 +37,33 @@ const createPoster = async (posterData, files) => {
         const processedLeftSlick = files.leftSlickFiles ? await uploadImages(files.leftSlickFiles) : [];
         const processedBottomSlick = files.bottomSlickFiles ? await uploadImages(files.bottomSlickFiles) : [];
         const processedBottom = files.bottomFiles ? await uploadImages(files.bottomFiles) : [];
+        const processedLeftRight = files.leftRightFiles ? await uploadImages(files.leftRightFiles) : []; 
 
         const newPoster = new Poster({
-            porterHeader: processedHeader,
+            posterHeader: processedHeader,
             LinkPosterHeader: LinkPosterHeader || [],
-            porterSlick: processedSlick,
-            LinkPorterSlick: LinkPorterSlick || [],
-            porterLeftSlick: processedLeftSlick,
-            LinkPorterLeftSlick: LinkPorterLeftSlick || [],
-            porterBottomSlick: processedBottomSlick,
-            LinkPorterBottomSlick: LinkPorterBottomSlick || [],
-            porterBottom: processedBottom,
-            LinkPorterBottom: LinkPorterBottom || []
+            posterSlick: processedSlick,
+            LinkPosterSlick: LinkPosterSlick || [],
+            posterLeftSlick: processedLeftSlick,
+            LinkPosterLeftSlick: LinkPosterLeftSlick || [],
+            posterBottomSlick: processedBottomSlick,
+            LinkPosterBottomSlick: LinkPosterBottomSlick || [],
+            posterBottom: processedBottom,
+            LinkPosterBottom: LinkPosterBottom || [],
+            posterLeftRight: processedLeftRight,
+            LinkPosterLeftRight: LinkPosterLeftRight || []
         });
 
         await newPoster.save();
         return newPoster;
     } catch (error) {
-        throw new Error(error.message);
+        return {
+            status: 'error',
+            message: error.message
+        };
     }
 };
+
 const getAll = async () => {
     try {
         const posters = await Poster.find();
@@ -74,17 +82,20 @@ const getAll = async () => {
 }
 const updatePoster = async (id, posterData, files) => {
     try {
-        const
-            { LinkPosterHeader,
-                LinkPorterSlick,
-                LinkPorterLeftSlick,
-                LinkPorterBottomSlick,
-                LinkPorterBottom } = posterData
-        const processedHeader = files.headerFiles ? await uploadImages(files.headerFiles) : null;
-        const processedSlick = files.headerFiles ? await uploadImages(files.slickFiles) : null;
-        const processedLeftSlick = files.headerFiles ? await uploadImages(files.leftSlickFiles) : null;
-        const processedBottomSlick = files.headerFiles ? await uploadImages(files.bottomSlickFiles) : null;
-        const processedBottom = files.headerFiles ? await uploadImages(files.bottomFiles) : null;
+        const {
+            LinkPosterHeader,
+            LinkPosterSlick,
+            LinkPosterLeftSlick,
+            LinkPosterBottomSlick,
+            LinkPosterBottom,
+            LinkPosterLeftRight
+        } = posterData;
+        const processedHeader = files.headerFiles ? await uploadImages(files.headerFiles) : [];
+        const processedSlick = files.slickFiles ? await uploadImages(files.slickFiles) : [];
+        const processedLeftSlick = files.leftSlickFiles ? await uploadImages(files.leftSlickFiles) : [];
+        const processedBottomSlick = files.bottomSlickFiles ? await uploadImages(files.bottomSlickFiles) : [];
+        const processedBottom = files.bottomFiles ? await uploadImages(files.bottomFiles) : [];
+        const processedLeftRight = files.LeftRightFiles ? await uploadImages(files.LeftRightFiles) : [];
         const poster = await Poster.findById(id);
         if (!poster) {
             return {
@@ -93,34 +104,45 @@ const updatePoster = async (id, posterData, files) => {
             }
         }
         if (processedHeader) {
-            poster.porterHeader = processedHeader;
+            poster.posterHeader = processedHeader;
         }
         if (processedSlick) {
-            poster.porterSlick = processedSlick
+            poster.posterSlick = processedSlick
         }
         if (processedLeftSlick) {
-            poster.porterLeftSlick = processedLeftSlick
+            poster.postesLeftSlick = processedLeftSlick
         }
         if (processedBottomSlick) {
-            poster.porterBottomSlick = processedBottomSlick
+            poster.posterBottomSlick = processedBottomSlick
         }
         if (processedBottom) {
-            poster.porterBottom = processedBottom
+            poster.posterBottom = processedBottom
         }
+        if (processedLeftRight) {
+            poster.posterBottom = processedLeftRight
+        }
+
+
+
+
+
         if (LinkPosterHeader) {
             poster.LinkPosterHeader = LinkPosterHeader;
         }
-        if (LinkPorterSlick) {
-            poster.LinkPorterSlick = LinkPorterSlick;
+        if (LinkPosterSlick) {
+            poster.LinkPosterSlick = LinkPosterSlick;
         }
-        if (LinkPorterLeftSlick) {
-            poster.LinkPorterLeftSlick = LinkPorterLeftSlick;
+        if (LinkPosterLeftSlick) {
+            poster.LinkPosterLeftSlick = LinkPosterLeftSlick;
         }
-        if (LinkPorterBottomSlick) {
-            poster.LinkPorterBottomSlick = LinkPorterBottomSlick;
+        if (LinkPosterBottomSlick) {
+            poster.LinkPosterBottomSlick = LinkPosterBottomSlick;
         }
-        if (LinkPorterBottom) {
-            poster.LinkPorterBottom = LinkPorterBottom;
+        if (LinkPosterBottom) {
+            poster.LinkPosterBottom = LinkPosterBottom;
+        }
+        if (LinkPosterLeftRight) {
+            poster.LinkPosterLeftRight = LinkPosterLeftRight;
         }
         const updatedPoster = await poster.save();
         return updatedPoster;
@@ -140,11 +162,11 @@ const deleteImagesPoster = async (id, imageId, imageType) => {
         }
 
         const imageTypeMap = {
-            porterHeader: poster.porterHeader,
-            porterSlick: poster.porterSlick,
-            porterLeftSlick: poster.porterLeftSlick,
-            porterBottomSlick: poster.porterBottomSlick,
-            porterBottom: poster.porterBottom
+            posterHeader: poster.posterHeader,
+            posterSlick: poster.posterSlick,
+            posterLeftSlick: poster.postesLeftSlick,
+            posterBottomSlick: poster.posterBottomSlick,
+            posterBottom: poster.posterBottom
         };
 
         const images = imageTypeMap[imageType];
@@ -180,7 +202,7 @@ const deleteImagesPoster = async (id, imageId, imageType) => {
     }
 };
 
-module.exports = {
+module.exports  = {
     createPoster,
     getAll,
     updatePoster,

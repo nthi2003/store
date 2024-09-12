@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PosterSchema = new Schema({
-    porterHeader: [{
+    posterHeader: [{
         public_id: {
             type: String,
             required: true
@@ -16,7 +16,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    porterSlick: [{
+    posterSlick: [{
         public_id: {
             type: String,
             required: true
@@ -26,11 +26,11 @@ const PosterSchema = new Schema({
             required: true
         }
     }],
-    LinkPorterSlick: [{
+    LinkPosterSlick: [{
         type: String,
         required: true
     }],
-    porterLeftSlick: [{
+    postesLeftSlick: [{
         public_id: {
             type: String,
             required: true
@@ -40,11 +40,11 @@ const PosterSchema = new Schema({
             required: true
         }
     }],
-    LinkPorterLeftSlick: [{
+    LinkPosterLeftSlick: [{
         type: String,
         required: true
     }],
-    porterBottomSlick: [{
+    posterBottomSlick: [{
         public_id: {
             type: String,
             required: true
@@ -54,11 +54,11 @@ const PosterSchema = new Schema({
             required: true
         }
     }],
-    LinkPorterBottomSlick: [{
+    LinkPosterBottomSlick: [{
         type: String,
         required: true
     }],
-    porterBottom: [{
+    posterBottom: [{
         public_id: {
             type: String,
             required: true
@@ -68,7 +68,21 @@ const PosterSchema = new Schema({
             required: true
         }
     }],
-    LinkPorterBottom: [{
+    LinkPosterBottom: [{
+        type: String,
+        required: true
+    }],
+    posterLeftRight: [{
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
+    }],
+    LinkPosterLeftRight: [{
         type: String,
         required: true
     }]

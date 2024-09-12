@@ -16,6 +16,8 @@ import Product from './components/Product';
 import Users from './components/Users';
 import Category from './components/Category';
 import { AiTwotoneTag } from "react-icons/ai";
+import Poster from './components/Poster';
+import { IoMdImages } from "react-icons/io";
 const Dashboard = () => {
   const [active , setActive] = useState('dashboard')
   const contentMap = {
@@ -23,6 +25,7 @@ const Dashboard = () => {
     products: <Product/>,
     Users: <Users/>,
     Category : <Category/>,
+    Poster : <Poster/>
 
   }
   const navigate = useNavigate();
@@ -130,6 +133,10 @@ const Dashboard = () => {
           <div className={` p-4 flex items-center cursor-pointer ${active === 'Category' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('Category')}>
             <AiTwotoneTag className='   mr-2'/>
             <span>Category</span>
+          </div>
+          <div className={` p-4 flex items-center cursor-pointer ${active === 'Poster' ? 'bg-gray-200 text-black' : 'text-white'}`} onClick={() => setActive('Poster')}>
+            <IoMdImages className='   mr-2'/>
+            <span>Poster</span>
           </div>
       
         </div>

@@ -7,10 +7,12 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
+
         cb(null, `${Date.now()}-${file.originalname}`);
     }
 });
 
+    
 const uploads = multer({
     storage: storage,
     limits: { fileSize: 100 * 1024 * 1024 } 
@@ -19,7 +21,8 @@ const uploads = multer({
     { name: 'slickFiles', maxCount: 10 },
     { name: 'leftSlickFiles', maxCount: 10 },
     { name: 'bottomSlickFiles', maxCount: 10 },
-    { name: 'bottomFiles', maxCount: 10 }
+    { name: 'bottomFiles', maxCount: 10 },
+    { name: 'leftRightFiles', maxCount: 10 }
 ]);
 
 module.exports = uploads;

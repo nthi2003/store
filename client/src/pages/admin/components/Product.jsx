@@ -90,7 +90,7 @@ const Product = () => {
                       )}
                     </td>
                     <td className='border-b border-[#eee] py-5 px-4'>
-                      <p className='text-black'>{product.price}đ</p>
+                      <p className='text-black'>{product.price.toLocaleString()}đ</p>
                     </td>
                     <td className='border-b border-[#eee] py-5 px-4'>
                       <div className='text-black'>

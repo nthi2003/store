@@ -2,15 +2,18 @@ const posterSevice = require('../service/posterSevice');
 
 const createPoster = async (req, res) => {
     try {
-
         const posterData = req.body;
+
+    
         const files = {
-            headerFiles: req.files.headerFiles || [],
-            slickFiles: req.files.slickFiles || [],
-            leftSlickFiles: req.files.leftSlickFiles || [],
-            bottomSlickFiles: req.files.bottomSlickFiles || [],
-            bottomFiles: req.files.bottomFiles || []
+            headerFiles: req.files?.headerFiles || [],
+            slickFiles: req.files?.slickFiles || [],
+            leftSlickFiles: req.files?.leftSlickFiles || [],
+            bottomSlickFiles: req.files?.bottomSlickFiles || [],
+            bottomFiles: req.files?.bottomFiles || [],
+            leftRightFiles: req.files?.leftRightFiles || []
         };
+
         const newPoster = await posterSevice.createPoster(posterData, files);
         return res.status(200).json(newPoster);
     } catch (error) {
@@ -20,6 +23,7 @@ const createPoster = async (req, res) => {
         });
     }
 };
+
 const getAll = async (req, res) => {
     try {
       const response = await posterSevice.getAll();
