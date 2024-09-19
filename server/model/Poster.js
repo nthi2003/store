@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PosterSchema = new Schema({
-    posterHeader: [{
+    headerFiles: [{
         public_id: {
             type: String,
             required: true
@@ -16,7 +16,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    posterSlick: [{
+    slickFiles: [{
         public_id: {
             type: String,
             required: true
@@ -30,7 +30,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    postesLeftSlick: [{
+    leftSlickFiles: [{
         public_id: {
             type: String,
             required: true
@@ -44,7 +44,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    posterBottomSlick: [{
+    bottomSlickFiles: [{
         public_id: {
             type: String,
             required: true
@@ -58,7 +58,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    posterBottom: [{
+    bottomFiles: [{
         public_id: {
             type: String,
             required: true
@@ -72,7 +72,7 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }],
-    posterLeftRight: [{
+    leftRightFiles: [{
         public_id: {
             type: String,
             required: true
@@ -86,6 +86,6 @@ const PosterSchema = new Schema({
         type: String,
         required: true
     }]
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Poster', PosterSchema);

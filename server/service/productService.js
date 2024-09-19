@@ -31,7 +31,7 @@ const uploadImages = async (files) => {
 
 const createProduct = async ({
     name, price, title, categoryid, categoryName, Stock, CPU, CPUDETAIL, RAMDETAIL,
-    RAM, GC, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, Battery,
+    RAM, Screen, Port, Keyboard, Audio, Lan, Bluetooth, Webcam, Battery,
     Wifi, Weight, Size, LCD, VGA, SSD, Color, OS, HZ, images
 }) => {
     try {

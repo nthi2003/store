@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import axios from "../../axiosConfig";
-import { setError , setLoading , getAllPosterSuccess , createPosterSuccess } from "../reducers/posterSlice";
+import { setError , setLoading , getAllPosterSuccess , createPosterSuccess , updatePosterSuccess , deleteImagePoster } from "../reducers/posterSlice";
 
 
 export const getAllPoster = () => async (dispatch) =>  {
@@ -23,11 +23,7 @@ export const getAllPoster = () => async (dispatch) =>  {
         formData.append('LinkPosterBottomSlick' , posterData.LinkPosterBottomSlick);
         formData.append('LinkPosterBottom' , posterData.LinkPosterBottom);
         formData.append('LinkPosterLeftRight' , posterData.LinkPosterLeftRight)
-        if(files.headerFiles) {
-            files.headerFiles.forEach(file => formData.append('headerFiles',file) 
-                
-            );
-        }
+       
         if(files.headerFiles) {
             files.headerFiles.forEach(file => formData.append('headerFiles',file) 
                 
@@ -59,8 +55,8 @@ export const getAllPoster = () => async (dispatch) =>  {
             );
         }
       const response = await axios.post(`/createPoster` , formData  )
-      dispatch(createPosterSuccess(response))
-      const { status , message} = response;
+      dispatch(createPosterSuccess(response.data))
+      const { status , message} = response.data;
       if (status === 'success') {
         toast.success(message)
       }
@@ -70,6 +66,53 @@ export const getAllPoster = () => async (dispatch) =>  {
       
   }
   catch (error) {
-      dispatch(setError(error.response.data.message))
+    dispatch(setError(error.response.data.message))
   }
+  }
+  export const updatePoster = (posterId, formData) => async (dispatch) => {
+    dispatch(setLoading(true));
+
+    try {
+        const response = await axios.put(`/updatePoster/${posterId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        dispatch(updatePosterSuccess(response.data));
+
+        const { status, message } = response.data;
+        if (status === 'success') {
+            toast.success(message);
+        } else {
+            toast.error(message);
+        }
+    } catch (error) {
+        console.error(error);
+        dispatch(setError(error.response?.data?.message ));
+        toast.error(error.response?.data?.message );
+    } finally {
+        dispatch(setLoading(false));
+    }
+};
+
+
+
+  export const deleteImagesPoster = (id , imageId , imageType) => async (dispatch) => {
+    dispatch(setLoading(true))
+    try {
+      const response =  await axios.delete(`deleteImagesPoster/${id}/${imageType}/${imageId}`);
+      dispatch(deleteImagePoster(id , imageId , imageType))
+      const {status, message} = response.data
+      if(status === 'success') { 
+        toast.success(message)
+       }
+       else {
+        toast.error(message)
+       }
+
+    } 
+    catch (error) {
+        dispatch(setError(error.response.data.message))
+    }
   }

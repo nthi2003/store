@@ -2,20 +2,10 @@ const posterSevice = require('../service/posterSevice');
 
 const createPoster = async (req, res) => {
     try {
-        const posterData = req.body;
-
-    
-        const files = {
-            headerFiles: req.files?.headerFiles || [],
-            slickFiles: req.files?.slickFiles || [],
-            leftSlickFiles: req.files?.leftSlickFiles || [],
-            bottomSlickFiles: req.files?.bottomSlickFiles || [],
-            bottomFiles: req.files?.bottomFiles || [],
-            leftRightFiles: req.files?.leftRightFiles || []
-        };
-
-        const newPoster = await posterSevice.createPoster(posterData, files);
-        return res.status(200).json(newPoster);
+        const data = req.body;
+        const files = req.files || {};
+        const poster = await posterSevice.createPoster(data, files);
+        return res.status(200).json(poster);
     } catch (error) {
         return res.status(500).json({
             status: 'error',
@@ -37,33 +27,31 @@ const getAll = async (req, res) => {
     }
 }
 const updatePoster = async (req, res) => {
-   
-       const posterId =  req.params.id;
-       const posterData = req.body;
-       const files = req.files
-       try {
-           const uploadPoster = await posterSevice.updatePoster(posterId, posterData, files);
-           res.status(200).json({
-             status : 'success',
-             message : 'Cập nhật thành công poster',
-            uploadPoster
-           })
-       }
-    
-    catch (error) {
+    const { posterId } = req.params;
+    const data = req.body;
+    const files = req.files || {};
+
+    console.log('Received files:', files);
+    console.log('Received data:', data);
+
+    try {
+        const poster = await posterSevice.updatePoster(posterId, data, files);
+        res.status(200).json(poster);
+    } catch (error) {
         res.status(500).json({
             status: 'error',
             message: error.message
         });
     }
-}
+};
+
 const deleteImagesPoster = async (req, res) => {
     const { id, imageId, imageType } = req.params;
 
     if (!id || !imageId || !imageType) {
         return res.status(400).json({
             status: 'error',
-            message: 'Thiếu tham số'
+            message: 'Thông tin điền vào còn thiếu'
         });
     }
 

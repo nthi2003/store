@@ -1,47 +1,82 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
-    error : null,
-    loading : false,
-    isAuthenticated : false,
-    posters : [],
+    error: null,
+    loading: false,
+    isAuthenticated: false,
+    posters: [],
     poster: null,
 
 }
-const  posterSlice = createSlice({
-    name : 'poster',
+const posterSlice = createSlice({
+    name: 'poster',
     initialState,
-    reducers :  {
-        setLoading : (state , action) => {
+    reducers: {
+        setLoading: (state, action) => {
             state.loading = action.payload.loading;
             state.error = null;
         },
-        setError : (state , action) => {
-             state.loading = false;
-             state.error = action.payload.error|| null;
-        },
-        createPosterSuccess : (state, action) => {
+        setError: (state, action) => {
             state.loading = false;
-            state.error = action.payload.error|| null;
+            state.error = action.payload?.error || null
+        },
+        createPosterSuccess: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.error || null;
             state.poster = action.payload.poster
         },
-        getAllPosterSuccess : (state, action) => {
+        getAllPosterSuccess: (state, action) => {
             state.posters = action.payload;
             state.loading = false;
             state.error = null;
 
         },
-        updatePosterSuccess : (state, action) => {
+        updatePosterSuccess: (state, action) => {
             state.loading = false;
-            state.error = action.payload.error;
+            state.error = null;
+
             const updatedPoster = action.payload;
-            const index = state.posters.findIndex((poster) => poster._id === updatedPoster._id );
-            if(index !== -1) {
-                state.posters[index] = updatedPoster
+
+            if (state.poster && state.poster._id === updatedPoster._id) {
+                state.poster = updatedPoster;
             }
+
+
+            if (Array.isArray(state.posters)) {
+                const index = state.posters.findIndex(poster => poster._id === updatedPoster._id);
+                if (index !== -1) {
+                    state.posters[index] = updatedPoster;
+                }
+            }
+        },
+
+
+        deleteImagePoster: (state, action) => {
+            state.loading = false;
+            state.error = null;
+            const { id, imageId, imageType } = action.payload;
+            const poster = state.posters.find((poster) => poster._id === id)
+            if (poster) {
+                const imageTypeMap = {
+                    posterHeader: poster.posterHeader,
+                    posterSlick: poster.posterSlick,
+                    postesLeftSlick: poster.postesLeftSlick,
+                    posterBottomSlick: poster.posterBottomSlick,
+                    posterBottom: poster.posterBottom,
+                    posterLeftRight: poster.posterLeftRight
+                }
+                const images = imageTypeMap[imageType]
+                if (images) {
+                    const imageIndex = images.findIndex(image => image._id === imageId);
+                    if (imageIndex != -1) {
+                        images.splice(imageIndex, 1);
+                    }
+                }
+            }
+
         }
 
     }
 })
-export const {setLoading , setError , getAllPosterSuccess , createPosterSuccess , updatePosterSuccess } = posterSlice.actions
+export const { setLoading, setError, getAllPosterSuccess, createPosterSuccess, updatePosterSuccess, deleteImagePoster } = posterSlice.actions
 export default posterSlice.reducer;
