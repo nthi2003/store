@@ -73,11 +73,7 @@ export const getAllPoster = () => async (dispatch) =>  {
     dispatch(setLoading(true));
 
     try {
-        const response = await axios.put(`/updatePoster/${posterId}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        const response = await axios.put(`/updatePoster/${posterId}`, formData);
 
         dispatch(updatePosterSuccess(response.data));
 
@@ -98,21 +94,24 @@ export const getAllPoster = () => async (dispatch) =>  {
 
 
 
-  export const deleteImagesPoster = (id , imageId , imageType) => async (dispatch) => {
-    dispatch(setLoading(true))
+export const deleteImagesPoster = (id, imageId, imageType) => async (dispatch) => {
+    dispatch(setLoading(true));
     try {
-      const response =  await axios.delete(`deleteImagesPoster/${id}/${imageType}/${imageId}`);
-      dispatch(deleteImagePoster(id , imageId , imageType))
-      const {status, message} = response.data
-      if(status === 'success') { 
-        toast.success(message)
-       }
-       else {
-        toast.error(message)
-       }
+        const response = await axios.delete(`deleteImagesPoster/${id}/${imageType}/${imageId}`);
+        dispatch(deleteImagePoster({id, imageId, imageType}));
+        
+        const { status, message } = response.data;
+        if (status === 'success') {
+            toast.success(message);
+        } else {
+            toast.error(message);
+        }
+    } catch (error) {
+        console.error(error);
+        dispatch(setError(error.response?.data?.message ));
+        toast.error(error.response?.data?.message );
 
-    } 
-    catch (error) {
-        dispatch(setError(error.response.data.message))
+    } finally {
+        dispatch(setLoading(false));
     }
-  }
+};

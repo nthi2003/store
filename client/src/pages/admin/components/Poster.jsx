@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePoster, getAllPoster } from "../../../redux/actions/posterAction";
+import { updatePoster, getAllPoster, deleteImagesPoster } from "../../../redux/actions/posterAction";
 import { IoMdClose } from "react-icons/io";
 import { HiPlusSm } from "react-icons/hi";
 import { Toaster } from 'react-hot-toast';
@@ -81,9 +81,9 @@ const Poster = () => {
         }));
     };
 
-    const handleImageRemove = (field, index) => {
+    const handleImageRemove = (field, index , id , imageId , imageType) => {
         setImagePreviews(prev => {
-            const updatedPreviews = [...prev[field]];
+            const updatedPreviews = Array.isArray(prev[field]) ? [...prev[field]] : []
             updatedPreviews.splice(index, 1);
             return {
                 ...prev,
@@ -92,13 +92,14 @@ const Poster = () => {
         });
 
         setSelectedImages(prev => {
-            const updatedImages = [...prev[field]];
+            const updatedImages = Array.isArray(prev[field]) ? [...prev[field]] : [];
             updatedImages.splice(index, 1);
             return {
                 ...prev,
                 [field]: updatedImages,
             };
         });
+        dispatch(deleteImagesPoster(id , imageType , imageId ))
     };
 
     const handleSubmit = (e) => {
@@ -106,7 +107,13 @@ const Poster = () => {
 
         const formData2 = new FormData();
         Object.keys(formData).forEach((key) => {
-            formData2.append(key, formData[key]);
+            const value = formData[key];
+            if (Array.isArray(value)) {
+                value.forEach((value , index) => {
+                    formData2.append(`${key}[${index}]`, value)
+                })   
+            }
+            
         });
 
         Object.keys(selectedImages).forEach((key) => {
@@ -124,6 +131,7 @@ const Poster = () => {
             dispatch(updatePoster(poster._id, formData2));
         }
     };
+
 
     return (
         
@@ -165,7 +173,7 @@ const Poster = () => {
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
-                                        onClick={() => handleImageRemove('headerFiles', index)}
+                                        onClick={() => handleImageRemove( 'headerFiles', index , poster._id , 'headerFiles', poster.headerFiles[index]._id , )}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -197,8 +205,95 @@ const Poster = () => {
                         <HiPlusSm className="ml-1" />
                     </button>
                 </div>
-               
+                 <div className="ml-[200px]">
+                    <span>leftRightFiles</span>
+                    <label
+                        className="flex flex-col items-center justify-center w-[1200px] h-[500px] border-2 border-red-300 border-dashed"
+                        htmlFor="leftRightFiles"
+                    >
+                        <div>
+                            <p className="mb-2 text-sm text-red-500">
+                                <span className="font-semibold">Click to upload</span> or drag
+                                and drop
+                            </p>
+                            <p className="text-xs text-red-500">
+                                SVG, PNG, JPG or GIF (MAX. 1200x500px)
+                            </p>
+                        </div>
+                        <input
+                            type="file"
+                            id="leftRightFiles"
+                            name="leftRightFiles"
+                            multiple
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+                    </label>
+
+                    <div className="flex flex-wrap mt-4">
+                        {imagePreviews.leftRightFiles &&
+                            imagePreviews.leftRightFiles.map((preview, index) => (
+                                <div key={index} className="relative mr-4 mb-4">
+                                    <img src={preview} className="w-[120px] h-[120px] object-cover ml-2" />
+                                    <button
+                                        type="button"
+                                        className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('leftRightFiles' , index , poster._id , 'leftRightFiles' , poster.leftRightFiles[index]._id)}
+                                    >
+                                        <IoMdClose />
+                                    </button>
+                                </div>
+                            ))}
+                    </div>
+                    <div className="">
+                    <label htmlFor="LinkPosterLeftRight">LinkPosterLeftRight</label>
+                    {Array.isArray(formData.LinkPosterLeftRight) && formData.LinkPosterLeftRight.map((header, index) => (
+                        <div className="mb-4" key={index}>
+                            <input
+                                type="text"
+                                id={`LinkPosterLeftRight-${index}`}
+                                name="LinkPosterLeftRight"
+                                className="mt-4 p-2 w-[1200px] border border-gray-300 rounded"
+                                value={header}
+                                onChange={e => handleInputChange(e, index, 'LinkPosterLeftRight')}
+                            />
+                        </div>
+                    ))}
+
+                    <button
+                        type="button"
+                        onClick={() => addNewInput('LinkPosterLeftRight')}
+                        className=" bg-green-500 text-white rounded w-[20px] h-[20px]"
+                    >
+                        <HiPlusSm className="ml-[2px]" />
+                    </button>
+                </div>
+                </div>
                 <div className="ml-[200px]">
+                    <label htmlFor="LinkPosterHeader">Link Poster Header</label>
+                    {Array.isArray(formData.LinkPosterHeader) && formData.LinkPosterHeader.map((header, index) => (
+                        <div className="mb-4" key={index}>
+                            <input
+                                type="text"
+                                id={`LinkPosterHeader-${index}`}
+                                name="LinkPosterHeader"
+                                className="mt-4 p-2 w-[1200px] border border-gray-300 rounded"
+                                value={header}
+                                onChange={e => handleInputChange(e, index , 'LinkPosterHeader')}
+                            />
+                        </div>
+                    ))}
+
+                    <button
+                        type="button"
+                        onClick={() => addNewInput('LinkPosterHeader')}
+                        className=" bg-green-500 text-white rounded w-[20px] h-[20px]"
+                    >
+                        <HiPlusSm className="ml-[2px]" />
+                    </button>
+                </div>
+
+               <div className="ml-[200px]">
                     <span>SlickFile</span>
                     <label
                         className="flex flex-col items-center justify-center w-[1200px] h-[500px] border-2 border-red-300 border-dashed"
@@ -231,6 +326,7 @@ const Poster = () => {
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('slickFiles' , index, poster._id , 'slickFiles' ,  poster.slickFiles[index]._id )}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -295,6 +391,7 @@ const Poster = () => {
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('leftSlickFiles', index , poster._id , 'leftSlickFiles' , poster.leftSlickFiles[index]._id)}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -352,12 +449,14 @@ const Poster = () => {
 
                     <div className="flex flex-wrap mt-4">
                         {imagePreviews.bottomSlickFiles &&
-                            imagePreviews.bottomSlickFiles.map((preview, index) => (
+                            imagePreviews.bottomSlickFiles.map((preview , index) => (
                                 <div key={index} className="relative mr-4 mb-4">
+                                
                                     <img src={preview} className="w-[120px] h-[120px] object-cover ml-2" />
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('bottomSlickFiles' , index , poster._id , 'bottomSlickFiles' , poster.bottomSlickFiles[index]._id)}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -422,6 +521,7 @@ const Poster = () => {
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('bottomFiles' , index , poster._id , 'bottomFiles' , poster.bottomFiles[index]._id)}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -487,6 +587,7 @@ const Poster = () => {
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                                        onClick={() => handleImageRemove('leftRightFiles' , index , poster._id , 'leftRightFiles' , poster.leftRightFiles[index]._id)}
                                     >
                                         <IoMdClose />
                                     </button>
@@ -517,6 +618,9 @@ const Poster = () => {
                     </button>
                 </div>
                 </div>
+
+               
+                
 
 
                 <button

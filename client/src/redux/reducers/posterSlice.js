@@ -55,26 +55,31 @@ const posterSlice = createSlice({
             state.loading = false;
             state.error = null;
             const { id, imageId, imageType } = action.payload;
-            const poster = state.posters.find((poster) => poster._id === id)
-            if (poster) {
-                const imageTypeMap = {
-                    posterHeader: poster.posterHeader,
-                    posterSlick: poster.posterSlick,
-                    postesLeftSlick: poster.postesLeftSlick,
-                    posterBottomSlick: poster.posterBottomSlick,
-                    posterBottom: poster.posterBottom,
-                    posterLeftRight: poster.posterLeftRight
-                }
-                const images = imageTypeMap[imageType]
-                if (images) {
-                    const imageIndex = images.findIndex(image => image._id === imageId);
-                    if (imageIndex != -1) {
-                        images.splice(imageIndex, 1);
+
+   
+            if (Array.isArray(state.posters)) {
+                const poster = state.posters.find((poster) => poster._id === id);
+                if (poster) {
+                    const imageTypeMap = {
+                        posterHeader: poster.headerFiles,
+                        posterSlick: poster.slickFiles,
+                        postesLeftSlick: poster.leftSlickFiles,
+                        posterBottomSlick: poster.bottomSlickFiles,
+                        posterBottom: poster.bottomFiles,
+                        posterLeftRight: poster.leftRightFiles,
+                    };
+                    const images = imageTypeMap[imageType];
+                    if (images) {
+                        const imageIndex = images.findIndex((image) => image._id === imageId);
+                        if (imageIndex !== -1) {
+                            images.splice(imageIndex, 1);
+                        }
                     }
                 }
+            } else {
+                console.error("state.posters is not an array");
             }
-
-        }
+        },
 
     }
 })

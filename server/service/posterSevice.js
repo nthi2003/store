@@ -123,45 +123,53 @@ const updatePoster = async (posterId, data, files) => {
 
 
 
-
 const deleteImagesPoster = async (id, imageId, imageType) => {
     try {
         const poster = await Poster.findById(id);
         if (!poster) {
             return {
                 status: 'error',
-                message: 'Không có ảnh'
+                message: 'Không tìm thấy poster'
             };
         }
 
         const imageTypeMap = {
-            posterHeader: poster.posterHeader,
-            posterSlick: poster.posterSlick,
-            posterLeftSlick: poster.postesLeftSlick,
-            posterBottomSlick: poster.posterBottomSlick,
-            posterBottom: poster.posterBottom ,
-            posterLeftRight : poster.posterLeftRight
+            headerFiles: poster.headerFiles,
+            slickFiles: poster.slickFiles,
+            leftSlickFiles: poster.leftSlickFiles,
+            bottomFiles: poster.bottomFiles,
+            bottomSlickFiles : poster.bottomSlickFiles,
+            leftRightFiles: poster.leftRightFiles
         };
 
         const images = imageTypeMap[imageType];
         if (!images) {
             return {
                 status: 'error',
-                message: 'Không có ảnh '
+                message: 'Không tìm thấy loại ảnh'
             };
         }
 
-        const imagesIndex = images.findIndex(image => image._id.toString() === imageId);
-        if (imagesIndex === -1) {
+        const imageIndex = images.findIndex(image => image._id.toString() === imageId);
+        if (imageIndex === -1) {
             return {
                 status: 'error',
                 message: 'Không tìm thấy ảnh'
             };
         }
 
-        await cloudinary.uploader.destroy(images[imagesIndex].public_id);
+        const result = await cloudinary.uploader.destroy(images[imageIndex].public_id);
+        if (result.result !== 'ok') {
+            return {
+                status: 'error',
+                message: 'Không thể xóa ảnh trên Cloudinary'
+            };
+        }
 
-        images.splice(imagesIndex, 1);
+
+        images.splice(imageIndex, 1);
+
+
         await poster.save();
 
         return {

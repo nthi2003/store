@@ -20,7 +20,7 @@ const NextArrow = (props) => {
             style={{ ...style, display: "block", right: "20px", zIndex: 100, background: '#343131' , borderRadius:'100%' }}
             onClick={onClick}
         >
-         <CiCircleChevRight className='text-white'/>
+
         </div>
     );
 };
