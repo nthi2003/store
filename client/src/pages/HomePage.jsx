@@ -18,15 +18,17 @@ import { GiShoppingCart } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../redux/actions/authActions';
 import { TbClipboardPlus } from 'react-icons/tb';
-
+import { MdArrowBackIos } from "react-icons/md";
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { IoIosLogOut } from 'react-icons/io';
 import { getAllPoster } from '../redux/actions/posterAction'
+import { MdArrowForwardIos } from "react-icons/md";
 const HomePage = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
 
-
+  const posters = useSelector(state => [state.poster.posters.posters[0]])
+  console.log(posters)
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,7 +44,22 @@ const HomePage = () => {
     dispatch(logoutUser());
     navigate('/');
   };
+  const [currentIndexes, setCurrentIndexes] = useState({});
 
+
+  const handleNext = (posterId, slickFilesLength) => {
+    setCurrentIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [posterId]: ((prevIndexes[posterId] || 0) + 1) % slickFilesLength,
+    }));
+  };
+
+  const handleBack = (posterId, slickFilesLength) => {
+    setCurrentIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [posterId]: (prevIndexes[posterId] - 1 + slickFilesLength) % slickFilesLength,
+    }));
+  };
   const [toastShow, setToastShow] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -243,20 +260,24 @@ const HomePage = () => {
       </div>
 
       <div className='min-h-screen'>
-        <div className='fixed hidden lg:block'>
-          <div className='left-4 w-[150px] ml-[180px] mt-4'>
-            <a href="">
-              <img src="https://file.hstatic.net/200000722513/file/pc_side_web.png" alt="" />
-            </a>
+        {posters.map((poster) => (
+          <div key={poster._id}>
+            <div className='fixed hidden lg:block'>
+              <div className='left-4 w-[150px] ml-[180px] mt-4'>
+                <a href={poster.LinkPosterLeftRight[0]}>
+                  <img src={poster.leftRightFiles[0]?.url} alt="" />
+                </a>
+              </div>
+            </div>
+            <div className='fixed hidden lg:block'>
+              <div className='right-4 w-[150px] ml-[1565px] mt-4'>
+              <a href={poster.LinkPosterLeftRight[1]}>
+                  <img src={poster.leftRightFiles[1]?.url} alt="" />
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className='fixed hidden lg:block'>
-          <div className='right-4 w-[150px] ml-[1565px] mt-4'>
-            <a href="">
-              <img src="https://file.hstatic.net/200000722513/file/side_web_laptop_gaming.png" alt="" />
-            </a>
-          </div>
-        </div>
+        ))}
 
         <div className='bg-gray-200  flex '>
           <div className='lg:w-20% ml-[360px] mt-4'>
@@ -355,19 +376,81 @@ const HomePage = () => {
 
             </div>
           </div>
-          <div className='w-[70%] mt-4 mr-[360px] ml-2'>
-           
-           <div className=''> 
-            
-           </div>
-           
-            <div className=' fixed w-[40px] h-[40px] mt-[100px]  ml-[1580px]'>
-              <span className='animate-ping rounded-full bg-sky-400 opacity-75 absolute  w-full h-full'></span>
-              <a href="https://zalo.me/0766524605" className='relative inline-flex rounded-full  bg-sky-500 w-full h-full'>
-                <img src="https://file.hstatic.net/200000722513/file/icon_zalo__1__f5d6f273786c4db4a3157f494019ab1e.png" className='' alt="" />
-              </a>
+          <div className='w-[70%] mt-4  mr-[360px] ml-2'>
+
+            <div className='flex'>
+              {
+                posters.map((poster) => (
+                  <div className='w-[601px] h-[320px] relative flex items-center' key={poster._id}>
+
+                    <button
+                      onClick={() => handleBack(poster._id, poster.slickFiles.length)}
+                      className='absolute ml-[10px]'>
+                      <MdArrowBackIos className='text-white text-[30px]' />
+                    </button>
+
+                    <div className='w-full h-full'>
+                      <a href={poster.LinkPosterSlick[currentIndexes[poster._id]]}>
+                        <img
+                          src={poster.slickFiles[currentIndexes[poster._id] || 0]?.url}
+                          alt=""
+                          className='w-full h-full object-cover'
+                        />
+                      </a>
+                    </div>
+
+                    <button
+                      onClick={() => handleNext(poster._id, poster.slickFiles.length)}
+                      className='absolute right-0 mr-[10px] z-20'>
+                      <MdArrowForwardIos className='text-white text-[30px]' />
+                    </button>
+
+
+                  </div>
+                ))
+              }
+              {posters.map((poster) => (
+                <div key={poster._id}>
+
+                  <div className='w-[340px] h-[150px] ml-5 mb-5'>
+                    <a href="">
+                      <img src={poster.leftSlickFiles[0]?.url} alt="" className='w-full h-full object-cover' />
+                    </a>
+                  </div>
+                  <div className='w-[340px] h-[150px] ml-5 mb-2'>
+                    <a href="">
+                      <img src={poster.leftSlickFiles[1]?.url} alt="" className='w-full h-full object-cover' />
+                    </a>
+                  </div>
+
+                </div>
+              ))}
 
             </div>
+            {posters.map((poster) => (
+              <div key={poster._id} className='flex'>
+
+                <div className='w-[315px] h-[150px] '>
+                  <a href="">
+                    <img src={poster.bottomSlickFiles[0]?.url} alt="" className='w-full h-full object-cover' />
+                  </a>
+                </div>
+                <div className='w-[315px] h-[150px]  mb-5 ml-2'>
+                  <a href="">
+                    <img src={poster.bottomSlickFiles[1]?.url} alt="" className='w-full h-full object-cover' />
+                  </a>
+                </div>
+                <div className='w-[315px] h-[150px] ml-2  '>
+                  <a href="">
+                    <img src={poster.bottomSlickFiles[2]?.url} alt="" className='w-full h-full object-cover' />
+                  </a>
+                </div>
+
+              </div>
+            ))}
+
+
+
 
 
           </div>
@@ -377,28 +460,31 @@ const HomePage = () => {
 
         <div className='bg-gray-200  '>
 
-          <div className='grid grid-rows-1 grid-cols-4 mx-[360px]'>
-            <div className='mt-2  '>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
+          {posters.map((poster) => (
+            <div className='grid grid-rows-1 grid-cols-4 mx-[360px]' key={poster.id} >
+              <div className='mt-2   '>
+                <a href="">
+                  <img src={poster.bottomFiles[0]?.url} alt="" />
+                </a>
+              </div>
+              <div className='mt-2 ml-2  '>
+                <a href="">
+                  <img src={poster.bottomFiles[1]?.url} alt="" />
+                </a>
+              </div>
+              <div className='mt-2 ml-2 '>
+                <a href="">
+                  <img src={poster.bottomFiles[2]?.url} alt="" />
+                </a>
+              </div>
+              <div className='mt-2 ml-2 '>
+                <a href="">
+                  <img src={poster.bottomFiles[3]?.url} alt="" />
+                </a>
+              </div>
+
             </div>
-            <div className='mt-2  ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-            <div className='mt-2  ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-            <div className='mt-2 ml-2'>
-              <a href="">
-                <img src="https://file.hstatic.net/200000722513/file/slider_6-6_920a2a63301a4e6694c8502ccfac4929.png" alt="" />
-              </a>
-            </div>
-          </div>
+          ))}
           <div className='flex px-[360px] mt-2'>
             <div className='mr-3 rounded-[20px]'>
               <img src="https://file.hstatic.net/200000722513/file/pc_-_may_bo_gvn_b53d8e3709b142828f7231b80dc03aa9.png" alt="" className='rounded-[5px]' />
